@@ -77,7 +77,6 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
 
         mView=inflater.inflate(R.layout.activity_content, null);
         setView();
-
         initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
         initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
         initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
@@ -86,28 +85,17 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         initbtn(R.id.textView5,R.drawable.quick_option_note_nor);
         initbtn(R.id.textView6,R.drawable.quick_option_photo_nor);
         initbtn(R.id.textView7,R.drawable.quick_option_scan_nor);
-
-        TextView tv2 = (TextView) mView.findViewById(R.id.textView0);
-        tv2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),SecondActivity.class);
-                startActivity(intent);
-            }
-        });
-
         TextView tv = (TextView) mView.findViewById(R.id.textView);
         tv.setSelected(true);
 
         //1.获取新闻数据用list封装
         mContext = getActivity();
-        ArrayList<NewsBean> allNews = NewsUtils.getAllNews(mContext);
+        ArrayList<ContentBean> allNews = ContentUtils.getAllNews(mContext);
         //2.找到控件
         ListView lv_news = (ListView) mView.findViewById(R.id.lv_news);
         //3.创建一个adapter设置给listview
-        NewsAdapter newsAdapter = new NewsAdapter(mContext, allNews);
-        lv_news.setAdapter(newsAdapter);
+        ContentAdapter contentAdapter = new ContentAdapter(mContext, allNews);
+        lv_news.setAdapter(contentAdapter);
         //4.设置listview条目的点击事件
         lv_news.setOnItemClickListener(this);
         return mView;
@@ -255,7 +243,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                             long id) {
 
         //需要获取条目上bean对象中url做跳转
-        NewsBean bean = (NewsBean) parent.getItemAtPosition(position);
+        ContentBean bean = (ContentBean) parent.getItemAtPosition(position);
 
         String url = bean.news_url;
 

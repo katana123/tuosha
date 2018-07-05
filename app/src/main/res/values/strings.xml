@@ -9,6 +9,20 @@
     <string name="art_type_5">经验神坛</string>
     <string name="art_type_6">金融工具</string>
     <string name="art_type_7">额度查询</string>
+    <!-- Strings related to kouzi -->
+    <string name="kouzi_type_0">大额借贷</string>
+    <string name="kouzi_type_1">工薪贷</string>
+    <string name="kouzi_type_2">身份证贷</string>
+    <string name="kouzi_type_3">淘宝贷</string>
+    <string name="kouzi_type_4">小额贷款</string>
+    <string name="kouzi_type_5">信用卡贷</string>
+    <string name="kouzi_type_6">学子分期</string>
+    <string name="kouzi_type_7">更多</string>
+    <!-- Strings related to card -->
+    <string name="card_type_0">快速提额</string>
+    <string name="card_type_1">银行贷款</string>
+    <string name="card_type_2">进度查询</string>
+    <string name="center_about">CenterAbout</string>
     <!-- Strings related to login -->
     <string name="prompt_phone">请输入手机号</string>
     <string name="prompt_password">请输入密码</string>

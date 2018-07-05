@@ -11,20 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
         </activity>
-        <!--<activity android:name=".KouziActivity" >
-            <intent-filter>
-                <action android:name="com.example.tuosha.KouziActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".CardActivity" >
-            <intent-filter>
-                <action android:name="com.example.tuosha.CardActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
 
-            </intent-filter>
-
-        </activity>-->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,9 +25,10 @@
 
         <activity android:name=".SubscribeActivity">
         </activity>
-
-        <activity android:name=".SecondActivity">
-        </activity>
+        <activity
+            android:name=".CenterAbout"
+            android:label="@string/center_about"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -6,8 +6,8 @@ public class KouziBean {
     public String title;
     public String des;
     public Drawable icon;
-    public String news_url;
-    public String newstime;
-    public String readnum;
+    public String kouzi_url;
+    public String kouzitime;
+    public String clicknum;
 }
 

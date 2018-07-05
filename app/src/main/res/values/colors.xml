@@ -11,5 +11,13 @@
     <color name="frame_search">#ADAEAD</color>
     <color name="background_white">#FFFFFF</color>
     <color name="back_red">#e75049</color>
+    <color name="border_clo">#ccc</color>
+    <color name="text_clo">#333</color>
+
+    <color name="blue">#419DE4</color>
+    <color name="pink">#FF90AC</color>
+    <color name="yellow">#FFE919</color>
+    <color name="orange">#FC8638</color>
+    <color name="textdark">#080808</color>
     <color name="black">#000000</color>
 </resources>

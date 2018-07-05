@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/reback"
+            android:layout_gravity="center"
+
+            android:src="@mipmap/reback"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="关于"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:textColor="@color/orange"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+    <View style="@style/bg2_line"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title1"
+        android:text="《用户购买协议》"
+        android:textSize="16dp"
+        android:textAlignment="center"
+        android:layout_marginVertical="10dp"
+        android:textColor="@color/textdark"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="\t\t\t\t欢迎广大用户购买拓沙金服提供的产品与服务，本协议由用户（您）与拓沙金服平台共同缔造，本协议具有合同效力。本平台各项产品与服务的所有权和经营权归拓沙金服所有。为便于表达，本协议“产品与服务”简称“产品”或“服务”，您理解并同意，此协议所指“产品”、“服务”均包含拓沙金服目前或将来提供的所有产品及服务项目。"
+        android:textSize="16dp"
+        android:textColor="@color/textdark"/>
+</LinearLayout>

@@ -6,7 +6,7 @@
     <!--轮播图-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:id="@+id/lunpic2">
         <android.support.v4.view.ViewPager
             android:id="@+id/kouzipic"
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lunpic2"
         android:orientation="vertical">
-        <!--文章分类图标区域-->
+        <!--口子分类图标区域-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 android:maxLines="1"
                 android:textAlignment="center"
 
-                android:text="@string/art_type_0" />
+                android:text="@string/kouzi_type_0" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -107,7 +107,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_note_nor"
-                android:text="@string/art_type_1"
+                android:text="@string/kouzi_type_1"
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center"/>
@@ -121,7 +121,7 @@
                 android:padding="10dp"
                 android:textAlignment="center"
                 android:maxLines="1"
-                android:text="@string/art_type_2" />
+                android:text="@string/kouzi_type_2" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -132,13 +132,13 @@
                 android:padding="10dp"
                 android:textAlignment="center"
                 android:maxLines="1"
-                android:text="@string/art_type_3" />
+                android:text="@string/kouzi_type_3" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#e1e1e1"/>
-        <!--文章分类图标区域-->
+        <!--口子分类图标区域-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_album_nor"
-                android:text="@string/art_type_4"
+                android:text="@string/kouzi_type_4"
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center" />
@@ -162,7 +162,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_note_nor"
-                android:text="@string/art_type_5"
+                android:text="@string/kouzi_type_5"
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center"/>
@@ -173,7 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_photo_nor"
-                android:text="@string/art_type_6"
+                android:text="@string/kouzi_type_6"
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center"/>
@@ -184,7 +184,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_scan_nor"
-                android:text="@string/art_type_7"
+                android:text="@string/kouzi_type_7"
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center"/>

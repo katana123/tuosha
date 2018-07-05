@@ -1,6 +1,10 @@
 package com.example.tuosha;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,7 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 //import com.example.R;
@@ -21,7 +27,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-public class KouziActivity extends Fragment {
+public class KouziActivity extends Fragment  implements AdapterView.OnItemClickListener  {
 
     private View mView;
     private ViewPager mViewPaper;
@@ -49,6 +55,7 @@ public class KouziActivity extends Fragment {
     private TextView title;
     private ViewPagerAdapter adapter;
     private ScheduledExecutorService scheduledExecutorService;
+    private Context mContext;
 
     public KouziActivity() {
 
@@ -69,6 +76,27 @@ public class KouziActivity extends Fragment {
 
         mView=inflater.inflate(R.layout.activity_kouzi, null);
         setView();
+        initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
+        initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
+        initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
+        initbtn(R.id.textView3,R.drawable.quick_option_scan_nor);
+        initbtn(R.id.textView4,R.drawable.quick_option_album_nor);
+        initbtn(R.id.textView5,R.drawable.quick_option_note_nor);
+        initbtn(R.id.textView6,R.drawable.quick_option_photo_nor);
+        initbtn(R.id.textView7,R.drawable.quick_option_scan_nor);
+
+
+        //1.获取新闻数据用list封装
+        mContext = getActivity();
+        ArrayList<KouziBean> allNews = KouziUtils.getAllNews(mContext);
+        //2.找到控件
+        ListView lv_kouzi = (ListView) mView.findViewById(R.id.lv_kouzi);
+        //3.创建一个adapter设置给listview
+        KouziAdapter kouziAdapter = new KouziAdapter(mContext, allNews);
+        lv_kouzi.setAdapter(kouziAdapter);
+        //4.设置listview条目的点击事件
+        lv_kouzi.setOnItemClickListener(this);
+
         return mView;
     }
     private void setView(){
@@ -199,5 +227,30 @@ public class KouziActivity extends Fragment {
         }
     }
 
+    private void initbtn(int tw,int pic){
+        //控制登录用户名图标大小
+        TextView hpRB = (TextView) mView.findViewById(tw);
+        Drawable hpDrawable = getResources().getDrawable(pic);
+        hpDrawable.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        hpRB.setCompoundDrawables(null,hpDrawable,null,null);//
 
+    }
+
+    //listview的条目点击时会调用该方法   parent:代表listviw  view:点击的条目上的那个view对象   position:条目的位置  id： 条目的id
+    //@Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        //需要获取条目上bean对象中url做跳转
+        KouziBean bean = (KouziBean) parent.getItemAtPosition(position);
+
+        String url = bean.kouzi_url;
+
+        //跳转浏览器
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+
+    }
 }
