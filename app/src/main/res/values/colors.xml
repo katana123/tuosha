@@ -11,4 +11,5 @@
     <color name="frame_search">#ADAEAD</color>
     <color name="background_white">#FFFFFF</color>
     <color name="back_red">#e75049</color>
+    <color name="black">#000000</color>
 </resources>

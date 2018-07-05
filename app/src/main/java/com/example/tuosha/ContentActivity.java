@@ -92,7 +92,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(),SubscribeActivity.class);
+                intent.setClass(getActivity(),SecondActivity.class);
                 startActivity(intent);
             }
         });

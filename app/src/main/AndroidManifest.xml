@@ -38,6 +38,9 @@
 
         <activity android:name=".SubscribeActivity">
         </activity>
+
+        <activity android:name=".SecondActivity">
+        </activity>
     </application>
 
 </manifest>
