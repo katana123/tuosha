@@ -85,6 +85,17 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         initbtn(R.id.textView5,R.drawable.quick_option_note_nor);
         initbtn(R.id.textView6,R.drawable.quick_option_photo_nor);
         initbtn(R.id.textView7,R.drawable.quick_option_scan_nor);
+
+        TextView tv2 = (TextView) mView.findViewById(R.id.textView0);
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),SecondActivity.class);
+                startActivity(intent);
+            }
+        });
+
         TextView tv = (TextView) mView.findViewById(R.id.textView);
         tv.setSelected(true);
 

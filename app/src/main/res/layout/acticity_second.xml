@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +9,34 @@
     <TextView
         android:id="@+id/article_title"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="37dp"
         android:background="@color/white"
-        android:textColor="@color/black"
+        android:gravity="center"
         android:text="如何入会"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:textColor="#fc7924"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/hr1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/article_title"
+        android:background="#33000000"/>
 
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/article_title"/>
+        android:layout_below="@id/hr1"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="36dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        app:srcCompat="@drawable/arrow_back" />
 
 </RelativeLayout>

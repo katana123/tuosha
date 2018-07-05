@@ -25,10 +25,9 @@
 
         <activity android:name=".SubscribeActivity">
         </activity>
-        <activity
-            android:name=".CenterAbout"
-            android:label="@string/center_about"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <activity android:name=".SecondActivity">
+        </activity>
     </application>
 
 </manifest>

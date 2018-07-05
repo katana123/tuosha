@@ -33,7 +33,7 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_articlelist, container, false);
         list_news = (ListView) view.findViewById(R.id.list_article);
-        NewsAdapter myAdapter = new NewsAdapter(getActivity(), datas);
+        MainSecondAdapter myAdapter = new MainSecondAdapter(datas, getActivity());
         list_news.setAdapter(myAdapter);
         list_news.setOnItemClickListener(this);
         return view;
