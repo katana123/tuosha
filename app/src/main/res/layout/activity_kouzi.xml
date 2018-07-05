@@ -1,0 +1,209 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tuosha.KouziActivity">
+    <!--轮播图-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/lunpic2">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/kouzipic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:layout_gravity="bottom"
+            android:background="#33000000"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片标题"
+                android:textColor="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dip"
+                android:orientation="horizontal" >
+
+                <View
+                    android:id="@+id/dot_0"
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/point_selector"/>
+
+                <View
+                    android:id="@+id/dot_1"
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/point_selector"/>
+                <View
+                    android:id="@+id/dot_2"
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/point_selector"/>
+                <View
+                    android:id="@+id/dot_3"
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/point_selector"/>
+                <View
+                    android:id="@+id/dot_4"
+                    android:layout_width="5dip"
+                    android:layout_height="5dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:background="@drawable/point_selector"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <!--轮播图end-->
+    <!--口子区域-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lunpic2"
+        android:orientation="vertical">
+        <!--文章分类图标区域-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/th1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_album_nor"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center"
+
+                android:text="@string/art_type_0" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_note_nor"
+                android:text="@string/art_type_1"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_photo_nor"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:text="@string/art_type_2" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_scan_nor"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:text="@string/art_type_3" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e1e1e1"/>
+        <!--文章分类图标区域-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/th2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_album_nor"
+                android:text="@string/art_type_4"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_note_nor"
+                android:text="@string/art_type_5"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_photo_nor"
+                android:text="@string/art_type_6"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/quick_option_scan_nor"
+                android:text="@string/art_type_7"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:textAlignment="center"/>
+        </LinearLayout>
+        <!--文章分类图标区域-end-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#d9d9d9"/>
+
+
+        <!--口子item-->
+        <ListView
+            android:id="@+id/lv_kouzi"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <!--口子item-end-->
+    </LinearLayout>
+
+    <!--口子end-->
+</RelativeLayout>

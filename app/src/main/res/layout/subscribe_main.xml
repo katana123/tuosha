@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".SubscribeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="92dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo2" />
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="120dp"
+            android:text="VIP专区教程订阅"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_title"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:text="开通会员请联系工作人员扫码支付"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/hr1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/textView1"
+            android:layout_marginTop="10dp"
+            android:background="#33000000"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hr1"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:text="￥298"
+        android:textSize="16sp"
+        android:textColor="@color/back_red"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_marginEnd="10dp"
+        android:text="VIP信息订阅月卡"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/subscribe_button"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="#214A7D"
+        android:text="注册"
+        android:textColor="@color/white"/>
+
+    <CheckBox
+        android:id="@+id/subscribe_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subscribe_button"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:text="同意《用户服务协议》"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/subscribe_check"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:text="加入拓沙金服，狂赚365天"
+        android:textSize="16sp"
+        android:textColor="@color/back_red"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:text="VIP信息订阅客户权益"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:text="客户端特点：\n1、手机在线学习网贷新口子\n2、上百款网贷产品提供在线申请\n3、一键办卡，网贷在线申请\n\n可以代办贷款和信用卡吗？\n1、每天分享最新口子与网贷信用卡等技术\n2、不代办信用卡和贷款等操作，请大家提防骗子\n\n成为会员后如何学习\n1、有精心整理的学习文案，如：网贷各类型口子汇总，网贷入门学习资料，信用卡入门学习资料等\n2、APP上每天更新最新口子与技术，可直接操作\n3、咨询客服，疑问解答\n\n投诉QQ：2226253723"
+        android:textSize="14sp"/>
+
+    </RelativeLayout>
+</ScrollView>

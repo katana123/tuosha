@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">tuosha</string>
+    <string name="card_text">信用卡页面</string>
+    <string name="art_type_0">如何入会</string>
+    <string name="art_type_1">视频技术</string>
+    <string name="art_type_2">新手专区</string>
+    <string name="art_type_3">达人交流圈</string>
+    <string name="art_type_4">历史黑科技</string>
+    <string name="art_type_5">经验神坛</string>
+    <string name="art_type_6">金融工具</string>
+    <string name="art_type_7">额度查询</string>
+    <!-- Strings related to login -->
+    <string name="prompt_phone">请输入手机号</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="register">注册</string>
+</resources>

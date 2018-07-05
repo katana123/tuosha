@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/mainpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rg_main"
+        android:layout_alignParentTop="true" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@id/rg_main"
+        android:layout_gravity="bottom"
+        android:background="#BBBBBB" />
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F7F7F7"
+        android:orientation="horizontal"
+        android:paddingTop="7dp">
+
+        <RadioButton
+            android:id="@+id/contentpage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="true"
+
+            android:drawableTop="@drawable/contentpage"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="技术专区"
+            android:textColor="@color/main_selector_tab"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/kouzipage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/kouzipage"
+            android:gravity="center"
+            android:text="口子集合"
+            android:textColor="@color/main_selector_tab"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/cardpage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/cardpage"
+            android:gravity="center"
+            android:text="信用卡"
+            android:textColor="@color/main_selector_tab"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/centerpage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/centerpage"
+            android:gravity="center"
+            android:text="个人中心"
+            android:textColor="@color/main_selector_tab"
+            android:textSize="10sp" />
+    </RadioGroup>
+</RelativeLayout>
