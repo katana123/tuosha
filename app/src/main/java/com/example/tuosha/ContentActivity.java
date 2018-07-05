@@ -95,7 +95,6 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                 intent.setClass(getActivity(),SubscribeActivity.class);
                 startActivity(intent);
             }
-
         });
 
         TextView tv = (TextView) mView.findViewById(R.id.textView);
