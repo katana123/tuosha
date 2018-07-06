@@ -98,7 +98,6 @@
                 android:padding="10dp"
                 android:maxLines="1"
                 android:textAlignment="center"
-
                 android:text="@string/kouzi_type_0" />
 
             <TextView

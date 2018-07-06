@@ -24,7 +24,7 @@
             android:label="@string/center_about"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-
+        <activity android:name=".SecondActivity" />
         <activity android:name=".KouziSecondActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

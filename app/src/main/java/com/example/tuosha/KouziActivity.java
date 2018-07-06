@@ -89,8 +89,7 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
         tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),SecondActivity.class);
+                Intent intent = new Intent(getActivity() , KouziSecondActivity.class);
                 startActivity(intent);
             }
         });
