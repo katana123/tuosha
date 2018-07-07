@@ -1,7 +1,7 @@
 package com.example.tuosha;
 import android.graphics.drawable.Drawable;
 
-public class CardBean {
+public class BankBean {
 
     public String title;
     public String des;
@@ -10,10 +10,10 @@ public class CardBean {
     public String cardtime;
     public String clicknum;
 
-    public CardBean() {
+    public BankBean() {
     }
 
-    public CardBean(String title, String des, Drawable icon, String news_url, String newstime, String readnum) {
+    public BankBean(String title, String des, Drawable icon, String news_url, String newstime, String readnum) {
         this.title = title;
         this.des = des;
         this.icon = icon;

@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat;
 import java.util.ArrayList;
 
 
-public class CardUtils {
+public class BankUtils {
 
     //封装新闻的假数据到list中返回,以后数据会从数据库中获取
     public static ArrayList<CardBean> getAllNews(Context context) {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/reback"
+            android:layout_gravity="center"
+
+            android:src="@mipmap/reback"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="银行贷款"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/orange"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+    <!--文章item-->
+    <ListView
+        android:id="@+id/lv_card"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+    <!--文章item-end-->
+
+
+</LinearLayout>

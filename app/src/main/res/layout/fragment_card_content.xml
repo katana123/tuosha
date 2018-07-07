@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="30dp"
+        android:layout_marginLeft="15dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/quick_option_text_over"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/s_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/textdark"
+                android:text="上海银行" />
+
+            <TextView
+                android:id="@+id/pub_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:text="15684人申请   通过率89%" />
+
+            <TextView
+                android:id="@+id/read_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/blue"
+                android:text="刷卡就是任性，分期就是轻松" />
+        </LinearLayout>
+    </LinearLayout>
+    <View style="@style/bg_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/textdark"
+            android:text="申请流程" />
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/lightdark"
+            android:text="填写相关资料> 提交审核> 等待通过" />
+
+    </LinearLayout>
+    <View style="@style/bg_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:layout_marginStart="15dp"
+            android:text="申请条件"
+            android:textColor="@color/textdark"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:textSize="14sp"
+            android:textColor="@color/lightdark"
+            android:text="1.身份信息 2.单位信息 3.联系人信息"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+
+    </LinearLayout>
+    <View style="@style/bg_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:text="申请材料"
+            android:textColor="@color/textdark"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:textSize="14sp"
+            android:textColor="@color/lightdark"
+            android:text="1.身份证 2.手机号 3。工作单位 4.联系人"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@color/green"
+        android:text="立即申请"/>
+</LinearLayout>

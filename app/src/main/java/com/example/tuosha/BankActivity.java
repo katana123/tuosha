@@ -18,16 +18,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import com.example.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+//import com.example.R;
+
 //接口
-public class CardActivity extends Fragment implements AdapterView.OnItemClickListener{
+public class BankActivity extends Fragment implements AdapterView.OnItemClickListener{
 
     private View mView;
     private ViewPager mViewPaper;
@@ -58,12 +58,12 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     //5.context
     private Context mContext;
 
-    public CardActivity() {
+    public BankActivity() {
 
     }
 
-    public static CardActivity newInstance() {
-        CardActivity fragment = new CardActivity();
+    public static BankActivity newInstance() {
+        BankActivity fragment = new BankActivity();
         return fragment;
     }
 

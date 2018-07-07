@@ -1,24 +1,21 @@
 package com.example.tuosha;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Date;
-
 @SuppressLint("ValidFragment")
-class KouziContentFragment extends Fragment{
-    KouziContentFragment() {
+class CardContentFragment extends Fragment{
+    CardContentFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_kouzi_content, container, false);
+        View view = inflater.inflate(R.layout.fragment_card_content, container, false);
         TextView s_title = (TextView) view.findViewById(R.id.s_title);
         //getArgument获取传递过来的Bundle对象
         s_title.setText("大额贷款xfgdfhdshfgd");

@@ -20,4 +20,8 @@
     <color name="orange">#FC8638</color>
     <color name="textdark">#080808</color>
     <color name="black">#000000</color>
+    <color name="lightgray">#eeeeee</color>
+    <color name="lightdark">#a8a8a8</color>
+    <color name="green">#1AAD19</color>
+    <color name="midgray">#d3d3d3</color>
 </resources>
