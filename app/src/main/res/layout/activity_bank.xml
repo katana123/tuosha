@@ -29,7 +29,7 @@
     </LinearLayout>
     <!--文章item-->
     <ListView
-        android:id="@+id/lv_card"
+        android:id="@+id/lv_bank"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
     <!--文章item-end-->

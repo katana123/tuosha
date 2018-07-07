@@ -6,8 +6,8 @@ public class BankBean {
     public String title;
     public String des;
     public Drawable icon;
-    public String card_url;
-    public String cardtime;
+    public String bank_url;
+    public String banktime;
     public String clicknum;
 
     public BankBean() {
@@ -17,8 +17,8 @@ public class BankBean {
         this.title = title;
         this.des = des;
         this.icon = icon;
-        this.card_url = news_url;
-        this.cardtime = newstime;
+        this.bank_url = news_url;
+        this.banktime = newstime;
         this.clicknum = readnum;
     }
 
@@ -46,20 +46,20 @@ public class BankBean {
         this.icon = icon;
     }
 
-    public String getCard_url() {
-        return card_url;
+    public String getBank_url() {
+        return bank_url;
     }
 
-    public void setCard_url(String news_url) {
-        this.card_url = news_url;
+    public void setBank_url(String news_url) {
+        this.bank_url = news_url;
     }
 
-    public String getCardtime() {
-        return cardtime;
+    public String getBanktime() {
+        return banktime;
     }
 
-    public void setCardtime(String newstime) {
-        this.cardtime = newstime;
+    public void setBanktime(String newstime) {
+        this.banktime = newstime;
     }
 
     public String getClicknum() {

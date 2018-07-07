@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class BankAdapter extends BaseAdapter{
 
-    private ArrayList<CardBean> list;
+    private ArrayList<BankBean> list;
     private Context context;
 
     //通过构造方法接受要显示的新闻数据集合
-    public BankAdapter(Context context, ArrayList<CardBean> list) {
+    public BankAdapter(Context context, ArrayList<BankBean> list) {
         this.list = list;
         this.context = context;
     }
@@ -63,12 +63,12 @@ public class BankAdapter extends BaseAdapter{
         TextView item_tv_title = (TextView) view.findViewById(R.id.item_tv_title);
         TextView item_tv_newstime = (TextView) view.findViewById(R.id.item_tv_newstime);
         //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
-        CardBean cardBean = list.get(position);
+        BankBean bankBean = list.get(position);
         //4.将数据设置给这些子控件做显示
-        item_img_icon.setImageDrawable(cardBean.icon);//设置imageView的图片
-        item_tv_title.setText(cardBean.title);
-        item_tv_des.setText(cardBean.des);
-        item_tv_newstime.setText(cardBean.cardtime);
+        item_img_icon.setImageDrawable(bankBean.icon);//设置imageView的图片
+        item_tv_title.setText(bankBean.title);
+        item_tv_des.setText(bankBean.des);
+        item_tv_newstime.setText(bankBean.banktime);
         return view;
     }
 

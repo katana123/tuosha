@@ -78,11 +78,19 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         mView=inflater.inflate(R.layout.activity_card, null);
         setView();
         //设置图标点击事件
-        TextView tv2 = (TextView) mView.findViewById(R.id.textView0);
-        tv2.setOnClickListener(new View.OnClickListener() {
+        TextView tv0 = (TextView) mView.findViewById(R.id.textView0);
+        tv0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(getActivity() , CardSecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView tv1 = (TextView) mView.findViewById(R.id.textView1);
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity() , BankActivity.class);
                 startActivity(intent);
             }
         });

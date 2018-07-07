@@ -25,16 +25,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
 
-        <activity android:name=".KouziSecondActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".KouziSecondActivity"></activity>
 
         <activity android:name=".SecondActivity"></activity>
         <activity android:name=".CardSecondActivity"></activity>
+
     </application>
 
 </manifest>

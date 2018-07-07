@@ -10,7 +10,7 @@
         android:id="@+id/item_img_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:src="@mipmap/ic_launcher" />
 
 
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/item_img_icon"
-            android:layout_marginleft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:text="民生银行"
             android:textColor="@color/textdark"
@@ -42,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:src="@mipmap/right" />
