@@ -55,14 +55,13 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
 
-dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:+'
-}
+
 
 dependencies {
     implementation 'com.android.support:support-v4:28.+'
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:28.+'
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.25.Final'
 }

@@ -29,7 +29,7 @@
 
         <activity android:name=".SecondActivity"></activity>
         <activity android:name=".CardSecondActivity"></activity>
-
+        <activity android:name=".BankActivity"></activity>
     </application>
 
 </manifest>

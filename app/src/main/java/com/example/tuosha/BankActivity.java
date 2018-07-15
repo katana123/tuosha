@@ -1,5 +1,6 @@
 package com.example.tuosha;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 //import com.example.R;
 
 //接口
-public class BankActivity extends Fragment implements AdapterView.OnItemClickListener{
+public class BankActivity extends Activity implements AdapterView.OnItemClickListener{
 
     private View mView;
 
@@ -40,17 +41,28 @@ public class BankActivity extends Fragment implements AdapterView.OnItemClickLis
 
     }
 
-    public static BankActivity newInstance() {
-        BankActivity fragment = new BankActivity();
-        return fragment;
-    }
+   // public static BankActivity newInstance() {
+    //    BankActivity fragment = new BankActivity();
+     //   return fragment;
+   // }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bank);
+        //1.获取新闻数据用list封装
+        // mContext = getActivity();
+        ArrayList<BankBean> allNews = BankUtils.getAllNews(this);
+        //2.找到控件
+       ListView lv_bank = (ListView) findViewById(R.id.lv_bank);
+        //3.创建一个adapter设置给listview
+       BankAdapter bankAdapter = new BankAdapter(this, allNews);
+        lv_bank.setAdapter(bankAdapter);
+        //4.设置listview条目的点击事件
+        lv_bank.setOnItemClickListener(this);
     }
-    @Nullable
-    @Override
+   // @Nullable
+   // @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView=inflater.inflate(R.layout.activity_bank, null);
@@ -59,15 +71,15 @@ public class BankActivity extends Fragment implements AdapterView.OnItemClickLis
        
 
         //1.获取新闻数据用list封装
-        mContext = getActivity();
-        ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext);
+       // mContext = getActivity();
+       // ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext);
         //2.找到控件
-        ListView lv_bank = (ListView) mView.findViewById(R.id.lv_bank);
+       // ListView lv_bank = (ListView) findViewById(R.id.lv_bank);
         //3.创建一个adapter设置给listview
-        BankAdapter bankAdapter = new BankAdapter(mContext, allNews);
-        lv_bank.setAdapter(bankAdapter);
+        //BankAdapter bankAdapter = new BankAdapter(mContext, allNews);
+        //lv_bank.setAdapter(bankAdapter);
         //4.设置listview条目的点击事件
-        lv_bank.setOnItemClickListener(this);
+       // lv_bank.setOnItemClickListener(this);
 
 
         return mView;
