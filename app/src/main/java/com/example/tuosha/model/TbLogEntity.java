@@ -1,5 +1,6 @@
 package com.example.tuosha.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * @email 1044053532@qq.com
  * @date 2018-07-10 12:09:31
  */
-public class TbLogEntity {
+public class TbLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//

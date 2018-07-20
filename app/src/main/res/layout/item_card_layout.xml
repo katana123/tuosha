@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:orientation="horizontal" >
 
     <ImageView
         android:layout_gravity="center"
         android:id="@+id/item_img_icon"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:src="@mipmap/ic_launcher" />
 
@@ -27,25 +28,27 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:text="title"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
+            android:textColor="@color/textdark"
+            android:textSize="14sp" />
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/item_tv_cardtime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:gravity="right"
+            android:text="已申请人数1000人"
+            android:textColor="@color/frame_search"
+            android:textSize="12sp" />
         <TextView
             android:maxLines="1"
             android:id="@+id/item_tv_des"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="des"
-            android:textColor="#666666"
-            android:textSize="13sp" />
-        <TextView
-            android:maxLines="1"
-            android:id="@+id/item_tv_cardtime"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="des"
-            android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textColor="@color/midgray"
+            android:textSize="12sp" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.tuosha.model;
 
-public class UserSearch {
+import java.io.Serializable;
+
+public class UserSearch implements Serializable {
 	private String nickname;
 	private String sex;
 	private String status;

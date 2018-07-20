@@ -12,6 +12,7 @@
         android:layout_marginLeft="15dp">
 
         <ImageView
+            android:id="@+id/item_img_icon"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/quick_option_text_over"/>
@@ -31,7 +32,7 @@
                 android:text="上海银行" />
 
             <TextView
-                android:id="@+id/pub_time"
+                android:id="@+id/apply_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -40,7 +41,7 @@
                 android:text="15684人申请   通过率89%" />
 
             <TextView
-                android:id="@+id/read_count"
+                android:id="@+id/s_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                android:layout_marginTop="8dp"
@@ -134,7 +135,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-
+        android:id="@+id/s_button"
         android:textSize="16sp"
         android:textColor="#ffffff"
         android:textAlignment="center"

@@ -23,7 +23,7 @@
             android:layout_height="37dp"
             android:background="@color/white"
             android:gravity="center"
-            android:text="如何入会"
+            android:text="银行贷款"
             android:textColor="#fc7924"
             android:textSize="16sp"
             android:textStyle="bold" />

@@ -35,7 +35,7 @@ public class CardSecondActivity extends AppCompatActivity {
         bindViews();
 
 
-        bar_title="快速提额";
+        bar_title="银行贷款";
         CardListFragment nlFragment = new CardListFragment(fManager, bar_title);
         FragmentTransaction ft = fManager.beginTransaction();
         ft.replace(R.id.fl_card, nlFragment);
@@ -49,7 +49,7 @@ public class CardSecondActivity extends AppCompatActivity {
                     finish();
                 } else {
                     fManager.popBackStack();
-                    txt_title.setText("如何入会");
+                    txt_title.setText("银行贷款");
                 }
             }
         });
@@ -66,7 +66,7 @@ public class CardSecondActivity extends AppCompatActivity {
             super.onBackPressed();
         } else {
             fManager.popBackStack();
-            txt_title.setText("如何入会");
+            txt_title.setText("银行贷款");
         }
     }
 }

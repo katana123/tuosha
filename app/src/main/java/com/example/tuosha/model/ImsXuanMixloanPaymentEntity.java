@@ -1,5 +1,6 @@
 package com.example.tuosha.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  * @email 1044053532@qq.com
  * @date 2018-07-10 12:09:30
  */
-public class ImsXuanMixloanPaymentEntity {
+public class ImsXuanMixloanPaymentEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//

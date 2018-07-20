@@ -1,12 +1,16 @@
 package com.example.tuosha;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -14,6 +18,14 @@ public class BankAdapter extends BaseAdapter{
 
     private ArrayList<BankBean> list;
     private Context context;
+
+    public ArrayList<BankBean> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<BankBean> list) {
+        this.list = list;
+    }
 
     //通过构造方法接受要显示的新闻数据集合
     public BankAdapter(Context context, ArrayList<BankBean> list) {
@@ -65,12 +77,40 @@ public class BankAdapter extends BaseAdapter{
         //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
         BankBean bankBean = list.get(position);
         //4.将数据设置给这些子控件做显示
-        item_img_icon.setImageDrawable(bankBean.icon);//设置imageView的图片
+       // bankBean.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_note_over);
+        if (bankBean.icon==""){
+            item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
+        }else{
+            if(!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+bankBean.icon))
+            {
+                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+            }else {
+                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + bankBean.icon)));
+            }
+        }
+
         item_tv_title.setText(bankBean.title);
         //item_tv_des.setText(bankBean.des);
         //item_tv_newstime.setText(bankBean.banktime);
         return view;
     }
 
+    public boolean fileIsExists(String strFile)
+    {
+        try
+        {
+            File f=new File(strFile);
+            if(!f.exists())
+            {
+                return false;
+            }
 
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

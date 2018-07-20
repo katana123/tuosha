@@ -15,7 +15,8 @@ public class CenterAbout extends Activity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CenterAbout.this , CenterActivity.class);
+                Intent intent = new Intent(CenterAbout.this , MainActivity.class);
+                intent.putExtra("tag","CenterActivity");
                 startActivity(intent);
             }
         });

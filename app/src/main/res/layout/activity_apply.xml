@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="银行贷款"
+            android:text="信用卡申请"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textColor="@color/orange"
@@ -27,12 +27,11 @@
             />
 
     </LinearLayout>
-    <!--文章item-->
-    <ListView
-        android:id="@+id/lv_bank"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-    <!--文章item-end-->
 
+        <WebView
+        android:id="@+id/word_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

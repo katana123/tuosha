@@ -5,7 +5,7 @@ public class BankBean {
 
     public String title;
     public String des;
-    public Drawable icon;
+    public String icon;
     public String bank_url;
     public String banktime;
     public String clicknum;
@@ -13,7 +13,7 @@ public class BankBean {
     public BankBean() {
     }
 
-    public BankBean(String title, String des, Drawable icon, String news_url, String newstime, String readnum) {
+    public BankBean(String title, String des, String icon, String news_url, String newstime, String readnum) {
         this.title = title;
         this.des = des;
         this.icon = icon;
@@ -38,11 +38,11 @@ public class BankBean {
         this.des = des;
     }
 
-    public Drawable getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 

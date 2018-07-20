@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -106,4 +107,43 @@ public class MainActivity extends AppCompatActivity {
         hpDrawable4.setBounds(0, 0, 70, 70);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB4.setCompoundDrawables(null,hpDrawable4,null,null);//
     }
+    @Override
+    protected void onResume() {
+        String tag = getIntent().getStringExtra("tag");
+        if (tag!=null) {
+            hideFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            Fragment fragment = getFragmentManager().findFragmentByTag(tag);
+            if (fragment != null) {
+                transaction.show(fragment);
+            } else {
+                if (tag.equals(("ContentActivity").toString())) {
+                    fragment = ContentActivity.newInstance();
+                } else if (tag.equals(("KouziActivity").toString())) {
+                    fragment = KouziActivity.newInstance();
+                } else if (tag.equals(("CardActivity").toString())) {
+                    fragment = CardActivity.newInstance();
+                } else if (tag.equals(("CenterActivity").toString())) {
+                    fragment = CenterActivity.newInstance();
+                }
+                mFragmentList.add(fragment);
+                transaction.add(R.id.mainpage, fragment, fragment.getClass().getName());
+            }
+            transaction.commitAllowingStateLoss();
+        }
+
+//        if (id == 2) {
+//            ContentActivity fragment = new ContentActivity();
+//            FragmentManager fmanger = getSupportFragmentManager();
+//            // FragmentTransaction transaction=fmanger.beginTransaction();
+//            FragmentTransaction transacti = getFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fl_content, fragment);
+//            transaction.commit();
+//            Intent i = new Intent();
+//            i.setClass(this, ContentActivity.class);
+//            i.putExtra("id", 1);
+//        }
+        super.onResume();
+    }
 }
+

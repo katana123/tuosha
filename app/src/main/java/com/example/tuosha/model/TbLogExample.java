@@ -1,10 +1,11 @@
 package com.example.tuosha.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TbLogExample {
+public class TbLogExample implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;

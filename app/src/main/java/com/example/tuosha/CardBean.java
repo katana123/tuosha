@@ -5,15 +5,15 @@ public class CardBean {
 
     public String title;
     public String des;
-    public Drawable icon;
+    public String icon;
     public String card_url;
     public String cardtime;
-    public String clicknum;
+    public Integer clicknum;
 
     public CardBean() {
     }
 
-    public CardBean(String title, String des, Drawable icon, String news_url, String newstime, String readnum) {
+    public CardBean(String title, String des, String icon, String news_url, String newstime, Integer readnum) {
         this.title = title;
         this.des = des;
         this.icon = icon;
@@ -38,11 +38,11 @@ public class CardBean {
         this.des = des;
     }
 
-    public Drawable getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
@@ -62,11 +62,11 @@ public class CardBean {
         this.cardtime = newstime;
     }
 
-    public String getClicknum() {
+    public Integer getClicknum() {
         return clicknum;
     }
 
-    public void setClicknum(String readnum) {
+    public void setClicknum(Integer readnum) {
         this.clicknum = readnum;
     }
 }

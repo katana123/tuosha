@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,8 +18,17 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.example.R;
+
+import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.client.CustomApplication;
+import com.example.tuosha.client.IMCGClientHandler;
+import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
+import com.example.tuosha.model.ImsXuanMixloanBankEntity;
+import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +36,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.example.tuosha.client.CustomApplication.getInstance;
+
 //接口
 public class CardActivity extends Fragment implements AdapterView.OnItemClickListener{
 
     private View mView;
     private ViewPager mViewPaper;
     private List<ImageView> images;
+    private CustomApplication customApplication;
     private List<View> dots;
     private int currentItem;
     //记录上一次点的位置
@@ -57,7 +70,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     private ScheduledExecutorService scheduledExecutorService;
     //5.context
     private Context mContext;
-
+    private  ListView lv_card ;
     public CardActivity() {
 
     }
@@ -82,7 +95,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         tv0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
+                Intent intent = new Intent(getActivity() , BankSecondActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +103,17 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity() , BankActivity.class);
+
+                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView tv2 = (TextView) mView.findViewById(R.id.textView2);
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
                 startActivity(intent);
             }
         });
@@ -99,18 +122,11 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
         initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
 
-        //1.获取新闻数据用list封装
-        mContext = getActivity();
-        ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext);
-        //2.找到控件
-        ListView lv_card = (ListView) mView.findViewById(R.id.lv_card);
-        //3.创建一个adapter设置给listview
-        CardAdapter cardAdapter = new CardAdapter(mContext, allNews);
-        lv_card.setAdapter(cardAdapter);
+        lv_card = mView.findViewById(R.id.lv_card);
         //4.设置listview条目的点击事件
         lv_card.setOnItemClickListener(this);
-
-
+        sendmessage();
+        receivemsg();
         return mView;
     }
     private void setView(){
@@ -219,18 +235,120 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         @Override
         public void run() {
             currentItem = (currentItem + 1) % imageIds.length;
-            mHandler.sendEmptyMessage(0);
+            handler.sendEmptyMessage(0);
         }
     }
 
     /**
      * 接收子线程传递过来的数据
      */
-    private Handler mHandler = new Handler(){
+    private Handler handler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             mViewPaper.setCurrentItem(currentItem);
+            switch (msg.what){
+                case 200:
+                    ArrayList<ImsXuanMixloanBankCardEntity> cardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
+                    CustomApplication application = (CustomApplication)getInstance();
+                    if (application.getCardEntityArrayList() != null) {
+                        mContext = getActivity();
+                         ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getCardEntityArrayList());
+
+                        //3.创建一个adapter设置给listview
+                        CardAdapter cardAdapter = new CardAdapter(getActivity(), allNews);
+                        lv_card.setAdapter(cardAdapter);
+
+                        application.setCardEntityArrayList(null);
+                    }
+                    break;
+                case -1:
+                    //获取失败
+                   // Toast.makeText(BankActivity.this, "获取失败", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取失败");
+                    break;
+                case -2:
+                    //获取发生异常
+                   // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取发生异常");
+                    break;
+                default:
+                    break;
+            }
         };
     };
+    public void sendmessage(){
+        Thread thread = new Thread() {
+            public void run() {
+                CustomApplication customApplication=new CustomApplication();
+                try {
+                    IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
+                    imcgClientHandler.start();
+                    SWbean swbean = new SWbean();
+                    System.out.println("sendmessage");
+                    swbean.setCommand(Constants.BANKCARDLIST);
+                    Thread.sleep(1000 * 3);
+                    imcgClientHandler.sendMsg(swbean);
+
+                    Thread.sleep(1000);
+                    imcgClientHandler.disposeInfoColClient();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+           thread.start();
+    }
+    public void receivemsg(){
+        System.out.println("执行接收程序");
+
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                JSONArray aaa = new JSONArray();
+                try {
+                   // ArrayList<ImsXuanMixloanBankCardEntity> cardkList = new ArrayList<ImsXuanMixloanBankCardEntity>();
+
+                    CustomApplication customApplication = (CustomApplication)getInstance();
+
+                    Thread.sleep(5000);
+                    System.out.println("customApplication的内容 :" +customApplication.getCardEntityArrayList());
+
+                    int i=0;
+                    while (customApplication.getCardEntityArrayList()==null){
+
+                        i=i+1;
+                        System.out.println("du"+customApplication.getCardEntityArrayList());
+                        Thread.sleep(1000 );
+                        if (i>50) break;
+                    }
+                    if (i<50){
+                        Message message=new Message();
+                        message.what=200; //200代码获取数据正常
+                        handler.sendMessage(message);
+
+                    }
+                    else{
+                        Message message=new Message();
+                        message.what=-1; //代码获取数据 常
+                        handler.sendMessage(message);
+
+                    }
+
+
+                    //把arraylist 转成 jsonArray
+                    // String bbb = JSONArray.toJSONString(bankList);
+                    //aaa = JSONArray.parseArray(bbb);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+
+                }
+            }
+        }.start();
+    }
     @Override
     public void onStop() {
         // TODO Auto-generated method stub
@@ -259,12 +377,14 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         CardBean bean = (CardBean) parent.getItemAtPosition(position);
 
         String url = bean.card_url;
-
+        System.out.println(url);
         //跳转浏览器
-        Intent intent = new Intent();
+        Intent intent = new Intent(getActivity() , ApplyActivity.class);
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
+        intent.putExtra("url",url);
         startActivity(intent);
 
     }
+
 }

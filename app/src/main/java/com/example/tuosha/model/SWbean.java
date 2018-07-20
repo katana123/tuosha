@@ -61,7 +61,7 @@ public class SWbean implements Serializable {
         return serialVersionUID;
     }
 
-    public byte getCommand() {
+    public int getCommand() {
         return command;
     }
 
@@ -69,7 +69,7 @@ public class SWbean implements Serializable {
         this.command = command;
     }
 
-    public byte getRecommand() {
+    public int getRecommand() {
         return recommand;
     }
 

@@ -3,33 +3,42 @@
     package="com.example.tuosha">
 
     <application
+        android:name=".client.CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SubscribeActivity" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".CenterAbout"
-            android:label="@string/center_about"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="@string/center_about"/>
+           <!--// android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
+
 
 
         <activity android:name=".KouziSecondActivity"></activity>
 
         <activity android:name=".SecondActivity"></activity>
         <activity android:name=".CardSecondActivity"></activity>
-        <activity android:name=".BankActivity"></activity>
+        <activity android:name=".BankSecondActivity"></activity>
+        <activity android:name=".ApplyActivity"></activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 </manifest>

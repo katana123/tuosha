@@ -1,16 +1,17 @@
 package com.example.tuosha.Utils;
 
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Created by kasim on 15-2-10.
+ * Created by admin on 2014/7/9.
  */
 public class NetWorkImpl {
-    public static byte[] getByteData(Object o) throws Exception{
+
+    public byte[] getByteData(Object o) throws Exception {
         if (o == null){
             return null;
         }
@@ -19,32 +20,17 @@ public class NetWorkImpl {
         objectOutputStream.writeObject(o);
         byte[] ndata = byteArrayOutputStream.toByteArray();
         objectOutputStream.close();
+        byteArrayOutputStream.close();
         return ndata;
     }
 
-    public static Object getObj(byte[] data){
+    public Object getObj(byte[] data) throws Exception{
         if (data == null){
             return null;
         }
-
-        Object object=null;
-        ObjectInputStream objectInputStream = null;
-        try {
-            objectInputStream = new ObjectInputStream(new ByteArrayInputStream(data));
-            object = objectInputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            if (objectInputStream != null) {
-                try {
-                    objectInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return object;
+        ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(data));
+        Object o = objectInputStream.readObject();
+        objectInputStream.close();
+        return o;
     }
 }

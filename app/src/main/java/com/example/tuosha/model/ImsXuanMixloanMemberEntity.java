@@ -1,6 +1,8 @@
 package com.example.tuosha.model;
 
 
+import java.io.Serializable;
+
 /**
  * 
  * 
@@ -8,7 +10,7 @@ package com.example.tuosha.model;
  * @email 1044053532@qq.com
  * @date 2018-07-10 12:09:30
  */
-public class ImsXuanMixloanMemberEntity {
+public class ImsXuanMixloanMemberEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//
