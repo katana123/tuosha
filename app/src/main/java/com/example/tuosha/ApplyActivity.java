@@ -26,7 +26,7 @@ public class ApplyActivity extends Activity  {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ApplyActivity.this , MainActivity.class);
+                Intent intent = new Intent(ApplyActivity.this , CardContentActivity.class);
                intent.putExtra("tag","CardActivity");
                 startActivity(intent);
                 //MainActivity.changeFragment(CardActivity.class.getName());

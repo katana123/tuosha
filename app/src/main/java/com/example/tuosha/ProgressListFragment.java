@@ -16,13 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
-import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
 import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import static com.example.tuosha.client.CustomApplication.getInstance;
 
 @SuppressLint("ValidFragment")
-public class CardListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ProgressListFragment extends Fragment implements AdapterView.OnItemClickListener {
     private FragmentManager fManager;
     private ArrayList<CardBean> datas;
     private ListView list_news;
@@ -40,12 +38,12 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
     private int currentItem;
     private View mview;
     @SuppressLint("ValidFragment")
-    public CardListFragment(FragmentManager fManager, ArrayList<CardBean> datas) {
+    public ProgressListFragment(FragmentManager fManager, ArrayList<CardBean> datas) {
         this.fManager = fManager;
         this.datas = datas;
     }
     @SuppressLint("ValidFragment")
-    public CardListFragment(FragmentManager fManager, String txt_title) {
+    public ProgressListFragment(FragmentManager fManager, String txt_title) {
         this.fManager = fManager;
         this.txt_title = txt_title;
     }
@@ -69,9 +67,8 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
         String url = bean.debit_url;
         fManager = getFragmentManager();
         FragmentTransaction fTransaction = fManager.beginTransaction();
-        CardWebFragment ncFragment = new CardWebFragment();
+        ProgressWebFragment ncFragment = new ProgressWebFragment();
         Bundle bd = new Bundle();
-        // bd.putString("content", datas.get(position).getDes());
 
         bd.putString("url", url);
         ncFragment.setArguments(bd);
@@ -87,7 +84,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
      * 接收子线程传递过来的数据
      */
     private Handler handler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             //mViewPaper.setCurrentItem(currentItem);
             switch (msg.what){
                 case 200:
@@ -130,7 +127,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                     imcgClientHandler.start();
                     SWbean swbean = new SWbean();
                     System.out.println("sendmessage");
-                    swbean.setCommand(Constants.PRODUCTEBITLIST);
+                    swbean.setCommand(Constants.PRODUCTLIST);
                     Thread.sleep(1000 * 3);
                     imcgClientHandler.sendMsg(swbean);
 

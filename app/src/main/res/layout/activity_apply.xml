@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="30dp"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="信用卡申请"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textAlignment="center"
             android:textColor="@color/orange"
             android:layout_gravity="center"

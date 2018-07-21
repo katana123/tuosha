@@ -119,15 +119,22 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (tag.equals(("ContentActivity").toString())) {
                     fragment = ContentActivity.newInstance();
+                    mRgTab.check(R.id.contentpage);
                 } else if (tag.equals(("KouziActivity").toString())) {
                     fragment = KouziActivity.newInstance();
+                    mRgTab.check(R.id.kouzipage);
                 } else if (tag.equals(("CardActivity").toString())) {
                     fragment = CardActivity.newInstance();
+                    mRgTab.check(R.id.cardpage);
                 } else if (tag.equals(("CenterActivity").toString())) {
                     fragment = CenterActivity.newInstance();
+                    mRgTab.check(R.id.contentpage);
                 }
                 mFragmentList.add(fragment);
                 transaction.add(R.id.mainpage, fragment, fragment.getClass().getName());
+
+
+
             }
             transaction.commitAllowingStateLoss();
         }

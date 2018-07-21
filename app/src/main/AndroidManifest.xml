@@ -37,6 +37,8 @@
         <activity android:name=".CardSecondActivity"></activity>
         <activity android:name=".BankSecondActivity"></activity>
         <activity android:name=".ApplyActivity"></activity>
+        <activity android:name=".ProgressSecondActivity"></activity>
+        <activity android:name=".CardContentActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 

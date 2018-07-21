@@ -113,7 +113,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             @Override
             public void onClick(View arg0) {
 
-                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
+                Intent intent = new Intent(getActivity() , ProgressSecondActivity.class);
                 startActivity(intent);
             }
         });
@@ -318,7 +318,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                     while (customApplication.getCardEntityArrayList()==null){
 
                         i=i+1;
-                        System.out.println("du"+customApplication.getCardEntityArrayList());
+                        System.out.println("读取customApplication.getCardEntityArrayList:"+customApplication.getCardEntityArrayList());
                         Thread.sleep(1000 );
                         if (i>50) break;
                     }
@@ -334,12 +334,6 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                         handler.sendMessage(message);
 
                     }
-
-
-                    //把arraylist 转成 jsonArray
-                    // String bbb = JSONArray.toJSONString(bankList);
-                    //aaa = JSONArray.parseArray(bbb);
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -377,12 +371,19 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         CardBean bean = (CardBean) parent.getItemAtPosition(position);
 
         String url = bean.card_url;
-        System.out.println(url);
+        String name = bean.title;
+        String des = bean.des;
+        String apply_num = bean.clicknum.toString();
+        String logo = bean.icon;
         //跳转浏览器
-        Intent intent = new Intent(getActivity() , ApplyActivity.class);
+        Intent intent = new Intent(getActivity() , CardContentActivity.class);
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
+        intent.putExtra("name",name);
         intent.putExtra("url",url);
+        intent.putExtra("des",des);
+        intent.putExtra("apply_num",apply_num);
+        intent.putExtra("logo",logo);
         startActivity(intent);
 
     }
