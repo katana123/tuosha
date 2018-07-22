@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tuosha.model.KouziBean;
+
 import java.util.ArrayList;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
@@ -42,7 +44,7 @@ public class KouziSecondActivity extends AppCompatActivity {
 
 
         bar_title="大额贷款";
-        KouziListFragment nlFragment = new KouziListFragment(fManager, bar_title);
+        KouziListFragment nlFragment = new KouziListFragment(fManager, bar_title,1);
         FragmentTransaction ft = fManager.beginTransaction();
         ft.replace(R.id.fl_kouzi, nlFragment);
         ft.commit();

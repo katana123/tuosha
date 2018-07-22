@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.Toast;
 
 
 import com.example.tuosha.LoginActivity;
@@ -341,6 +342,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                 String userPwd = imcg.getTbUsersEntity().getPassword();
                                 String status = imcg.getTbUsersEntity().getStatus();
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
+
                                 AlertDialog.Builder builder = new Builder(customApplication.getWelcomeActivity());
                                 builder.setTitle("没有权限！！！请注册加入会员！");
                                 builder.setPositiveButton("确定",
@@ -360,13 +362,44 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                 builder.create().show();
                             } else if (imcg.getResult() == 3) {//无效，预留
                                 System.out.println("没有该用户信息，请注册");
-                                Intent intent = new Intent();
-                                intent.setClass(customApplication.getWelcomeActivity(), RegisterActivity.class);
-                                customApplication.getWelcomeActivity().startActivity(intent);
-                                customApplication.getWelcomeActivity().finish();
+                                AlertDialog.Builder builder = new Builder(customApplication.getLoginActivity());
+                                builder.setTitle("没有该用户信息，请修改登录信息或注册");
+                                builder.setPositiveButton("确定",
+                                        new android.content.DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                // TODO Auto-generated method stub
+                                                arg0.dismiss();
+
+                                            }
+                                        });
+                                builder.create().show();
                             }
                         }
                     });
+                    break;
+
+                case Constants.CHECKNAME:
+                    System.out.println("CHECKNAME");
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
+                        public void run() {
+
+                            if (imcg.getRecommand() == Constants.CHECKNAME){
+                                System.out.println("CHECKNAME数据请求成功");
+                               if (imcg.getResult() == 1){
+                                   Toast.makeText(customApplication.getRegisterActivity(), "存在同名用户！",
+                              	      Toast.LENGTH_SHORT).show();
+                                   //customApplication.getRegisterActivity()
+                               }
+
+                            } else if(imcg.getRecommand() == Constants.DEFAULT){
+                                System.out.println("BANKLIST数据请求失败");
+//                                Toast.makeText(customapplication.getLoginActivity(), "登陆失败！",
+//                              	      Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
                     break;
 
                 default:

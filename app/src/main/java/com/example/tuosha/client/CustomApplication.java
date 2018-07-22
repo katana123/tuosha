@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.example.tuosha.CardActivity;
 import com.example.tuosha.LoginActivity;
+import com.example.tuosha.RegisterActivity;
 import com.example.tuosha.WelcomeActivity;
 import com.example.tuosha.BankSecondActivity;
 import com.example.tuosha.model.ImsXuanMixloanBankEntity;
@@ -21,6 +22,10 @@ import java.util.List;
 public class CustomApplication extends Application implements UncaughtExceptionHandler {
 	private LoginActivity LoginActivity;
 	private WelcomeActivity WelcomeActivity;
+
+
+
+	private RegisterActivity registerActivity;
 	private BankSecondActivity BankSecondActivity;
 	private CardActivity CardActivity;
 
@@ -123,4 +128,14 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	public void setCardActivity(com.example.tuosha.CardActivity cardActivity) {
 		CardActivity = cardActivity;
 	}
+
+	public RegisterActivity getRegisterActivity() {
+		return registerActivity;
+	}
+
+	public void setRegisterActivity(RegisterActivity registerActivity) {
+		this.registerActivity = registerActivity;
+	}
 }
+
+
