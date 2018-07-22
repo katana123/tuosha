@@ -35,7 +35,7 @@ class CardContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_content, container, false);
-        TextView txt_title = (TextView) getActivity().findViewById(R.id.bank_title);
+        TextView txt_title = getActivity().findViewById(R.id.bank_title);
         txt_title.setText("提额通道");
 
         String name = getArguments().getString("name");
@@ -44,13 +44,13 @@ class CardContentFragment extends Fragment {
         String des = getArguments().getString("des");
         String applynum = getArguments().getString("apply_num");
 
-        TextView s_title = (TextView) view.findViewById(R.id.s_title);
+        TextView s_title = view.findViewById(R.id.s_title);
         s_title.setText(name);
-        TextView apply_num = (TextView) view.findViewById(R.id.apply_num);
+        TextView apply_num = view.findViewById(R.id.apply_num);
         apply_num.setText("已申请"+applynum+"人");
-        TextView s_des = (TextView) view.findViewById(R.id.s_des);
+        TextView s_des = view.findViewById(R.id.s_des);
         s_des.setText(des);
-        ImageView item_img_icon = (ImageView) view.findViewById(R.id.item_img_icon);
+        ImageView item_img_icon = view.findViewById(R.id.item_img_icon);
         if (logo==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.quick_option_text_over));//设置imageView的图片
         }else{
@@ -63,7 +63,7 @@ class CardContentFragment extends Fragment {
         }
 
         //设置图标点击事件
-        TextView tv0 = (TextView) view.findViewById(R.id.s_button);
+        TextView tv0 = view.findViewById(R.id.s_button);
         tv0.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View arg0){

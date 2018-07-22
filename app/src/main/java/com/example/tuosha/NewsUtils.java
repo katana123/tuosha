@@ -27,7 +27,7 @@ public class NewsUtils {
             newsBean1.title ="似懂非懂瑟瑟发抖速度";
             newsBean1.des= "地方上的房贷首付读书首付第三方的手房贷首付第三方的手负担";
             newsBean1.news_url= "http://www.baidu.cn";
-            newsBean1.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_photo_over);;//通过context对象将一个资源id转换成一个Drawable对象。
+            newsBean1.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_photo_over);//通过context对象将一个资源id转换成一个Drawable对象。
             arrayList.add(newsBean1);
 
 
@@ -36,7 +36,7 @@ public class NewsUtils {
             newsBean2.title ="豆腐皮人热舞";
             newsBean2.des= "费解的是离开房间打扫李开复离开独守空房迪斯科浪费电锋克劳利分级恐龙快打";
             newsBean2.news_url= "http://www.qq.com";
-            newsBean2.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_scan_over);;//通过context对象将一个资源id转换成一个Drawable对象。
+            newsBean2.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_scan_over);//通过context对象将一个资源id转换成一个Drawable对象。
             arrayList.add(newsBean2);
         }
         return arrayList;

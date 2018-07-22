@@ -56,8 +56,8 @@ public class CardSecondActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        txt_title = (TextView) findViewById(R.id.card_title);
-        fl_card = (FrameLayout) findViewById(R.id.fl_card);
+        txt_title = findViewById(R.id.card_title);
+        fl_card = findViewById(R.id.fl_card);
     }
 
     @Override

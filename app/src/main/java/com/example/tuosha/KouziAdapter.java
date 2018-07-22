@@ -1,12 +1,22 @@
 package com.example.tuosha;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.model.KouziBean;
+
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -14,6 +24,14 @@ public class KouziAdapter extends BaseAdapter{
 
     private ArrayList<KouziBean> list;
     private Context context;
+
+    public ArrayList<KouziBean> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<KouziBean> list) {
+        this.list = list;
+    }
 
     //通过构造方法接受要显示的数据集合
     public KouziAdapter(Context context, ArrayList<KouziBean> list) {
@@ -35,6 +53,7 @@ public class KouziAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,19 +77,57 @@ public class KouziAdapter extends BaseAdapter{
 
         }
         //2.获取view上的子控件对象
-        ImageView item_img_icon = (ImageView) view.findViewById(R.id.item_img_icon);
-        TextView item_tv_des = (TextView) view.findViewById(R.id.item_tv_des);
-        TextView item_tv_title = (TextView) view.findViewById(R.id.item_tv_title);
-        TextView item_tv_kouzitime = (TextView) view.findViewById(R.id.item_tv_kouzitime);
+        ImageView item_img_icon = view.findViewById(R.id.item_img_kouziicon);
+        TextView item_tv_des = view.findViewById(R.id.item_tv_kouzides);
+        TextView item_tv_title = view.findViewById(R.id.item_tv_kouzititle);
+        TextView item_tv_kouzitime = view.findViewById(R.id.item_tv_kouzitime);
         //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
         KouziBean kouziBean = list.get(position);
         //4.将数据设置给这些子控件做显示
-        item_img_icon.setImageDrawable(kouziBean.icon);//设置imageView的图片
         item_tv_title.setText(kouziBean.title);
-        item_tv_des.setText(kouziBean.des);
-        item_tv_kouzitime.setText(kouziBean.kouzitime);
+        item_tv_des.setText("已申请人数" + kouziBean.clicknum + "人");
+        item_tv_kouzitime.setText(kouziBean.kouzitime + "天前  |  " + kouziBean.clicknum + "人在看");
+
+        if (kouziBean.icon == "") {
+            item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
+        } else {
+            if (!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + kouziBean.icon)) {
+                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+            } else {
+                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + kouziBean.icon)));
+            }
+        }
         return view;
     }
 
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+
+    public boolean fileIsExists(String strFile) {
+        try {
+
+            File f = new File(strFile);
+            if (!f.exists()) {
+                return false;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 }

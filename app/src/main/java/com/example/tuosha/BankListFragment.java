@@ -95,7 +95,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                         //3.创建一个adapter
                         BankAdapter  bankAdapter = new BankAdapter(mContext, allNews);
                         //4.设置给listview
-                        ListView lv_bank = (ListView) mView.findViewById(R.id.lv_bank);
+                        ListView lv_bank = mView.findViewById(R.id.lv_bank);
                         lv_bank.setAdapter(bankAdapter);
                         bankAdapter.notifyDataSetChanged();//一旦适配器有数据，直接通知listView更新
                         lv_bank.setOnItemClickListener(BankListFragment.this);
@@ -147,7 +147,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
         ncFragment.setArguments(bd);
         //获取Activity的控件
         //bar_title
-        TextView txt_title = (TextView) getActivity().findViewById(R.id.bank_title);
+        TextView txt_title = getActivity().findViewById(R.id.bank_title);
         txt_title.setText("银行贷款");
 
 

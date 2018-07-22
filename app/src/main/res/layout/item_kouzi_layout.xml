@@ -8,7 +8,7 @@
 
     <ImageView
         android:layout_gravity="center"
-        android:id="@+id/item_img_icon"
+        android:id="@+id/item_img_kouziicon"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_marginRight="10dp"
@@ -22,7 +22,7 @@
 
         <TextView
             android:singleLine="true"
-            android:id="@+id/item_tv_title"
+            android:id="@+id/item_tv_kouzititle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -31,11 +31,12 @@
             android:textSize="16sp" />
 
         <TextView
-            android:maxLines="1"
-            android:id="@+id/item_tv_des"
+            android:id="@+id/item_tv_kouzides"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:text="des"
+            android:textAlignment="textEnd"
             android:textColor="#666666"
             android:textSize="13sp" />
         <TextView

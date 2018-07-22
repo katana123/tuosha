@@ -17,12 +17,12 @@ public class ApplyActivity extends Activity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply);
-        WebView wv = (WebView)findViewById(R.id.word_web_view);
+        WebView wv = findViewById(R.id.word_web_view);
         Intent intent = getIntent();//获取传来的intent对象
         String data = intent.getStringExtra("url");//获取键值对的键名
         wv.loadUrl(data);
 
-        ImageView backbtn=(ImageView)findViewById(R.id.reback);
+        ImageView backbtn = findViewById(R.id.reback);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -126,12 +126,12 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
      * @throws Exception
      */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         System.out.println(HANDLER_CHANNELACTIVE);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
         System.out.println(HANDLER_CHANNELINACTIVE);
         if (shouldReconncet) {
 //            if (infoColCient == null) {
@@ -170,7 +170,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
        System.out.println(HANDLER_CHANNELREAD);
          rebackctx = ctx;
         rebackmsg = msg;
@@ -317,7 +317,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         shouldReconncet = true;
         System.out.println(HANDLER_EXCEPTION_CAUGHT+":"+cause.getLocalizedMessage());
         cause.printStackTrace();
@@ -345,13 +345,15 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
         }
     }
 
-    public  ChannelHandlerContext getChannelHandlerContext() throws Exception {
+    public ChannelHandlerContext getChannelHandlerContext() {
         return rebackctx;
     }
-    public  Object getMsg() throws Exception {
+
+    public Object getMsg() {
         return rebackmsg;
     }
-    public  CustomApplication getCustomApplication() throws Exception {
+
+    public CustomApplication getCustomApplication() {
         return customApplication;
     }
 }

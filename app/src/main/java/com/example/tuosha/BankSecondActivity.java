@@ -56,8 +56,8 @@ public class BankSecondActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        txt_title = (TextView) findViewById(R.id.bank_title);
-        fl_bank = (FrameLayout) findViewById(R.id.fl_bank);
+        txt_title = findViewById(R.id.bank_title);
+        fl_bank = findViewById(R.id.fl_bank);
     }
 
     @Override

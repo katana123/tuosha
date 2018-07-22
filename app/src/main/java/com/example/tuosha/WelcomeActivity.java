@@ -134,6 +134,6 @@ public class WelcomeActivity extends Activity {
                 case 0:
                     break;
             }
-        };
+        }
     };
 }

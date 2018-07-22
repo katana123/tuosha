@@ -98,7 +98,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                         ArrayList<DebitBean> allNews = DebitUtils.getAllNews(mContext, application.getProductEntityArrayList());
 
                         //3.创建一个adapter设置给listview
-                        ListView lv_debit = (ListView) mview.findViewById(R.id.lv_debit);
+                        ListView lv_debit = mview.findViewById(R.id.lv_debit);
                         DebitAdapter debitAdapter = new DebitAdapter(getActivity(), allNews);
                         lv_debit.setAdapter(debitAdapter);
 
@@ -119,7 +119,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                 default:
                     break;
             }
-        };
+        }
     };
     public void sendmessage(){
         Thread thread = new Thread() {

@@ -19,7 +19,7 @@ public class BankWebFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bank_web,container, false);
 
-        WebView webView = (WebView) view.findViewById(R.id.word_web_view);
+        WebView webView = view.findViewById(R.id.word_web_view);
         String url = getArguments().getString("url");
         if (url!="" || url!=null) {
             webSettings = webView.getSettings();
