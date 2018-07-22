@@ -9,7 +9,7 @@ public class SWbean implements Serializable {
     private byte command;
     private byte recommand;
     private int result;
-
+    private String Ex_Data;
     public String getEx_Data() {
         return Ex_Data;
     }
@@ -18,7 +18,7 @@ public class SWbean implements Serializable {
         Ex_Data = ex_Data;
     }
 
-    private String Ex_Data;
+
 
     private TbAdminEntity tbAdminEntity;
     private TbLogEntity tbLogEntity; //

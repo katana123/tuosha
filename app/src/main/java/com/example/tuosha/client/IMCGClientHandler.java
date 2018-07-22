@@ -283,7 +283,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                         System.out.println("INFOCOL_HEARTBEAT_FAIL");
                     }
                     break;
-                case Constants.DEFAULT:
+                case Constants.WELCOME:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
                             if(imcg.getResult()==1){
@@ -315,7 +315,20 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                         });
                                 builder.create().show();
                             }else if(imcg.getResult()==3){
-                                System.out.println("正在授权，请稍后。。。");
+                                AlertDialog.Builder builder = new Builder(customApplication.getWelcomeActivity());
+                                builder.setTitle("请注册加入会员！");
+                                builder.setPositiveButton("确定",
+                                        new android.content.DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                // TODO Auto-generated method stub
+                                                arg0.dismiss();
+                                                Intent intent = new Intent();
+                                                intent.setClass(customApplication.getWelcomeActivity(), RegisterActivity.class);
+                                                customApplication.getWelcomeActivity().startActivity(intent);
+                                                customApplication.getWelcomeActivity().finish();
+                                            }
+                                        });
+                                builder.create().show();
                             }
                         }
                     });
@@ -401,7 +414,38 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                     });
 
                     break;
+                case Constants.REGISTER:
+                    System.out.println("REGISTER");
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
+                        public void run() {
 
+                            if (imcg.getRecommand() == Constants.REGISTER){
+                                System.out.println("REGISTER数据成功");
+                                if (imcg.getResult() == 1){
+                                    Toast.makeText(customApplication.getRegisterActivity(), "注册成功！",
+                                            Toast.LENGTH_SHORT).show();
+                                    //把返回的值，用户名、密码放入缓存中
+                                    String userName= imcg.getTbUsersEntity().getNickname();
+                                    String userPwd = imcg.getTbUsersEntity().getPassword();
+                                    String status = imcg.getTbUsersEntity().getStatus();
+                                    UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
+                                    //打开主页面
+                                    Intent intent = new Intent();
+                                    intent.setClass(customApplication.getRegisterActivity(), MainActivity.class);
+                                    customApplication.getRegisterActivity().startActivity(intent);
+                                    customApplication.getRegisterActivity().finish();
+                                }
+
+                            } else if(imcg.getRecommand() == Constants.DEFAULT){
+                                System.out.println("REGISTER数据失败");
+//                                Toast.makeText(customapplication.getLoginActivity(), "登陆失败！",
+//                              	      Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+                    break;
                 default:
                     break;
             }

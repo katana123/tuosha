@@ -43,7 +43,9 @@ public class Constants {
     public static final byte BANKLIST = 0x05; //银行列表PRODUCT
     public static final byte PRODUCTLIST = 0x08;
     public static final byte BANKCARDLIST = 0x09; //银行列表
+
     public static final byte BANKDEBITLIST = 0x10;
     public static final byte PRODUCTEBITLIST = 0x11;
     public static final byte CHECKNAME = 0x12;
+    public static final byte WELCOME = 0x13;
 }

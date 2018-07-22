@@ -85,7 +85,8 @@ public class WelcomeActivity extends Activity {
                 Message message = new Message();
                 message.what = 2000; //200代码获取数据正常
                 mHandler.sendMessage(message);
-            }else if(UserManage.getInstance().getUserInfo(this).getStatus()=="0"){
+                // }else if(UserManage.getInstance().getUserInfo(this).getStatus()=="0"){
+            }else{
                 Thread thread = new Thread() {
                     public void run() {
                         try {
@@ -94,14 +95,17 @@ public class WelcomeActivity extends Activity {
                             imcgClientHandler.start();
                             SWbean imcg = new SWbean();
                             TbUsersEntity user = new TbUsersEntity();
-                            imcg.setTbUsersEntity(user);
-                            imcg.setCommand(Constants.DEFAULT);
-                            //把内存的nickname和password去找用户
-                            imcg.getTbUsersEntity().setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getNickname());
-                            imcg.getTbUsersEntity().setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getPassword());
 
-                            imcgClientHandler.sendMsg(imcg);
-                            Thread.sleep(1000 * 3);
+                            //把内存的nickname和password去找用户
+                            user.setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getNickname());
+                            user.setPassword(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getPassword());
+                            System.out.println("状态不为1：到数据库查找");
+
+                            imcg.setTbUsersEntity(user);
+                            imcg.setCommand(Constants.WELCOME);
+
+
+                            Thread.sleep(1000 * 5);
                             imcgClientHandler.sendMsg(imcg);
                             Thread.sleep(1000 * 10);
                             imcgClientHandler.disposeInfoColClient();

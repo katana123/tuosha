@@ -129,7 +129,8 @@ public class RegisterActivity extends AppCompatActivity {
                 .getText().toString();
         final String phone = ((EditText) findViewById(R.id.phone))
                 .getText().toString();
-
+        final String icode = ((EditText) findViewById(R.id.identifying_code))
+                .getText().toString();
 
 
         if(userName.length()==0){
@@ -161,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else if(ensurepassword.length()==0){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("武钢INFOCLOUD");
+            builder.setTitle("tuosha");
             builder.setMessage("确认密码不能为空！");
             builder.setPositiveButton("确定",
                     new android.content.DialogInterface.OnClickListener() {
@@ -174,8 +175,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else if(phone.length()==0){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("武钢INFOCLOUD");
-            builder.setMessage("用户电话不能为空！！�?");
+            builder.setTitle("tuosha");
+            builder.setMessage("用户电话不能为空！");
+            builder.setPositiveButton("确定",
+                    new android.content.DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            // TODO Auto-generated method stub
+                            arg0.dismiss();
+                        }
+                    });
+            builder.create().show();
+        }
+        else if(icode.length()==0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("tuosha");
+            builder.setMessage("验证码不能为空！");
             builder.setPositiveButton("确定",
                     new android.content.DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
@@ -187,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else if(!(password.equals(ensurepassword))){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("武钢INFOCLOUD");
+            builder.setTitle("tuosha");
             builder.setMessage("密码和确认密码不同！！！");
             builder.setPositiveButton("确定",
                     new android.content.DialogInterface.OnClickListener() {
@@ -200,7 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else if(!(checkMobile(phone))){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("武钢INFOCLOUD");
+            builder.setTitle("tuosha");
             builder.setMessage("手机号有误！！！");
             builder.setPositiveButton("确定",
                     new android.content.DialogInterface.OnClickListener() {
@@ -220,15 +234,13 @@ public class RegisterActivity extends AppCompatActivity {
                 TbUsersEntity user = new TbUsersEntity();
                 user.setNickname(userName);
                 user.setPassword(password);
-                user.setPhone(phone);
+                user.setPassword(phone);
+                swbean.setEx_Data(icode);
 
                 swbean.setTbUsersEntity(user);
                 swbean.setCommand(Constants.REGISTER);
                 Thread.sleep(1000 * 3);
                 imcgClientHandler.sendMsg(swbean);
-//	            Thread.sleep(1000 * 10);
-//	            imcg.getUser().setUserid(2);
-//	            imcgClientHandler.sendMsg(imcg);
                 Thread.sleep(1000);
                 imcgClientHandler.disposeInfoColClient();
             } catch (Exception e) {
