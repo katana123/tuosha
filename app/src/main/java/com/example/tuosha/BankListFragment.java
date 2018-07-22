@@ -124,60 +124,39 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
 
     //6.listview的条目点击时会调用该方法   parent:代表listviw  view:点击的条目上的那个view对象   position:条目的位置  id： 条目的id
     //@Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position,
-//                            long id) {
-//
-//        //需要获取条目上bean对象中url做跳转
-//        BankBean bean = (BankBean) parent.getItemAtPosition(position);
-//        String url = bean.bank_url;
-//        String name = bean.title;
-//        String apply_num = bean.clicknum;
-//        String des = bean.des;
-//        String logo = bean.icon;
-//        fManager = getFragmentManager();
-//        FragmentTransaction fTransaction = fManager.beginTransaction();
-//        CardContentFragment ncFragment = new CardContentFragment(fManager,"提额通道");
-//        Bundle bd = new Bundle();
-//        // bd.putString("content", datas.get(position).getDes());
-//        bd.putString("name",name);
-//        bd.putString("url",url);
-//        bd.putString("logo",logo);
-//        bd.putString("des",des);
-//        bd.putString("apply_num",apply_num);
-//        ncFragment.setArguments(bd);
-//        //获取Activity的控件
-//        //bar_title
-//        //TextView txt_title = (TextView) getActivity().findViewById(R.id.bank_title);
-//        //txt_title.setText("银行贷款");
-//
-//
-//        fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
-//        fTransaction.replace(R.id.fl_bank, ncFragment);
-//        //调用addToBackStack将Fragment添加到栈中
-//        fTransaction.addToBackStack(null);
-//        fTransaction.commit();
-//
-//    }
-    @SuppressLint("ResourceType")
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
 
-        BankBean bean = (BankBean) adapterView.getItemAtPosition(position);
-
+        //需要获取条目上bean对象中url做跳转
+        BankBean bean = (BankBean) parent.getItemAtPosition(position);
         String url = bean.bank_url;
+        String name = bean.title;
+        String apply_num = bean.clicknum;
+        String des = bean.des;
+        String logo = bean.icon;
         fManager = getFragmentManager();
         FragmentTransaction fTransaction = fManager.beginTransaction();
-        BankWebFragment ncFragment = new BankWebFragment();
+        CardContentFragment ncFragment = new CardContentFragment(fManager,"提额通道");
         Bundle bd = new Bundle();
-
-        bd.putString("url", url);
+        // bd.putString("content", datas.get(position).getDes());
+        bd.putString("name",name);
+        bd.putString("url",url);
+        bd.putString("logo",logo);
+        bd.putString("des",des);
+        bd.putString("apply_num",apply_num);
         ncFragment.setArguments(bd);
+        //获取Activity的控件
+        //bar_title
+        TextView txt_title = (TextView) getActivity().findViewById(R.id.bank_title);
+        txt_title.setText("银行贷款");
 
-        fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
-        fTransaction.replace(R.id.fl_card, ncFragment);
+
+       //fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
+        fTransaction.replace(R.id.fl_bank, ncFragment);
         //调用addToBackStack将Fragment添加到栈中
         fTransaction.addToBackStack(null);
         fTransaction.commit();
+
     }
 
     public void sendmessage(){

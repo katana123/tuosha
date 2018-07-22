@@ -85,7 +85,7 @@ public class PropertiesHelper {
         return hashMap;
     }
 
-    public void setValue(String key, String newValue) throws Exception {
+    public void setValue(String key, String newValue) {
         if (newValue != null)
             properties.setProperty(key, newValue);
         else

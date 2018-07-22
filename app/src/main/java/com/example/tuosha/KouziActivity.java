@@ -3,22 +3,32 @@ package com.example.tuosha;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-//import com.example.R;
+import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Protocols;
+import com.example.tuosha.model.INFOCOLT;
+import com.example.tuosha.model.KouziBean;
+import com.example.tuosha.netty.CustomApplication;
+import com.example.tuosha.netty.NettyClientHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +36,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.example.tuosha.netty.CustomApplication.getInstance;
 
-public class KouziActivity extends Fragment  implements AdapterView.OnItemClickListener  {
+
+public class KouziActivity extends Fragment implements AdapterView.OnItemClickListener {
 
     private View mView;
     private ViewPager mViewPaper;
@@ -56,6 +68,10 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
     private ViewPagerAdapter adapter;
     private ScheduledExecutorService scheduledExecutorService;
     private Context mContext;
+    private CustomApplication customApplication;
+    private ArrayList<KouziBean> allNews = new ArrayList<>();
+    private WebView webView;
+    private ListView lv_kouzi;
 
     public KouziActivity() {
 
@@ -69,45 +85,138 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mView=inflater.inflate(R.layout.activity_kouzi, null);
+        mView = inflater.inflate(R.layout.activity_kouzi, null);
         setView();
-        initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
-        initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
-        initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
-        initbtn(R.id.textView3,R.drawable.quick_option_scan_nor);
-        initbtn(R.id.textView4,R.drawable.quick_option_album_nor);
-        initbtn(R.id.textView5,R.drawable.quick_option_note_nor);
-        initbtn(R.id.textView6,R.drawable.quick_option_photo_nor);
-        initbtn(R.id.textView7,R.drawable.quick_option_scan_nor);
+        initbtn(R.id.textView0, R.drawable.quick_option_album_nor);
+        initbtn(R.id.textView1, R.drawable.quick_option_note_nor);
+        initbtn(R.id.textView2, R.drawable.quick_option_photo_nor);
+        initbtn(R.id.textView3, R.drawable.quick_option_scan_nor);
+        initbtn(R.id.textView4, R.drawable.quick_option_album_nor);
+        initbtn(R.id.textView5, R.drawable.quick_option_note_nor);
+        initbtn(R.id.textView6, R.drawable.quick_option_photo_nor);
+        initbtn(R.id.textView7, R.drawable.quick_option_scan_nor);
 
-        TextView tv2 = (TextView) mView.findViewById(R.id.textView0);
+        TextView tv2 = mView.findViewById(R.id.textView0);
         tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity() , KouziSecondActivity.class);
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 1);
+                bd.putString("erTitle", "大额借贷");
+                intent.putExtras(bd);
                 startActivity(intent);
             }
         });
-        //1.获取新闻数据用list封装
-        mContext = getActivity();
-        ArrayList<KouziBean> allNews = KouziUtils.getAllNews(mContext);
-        //2.找到控件
-        ListView lv_kouzi = (ListView) mView.findViewById(R.id.lv_kouzi);
-        //3.创建一个adapter设置给listview
-        KouziAdapter kouziAdapter = new KouziAdapter(mContext, allNews);
-        lv_kouzi.setAdapter(kouziAdapter);
-        //4.设置listview条目的点击事件
+
+        TextView tv3 = mView.findViewById(R.id.textView1);
+        tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 2);
+                bd.putString("erTitle", "工薪贷");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv4 = mView.findViewById(R.id.textView2);
+        tv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 3);
+                bd.putString("erTitle", "身份证贷");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv5 = mView.findViewById(R.id.textView3);
+        tv5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 4);
+                bd.putString("erTitle", "淘宝贷");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv6 = mView.findViewById(R.id.textView4);
+        tv6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 5);
+                bd.putString("erTitle", "小额贷款");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv7 = mView.findViewById(R.id.textView5);
+        tv7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 6);
+                bd.putString("erTitle", "信用卡贷");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv8 = mView.findViewById(R.id.textView6);
+        tv8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 7);
+                bd.putString("erTitle", "学子分期");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv9 = mView.findViewById(R.id.textView7);
+        tv9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity(), KouziSecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("kouziId", 8);
+                bd.putString("erTitle", "更多");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        sendmessage();
+        receivemsg();
+        lv_kouzi = mView.findViewById(R.id.lv_kouzi);
         lv_kouzi.setOnItemClickListener(this);
 
         return mView;
     }
     private void setView(){
-        mViewPaper = (ViewPager)mView.findViewById(R.id.kouzipic);
+        mViewPaper = mView.findViewById(R.id.kouzipic);
 
         //显示的图片
         images = new ArrayList<ImageView>();
@@ -124,7 +233,7 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
         dots.add(mView.findViewById(R.id.dot_3));
         dots.add(mView.findViewById(R.id.dot_4));
 
-        title = (TextView) mView.findViewById(R.id.title);
+        title = mView.findViewById(R.id.title);
         title.setText(titles[0]);
 
         adapter = new ViewPagerAdapter();
@@ -195,12 +304,11 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
         super.onStart();
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleWithFixedDelay(
-                new ViewPageTask(),
+                new KouziActivity.ViewPageTask(),
                 2,
                 2,
                 TimeUnit.SECONDS);
     }
-
 
     /**
      * 图片轮播任务
@@ -220,10 +328,99 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
      * 接收子线程传递过来的数据
      */
     private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
+        @Override
+        public void handleMessage(Message msg) {
             mViewPaper.setCurrentItem(currentItem);
-        };
+            switch (msg.what) {
+                case 200:
+                    ArrayList<KouziBean> cardList = new ArrayList<KouziBean>();
+                    CustomApplication application = (CustomApplication) getInstance();
+                    if (application.getList() != null) {
+                        mContext = getActivity();
+                        ArrayList<KouziBean> allNews = KouziUtils.getAllNews(mContext, application.getList());
+                        //3.创建一个adapter设置给listview
+                        KouziAdapter contentAdapter = new KouziAdapter(getActivity(), allNews);
+                        lv_kouzi.setAdapter(contentAdapter);
+
+                        application.setList(null);
+                    }
+                    break;
+                case -1:
+                    //获取失败
+//                     Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取失败");
+                    break;
+                case -2:
+                    //获取发生异常
+                    // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取发生异常");
+                    break;
+                default:
+                    break;
+            }
+        }
     };
+
+    private void sendmessage() {
+        try {
+            NettyClientHandler nettyClientHandler = new NettyClientHandler(customApplication);
+            nettyClientHandler.start();
+            INFOCOLT sWbean = new INFOCOLT();
+            sWbean.setCommand(Protocols.KOUZILIST);
+            Thread.sleep(1000 * 3);
+            nettyClientHandler.sendMsg(sWbean);
+            Thread.sleep(1000);
+            nettyClientHandler.disposeInfoColClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void receivemsg() {
+        System.out.println("执行接收程序");
+
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                JSONArray aaa = new JSONArray();
+                try {
+                    CustomApplication customApplication = (CustomApplication) getInstance();
+
+                    Thread.sleep(5000);
+                    System.out.println("customApplication的内容 :" + customApplication.getList());
+
+                    int i = 0;
+                    while (customApplication.getList() == null) {
+//                        System.out.println("aaa");
+                        i = i + 1;
+                        System.out.println("du55555" + customApplication.getList());
+                        Thread.sleep(1000);
+                        if (i > 50) break;
+                    }
+                    if (i < 50) {
+//                        System.out.println("bbb");
+                        Message message = new Message();
+                        message.what = 200; //200代码获取数据正常
+                        mHandler.sendMessage(message);
+
+                    } else {
+//                        System.out.println("ccc");
+                        Message message = new Message();
+                        message.what = -1; //代码获取数据 常
+                        mHandler.sendMessage(message);
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
     @Override
     public void onStop() {
         // TODO Auto-generated method stub
@@ -236,7 +433,7 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
 
     private void initbtn(int tw,int pic){
         //控制登录用户名图标大小
-        TextView hpRB = (TextView) mView.findViewById(tw);
+        TextView hpRB = mView.findViewById(tw);
         Drawable hpDrawable = getResources().getDrawable(pic);
         hpDrawable.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB.setCompoundDrawables(null,hpDrawable,null,null);//
@@ -248,16 +445,24 @@ public class KouziActivity extends Fragment  implements AdapterView.OnItemClickL
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
-        //需要获取条目上bean对象中url做跳转
+//        //需要获取条目上bean对象中url做跳转
         KouziBean bean = (KouziBean) parent.getItemAtPosition(position);
 
         String url = bean.kouzi_url;
-
-        //跳转浏览器
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-
+        System.out.println(url);
+        webView = new WebView(getActivity());
+        webView.setWebViewClient(new WebViewClient() {
+            //设置在webView点击打开的新网页在当前界面显示,而不跳转到新的浏览器中
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);  //设置WebView属性,运行执行js脚本
+        webView.loadUrl(url);          //调用loadUrl方法为WebView加入链接
+        getActivity().setContentView(webView);                           //调用Activity提供的setContentView将webView显示出来
     }
+
+
 }

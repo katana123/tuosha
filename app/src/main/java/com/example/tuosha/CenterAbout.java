@@ -11,7 +11,7 @@ public class CenterAbout extends Activity {
    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.center_about);
-        ImageView backbtn=(ImageView)findViewById(R.id.reback);
+        ImageView backbtn = findViewById(R.id.reback);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

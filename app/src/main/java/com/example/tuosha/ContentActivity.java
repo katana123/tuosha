@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,12 +21,20 @@ import android.widget.TextView;
 
 //import com.example.R;
 
+import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Protocols;
+import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.INFOCOLT;
+import com.example.tuosha.netty.CustomApplication;
+import com.example.tuosha.netty.NettyClientHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.example.tuosha.netty.CustomApplication.getInstance;
 
 
 public class ContentActivity extends Fragment implements AdapterView.OnItemClickListener {
@@ -57,6 +66,9 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
     private ViewPagerAdapter adapter;
     private ScheduledExecutorService scheduledExecutorService;
     private Context mContext;
+    private CustomApplication customApplication;
+    private ArrayList<ContentBean> allNews = new ArrayList<>();
+    private ListView lv_news;
 
     public ContentActivity() {
 
@@ -75,6 +87,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         mView=inflater.inflate(R.layout.activity_content, null);
         setView();
         initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
@@ -86,33 +99,128 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         initbtn(R.id.textView6,R.drawable.quick_option_photo_nor);
         initbtn(R.id.textView7,R.drawable.quick_option_scan_nor);
 
-        TextView tv2 = (TextView) mView.findViewById(R.id.textView0);
+        TextView tv2 = mView.findViewById(R.id.textView0);
         tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 1);
+                bd.putString("erTitle", "如何入会");
+                intent.putExtras(bd);
                 startActivity(intent);
             }
         });
 
-        TextView tv = (TextView) mView.findViewById(R.id.textView);
+        TextView tv3 = mView.findViewById(R.id.textView1);
+        tv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 2);
+                bd.putString("erTitle", "视频技术");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv4 = mView.findViewById(R.id.textView2);
+        tv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 3);
+                bd.putString("erTitle", "新手专区");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv5 = mView.findViewById(R.id.textView3);
+        tv5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 4);
+                bd.putString("erTitle", "达人交流圈");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv6 = mView.findViewById(R.id.textView4);
+        tv6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 5);
+                bd.putString("erTitle", "历史黑科技");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv7 = mView.findViewById(R.id.textView5);
+        tv7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 6);
+                bd.putString("erTitle", "经验神坛");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv8 = mView.findViewById(R.id.textView6);
+        tv8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 7);
+                bd.putString("erTitle", "金融工具");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+        TextView tv9 = mView.findViewById(R.id.textView7);
+        tv9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SecondActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("jisuId", 8);
+                bd.putString("erTitle", "额度查询");
+                intent.putExtras(bd);
+                startActivity(intent);
+            }
+        });
+
+        TextView tv = mView.findViewById(R.id.textView);
         tv.setSelected(true);
 
-        //1.获取新闻数据用list封装
-        mContext = getActivity();
-        ArrayList<ContentBean> allNews = ContentUtils.getAllNews(mContext);
-        //2.找到控件
-        ListView lv_news = (ListView) mView.findViewById(R.id.lv_news);
-        //3.创建一个adapter设置给listview
-        ContentAdapter contentAdapter = new ContentAdapter(mContext, allNews);
-        lv_news.setAdapter(contentAdapter);
-        //4.设置listview条目的点击事件
+        lv_news = mView.findViewById(R.id.lv_news);
+
         lv_news.setOnItemClickListener(this);
+
+        sendmessage();
+        receivemsg();
+
         return mView;
     }
+
+
     private void setView(){
-        mViewPaper = (ViewPager)mView.findViewById(R.id.contentpic);
+        mViewPaper = mView.findViewById(R.id.contentpic);
 
         //显示的图片
         images = new ArrayList<ImageView>();
@@ -129,7 +237,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         dots.add(mView.findViewById(R.id.dot_3));
         dots.add(mView.findViewById(R.id.dot_4));
 
-        title = (TextView) mView.findViewById(R.id.title);
+        title = mView.findViewById(R.id.title);
         title.setText(titles[0]);
 
         adapter = new ViewPagerAdapter();
@@ -221,14 +329,103 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         }
     }
 
-    /**
-     * 接收子线程传递过来的数据
-     */
     private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             mViewPaper.setCurrentItem(currentItem);
-        };
+            switch (msg.what) {
+                case 200:
+                    ArrayList<ContentBean> cardList = new ArrayList<ContentBean>();
+                    CustomApplication application = (CustomApplication) getInstance();
+                    if (application.getContentList() != null) {
+                        mContext = getActivity();
+                        ArrayList<ContentBean> allNews = ContentUtils.getAllNews(mContext, application.getContentList());
+
+                        //3.创建一个adapter设置给listview
+                        ContentAdapter contentAdapter = new ContentAdapter(getActivity(), allNews);
+                        lv_news.setAdapter(contentAdapter);
+
+                        application.setContentList(null);
+                    }
+                    break;
+                case -1:
+                    //获取失败
+                    // Toast.makeText(BankActivity.this, "获取失败", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取失败");
+                    break;
+                case -2:
+                    //获取发生异常
+                    // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
+                    System.out.println("获取发生异常");
+                    break;
+                default:
+                    break;
+            }
+        }
     };
+
+    private void sendmessage() {
+        System.out.println("发送数据请求");
+        Thread thread = new Thread() {
+            public void run() {
+                try {
+                    NettyClientHandler nettyClientHandler = new NettyClientHandler(customApplication);
+                    nettyClientHandler.start();
+                    INFOCOLT sWbean = new INFOCOLT();
+                    sWbean.setCommand(Protocols.CONTENTLIST);
+                    Thread.sleep(1000 * 3);
+                    nettyClientHandler.sendMsg(sWbean);
+                    Thread.sleep(1000);
+                    nettyClientHandler.disposeInfoColClient();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+    }
+
+    public void receivemsg() {
+        System.out.println("执行接收程序");
+
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                JSONArray aaa = new JSONArray();
+                try {
+                    CustomApplication customApplication = (CustomApplication) getInstance();
+
+                    Thread.sleep(5000);
+                    System.out.println("customApplication的内容 :" + customApplication.getContentList());
+
+                    int i = 0;
+                    while (customApplication.getContentList() == null) {
+
+                        i = i + 1;
+                        System.out.println("du" + customApplication.getContentList());
+                        Thread.sleep(1000);
+                        if (i > 50) break;
+                    }
+                    if (i < 50) {
+                        Message message = new Message();
+                        message.what = 200; //200代码获取数据正常
+                        mHandler.sendMessage(message);
+
+                    } else {
+                        Message message = new Message();
+                        message.what = -1; //代码获取数据 常
+                        mHandler.sendMessage(message);
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     @Override
     public void onStop() {
         // TODO Auto-generated method stub
@@ -241,7 +438,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
 
     private void initbtn(int tw,int pic){
         //控制登录用户名图标大小
-        TextView hpRB = (TextView) mView.findViewById(tw);
+        TextView hpRB = mView.findViewById(tw);
         Drawable hpDrawable = getResources().getDrawable(pic);
         hpDrawable.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB.setCompoundDrawables(null,hpDrawable,null,null);//
@@ -256,13 +453,21 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         //需要获取条目上bean对象中url做跳转
         ContentBean bean = (ContentBean) parent.getItemAtPosition(position);
 
-        String url = bean.news_url;
+//        String url = bean.news_url;
 
         //跳转浏览器
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
+        intent.setClass(mContext, SecondActivity.class);
+        Bundle bd = new Bundle();
+        bd.putString("name", bean.getTitle());
+        bd.putString("apply_num", bean.getReadnum());
+        bd.putString("newstime", bean.getNewstime());
+        bd.putString("logo", bean.getIcon());
+        bd.putInt("id", bean.getId());
+        bd.putString("extInfo", bean.getExtInfo());
+        bd.putInt("type", 3);
+        intent.putExtras(bd);
         startActivity(intent);
-
     }
+
 }

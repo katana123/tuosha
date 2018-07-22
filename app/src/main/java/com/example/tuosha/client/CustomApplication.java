@@ -46,7 +46,7 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	public void uncaughtException(Thread thread, Throwable ex) {
 		android.os.Process.killProcess(android.os.Process.myPid());
 		System.exit(1);
-	  thread.setDefaultUncaughtExceptionHandler( this);  
+        Thread.setDefaultUncaughtExceptionHandler(this);
 
 	}
 	 @Override  

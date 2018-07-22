@@ -91,7 +91,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         mView=inflater.inflate(R.layout.activity_card, null);
         setView();
         //设置图标点击事件
-        TextView tv0 = (TextView) mView.findViewById(R.id.textView0);
+        TextView tv0 = mView.findViewById(R.id.textView0);
         tv0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -99,7 +99,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                 startActivity(intent);
             }
         });
-        TextView tv1 = (TextView) mView.findViewById(R.id.textView1);
+        TextView tv1 = mView.findViewById(R.id.textView1);
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -108,7 +108,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                 startActivity(intent);
             }
         });
-        TextView tv2 = (TextView) mView.findViewById(R.id.textView2);
+        TextView tv2 = mView.findViewById(R.id.textView2);
         tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -130,7 +130,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         return mView;
     }
     private void setView(){
-        mViewPaper = (ViewPager)mView.findViewById(R.id.cardpic);
+        mViewPaper = mView.findViewById(R.id.cardpic);
 
         //显示的图片
         images = new ArrayList<ImageView>();
@@ -147,7 +147,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         dots.add(mView.findViewById(R.id.dot_3));
         dots.add(mView.findViewById(R.id.dot_4));
 
-        title = (TextView) mView.findViewById(R.id.title);
+        title = mView.findViewById(R.id.title);
         title.setText(titles[0]);
 
         adapter = new ViewPagerAdapter();
@@ -273,7 +273,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                 default:
                     break;
             }
-        };
+        }
     };
     public void sendmessage(){
         Thread thread = new Thread() {
@@ -355,7 +355,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
 
     private void initbtn(int tw,int pic){
         //控制登录用户名图标大小
-        TextView hpRB = (TextView) mView.findViewById(tw);
+        TextView hpRB = mView.findViewById(tw);
         Drawable hpDrawable = getResources().getDrawable(pic);
         hpDrawable.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB.setCompoundDrawables(null,hpDrawable,null,null);//

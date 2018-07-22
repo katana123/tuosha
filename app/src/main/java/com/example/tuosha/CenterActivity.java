@@ -44,7 +44,7 @@ public class CenterActivity extends Fragment{
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.activity_center, null);
 
-        TextView textView = (TextView) mView.findViewById(R.id.c_about);
+        TextView textView = mView.findViewById(R.id.c_about);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {

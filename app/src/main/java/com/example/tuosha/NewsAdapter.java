@@ -59,10 +59,10 @@ public class NewsAdapter extends BaseAdapter{
 
         }
         //2.获取view上的子控件对象
-        ImageView item_img_icon = (ImageView) view.findViewById(R.id.item_img_icon);
-        TextView item_tv_des = (TextView) view.findViewById(R.id.item_tv_des);
-        TextView item_tv_title = (TextView) view.findViewById(R.id.item_tv_title);
-        TextView item_tv_newstime = (TextView) view.findViewById(R.id.item_tv_newstime);
+        ImageView item_img_icon = view.findViewById(R.id.item_img_icon);
+        TextView item_tv_des = view.findViewById(R.id.item_tv_des);
+        TextView item_tv_title = view.findViewById(R.id.item_tv_title);
+        TextView item_tv_newstime = view.findViewById(R.id.item_tv_newstime);
         //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
         NewsBean newsBean = list.get(position);
         //4.将数据设置给这些子控件做显示

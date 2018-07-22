@@ -19,7 +19,7 @@ class KouziContentFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_kouzi_content, container, false);
-        TextView s_title = (TextView) view.findViewById(R.id.s_title);
+        TextView s_title = view.findViewById(R.id.s_title);
         //getArgument获取传递过来的Bundle对象
         s_title.setText("大额贷款xfgdfhdshfgd");
 
