@@ -153,6 +153,7 @@
         android:layout_centerHorizontal="true"
         android:background="#214A7D"
         android:text="注册"
+        android:onClick="RegisterButtonOnClick"
         android:textColor="@color/white"/>
 
     <Button
