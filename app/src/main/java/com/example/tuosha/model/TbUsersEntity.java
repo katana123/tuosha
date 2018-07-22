@@ -37,6 +37,10 @@ public class TbUsersEntity implements Serializable {
 	//
 	private Date createTime;
 
+
+	private String imei;
+
+	private String imsi;
 	/**
 	 * 设置：
 	 */
@@ -170,6 +174,21 @@ public class TbUsersEntity implements Serializable {
 		return createTime;
 	}
 
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+
+	public String getImsi() {
+		return imsi;
+	}
+
+	public void setImsi(String imsi) {
+		this.imsi = imsi;
+	}
 
 	@Override
 	public String toString() {
@@ -185,6 +204,8 @@ public class TbUsersEntity implements Serializable {
 				", eCode='" + eCode + '\'' +
 				", status='" + status + '\'' +
 				", createTime=" + createTime +
+				", imei='" + imei + '\'' +
+				", imsi='" + imsi + '\'' +
 				'}';
 	}
 }

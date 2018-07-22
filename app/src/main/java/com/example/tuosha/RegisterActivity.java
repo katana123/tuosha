@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private Button login;
@@ -14,6 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.register_main);
 
         login = findViewById(R.id.login_button);
@@ -23,7 +27,12 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
+                onDestory();
+                finish();
             }
         });
+    }
+    public void onDestory(){
+        removeActivity(this);
     }
 }

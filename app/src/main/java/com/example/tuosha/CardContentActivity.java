@@ -22,6 +22,8 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+
 public class CardContentActivity extends AppCompatActivity {
     private TextView txt_title;
 
@@ -36,6 +38,7 @@ public class CardContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.activity_card_content);
         mContext = CardContentActivity.this;
 

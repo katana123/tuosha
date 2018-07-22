@@ -10,14 +10,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,13 +28,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        addActivity(this);
         setContentView(R.layout.activity_main);
         initbtn();
-        mRgTab = findViewById(R.id.rg_main);
+        mRgTab = (RadioGroup) findViewById(R.id.rg_main);
         mRgTab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -93,22 +91,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initbtn(){
         //控制登录用户名图标大小
-        RadioButton hpRB = findViewById(R.id.contentpage);
+        RadioButton hpRB = (RadioButton) findViewById(R.id.contentpage);
         Drawable hpDrawable = getResources().getDrawable(R.drawable.contentpage);
         hpDrawable.setBounds(0, 0, 70, 70);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB.setCompoundDrawables(null,hpDrawable,null,null);//
         //控制登录用户名图标大小
-        RadioButton hpRB2 = findViewById(R.id.kouzipage);
+        RadioButton hpRB2 = (RadioButton) findViewById(R.id.kouzipage);
         Drawable hpDrawable2 = getResources().getDrawable(R.drawable.kouzipage);
         hpDrawable2.setBounds(0, 0, 70, 70);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB2.setCompoundDrawables(null,hpDrawable2,null,null);//
         //控制登录用户名图标大小
-        RadioButton hpRB3 = findViewById(R.id.cardpage);
+        RadioButton hpRB3 = (RadioButton) findViewById(R.id.cardpage);
         Drawable hpDrawable3 = getResources().getDrawable(R.drawable.cardpage);
         hpDrawable3.setBounds(0, 0, 70, 70);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB3.setCompoundDrawables(null,hpDrawable3,null,null);//
         //控制登录用户名图标大小
-        RadioButton hpRB4 = findViewById(R.id.centerpage);
+        RadioButton hpRB4 = (RadioButton) findViewById(R.id.centerpage);
         Drawable hpDrawable4 = getResources().getDrawable(R.drawable.centerpage);
         hpDrawable4.setBounds(0, 0, 70, 70);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB4.setCompoundDrawables(null,hpDrawable4,null,null);//
@@ -145,18 +143,12 @@ public class MainActivity extends AppCompatActivity {
             transaction.commitAllowingStateLoss();
         }
 
-//        if (id == 2) {
-//            ContentActivity fragment = new ContentActivity();
-//            FragmentManager fmanger = getSupportFragmentManager();
-//            // FragmentTransaction transaction=fmanger.beginTransaction();
-//            FragmentTransaction transacti = getFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fl_content, fragment);
-//            transaction.commit();
-//            Intent i = new Intent();
-//            i.setClass(this, ContentActivity.class);
-//            i.putExtra("id", 1);
-//        }
+
         super.onResume();
+    }
+
+    public void onDestory(){
+        removeActivity(this);
     }
 }
 

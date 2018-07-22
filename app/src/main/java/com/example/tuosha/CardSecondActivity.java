@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+
 
 public class CardSecondActivity extends AppCompatActivity {
     private TextView txt_title;
@@ -29,6 +31,7 @@ public class CardSecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.activity_card_second);
         mContext = CardSecondActivity.this;
         fManager = getFragmentManager();

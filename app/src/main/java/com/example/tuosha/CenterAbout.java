@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+
 public class CenterAbout extends Activity {
     @Override
    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.center_about);
         ImageView backbtn = findViewById(R.id.reback);
         backbtn.setOnClickListener(new View.OnClickListener() {
@@ -18,7 +22,11 @@ public class CenterAbout extends Activity {
                 Intent intent = new Intent(CenterAbout.this , MainActivity.class);
                 intent.putExtra("tag","CenterActivity");
                 startActivity(intent);
+                finish();
             }
         });
+    }
+    public void onDestory(){
+        removeActivity(this);
     }
 }

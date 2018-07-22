@@ -20,6 +20,8 @@ import com.example.tuosha.model.ContentBean;
 
 import java.util.ArrayList;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+
 public class SecondActivity extends AppCompatActivity {
     private TextView txt_title;
     private FrameLayout fl_content;
@@ -33,6 +35,7 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.acticity_second);
         Intent intent = getIntent();
         Bundle bd = intent.getExtras();

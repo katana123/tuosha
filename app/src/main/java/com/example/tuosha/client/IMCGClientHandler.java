@@ -11,7 +11,11 @@ import android.os.Looper;
 import android.os.Message;
 
 
+import com.example.tuosha.LoginActivity;
+import com.example.tuosha.MainActivity;
 import com.example.tuosha.RegisterActivity;
+import com.example.tuosha.SubscribeActivity;
+import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.NetWorkImpl;
@@ -263,7 +267,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
 //                case Constants.INFOCOL_LINKING_FAIL:
 //                    System.out.println("INFOCOL_LINKING_FAIL");
 //                    break;
-                case Constants.IMCG_HEARTBEAT:
+                case Constants.HEART_BEAT:
 //                    心跳检测
 //                    System.out.println("INFOCOL_HEARTBEAT");
                     if (imcg.getRecommand() == Constants.IMCG_HEARTBEAT_SUC){
@@ -278,15 +282,25 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                         System.out.println("INFOCOL_HEARTBEAT_FAIL");
                     }
                     break;
-                case Constants.IMCG_LINKING:
+                case Constants.DEFAULT:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
-                            if(imcg.getRecommand()==Constants.IMCG_LINKING_SUC){
+                            if(imcg.getResult()==1){
                                 System.out.println("连接成功");
-                            }else if(imcg.getRecommand()==Constants.IMCG_LINKING_FAIL){
-                                System.out.println("没有权限，请注册使用");
+                                String username=imcg.getTbUsersEntity().getNickname();
+                                String password=imcg.getTbUsersEntity().getPassword();
+                                String status=imcg.getTbUsersEntity().getStatus();
+                                UserManage.getInstance().saveUserInfo(getMyApplication(), username, password,status);
+                                 Intent intent = new Intent();
+                                intent.setClass(customApplication.getWelcomeActivity(), MainActivity.class);
+                                customApplication.getWelcomeActivity().startActivity(intent);
+                                customApplication.getWelcomeActivity().finish();
+
+                            }else if(imcg.getResult()==2){
+                                System.out.println("没有权限，该账号被禁用！");
+                            }else if(imcg.getResult()==0){
                                 AlertDialog.Builder builder = new Builder(customApplication.getWelcomeActivity());
-                                builder.setTitle("没有权限！！！");
+                                builder.setTitle("没有权限！！！请注册加入会员！");
                                 builder.setPositiveButton("确定",
                                         new android.content.DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface arg0, int arg1) {
@@ -299,12 +313,62 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                             }
                                         });
                                 builder.create().show();
-                            }else if(imcg.getRecommand()==Constants.IMCG_NO_PERMISSION){
+                            }else if(imcg.getResult()==3){
                                 System.out.println("正在授权，请稍后。。。");
                             }
                         }
                     });
                     break;
+                case Constants.LOGIN:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
+                        public void run() {
+                            if (imcg.getResult() == 1) {
+                                System.out.println("登录成功");
+                                String userName= imcg.getTbUsersEntity().getNickname();
+                                String userPwd = imcg.getTbUsersEntity().getPassword();
+                                String status = imcg.getTbUsersEntity().getStatus();
+                                UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
+                               //如果有登陆过，直接进入主页，否则进入登录页面
+                                Intent intent = new Intent();
+                                intent.setClass(customApplication.getWelcomeActivity(), MainActivity.class);
+                                customApplication.getWelcomeActivity().startActivity(intent);
+                                customApplication.getWelcomeActivity().finish();
+
+                            } else if (imcg.getResult() == 2) {
+                                System.out.println("没有权限，该账号被禁用！");
+                            } else if (imcg.getResult() == 0) {
+                                String userName= imcg.getTbUsersEntity().getNickname();
+                                String userPwd = imcg.getTbUsersEntity().getPassword();
+                                String status = imcg.getTbUsersEntity().getStatus();
+                                UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
+                                AlertDialog.Builder builder = new Builder(customApplication.getWelcomeActivity());
+                                builder.setTitle("没有权限！！！请注册加入会员！");
+                                builder.setPositiveButton("确定",
+                                        new android.content.DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface arg0, int arg1) {
+                                                // TODO Auto-generated method stub
+                                                arg0.dismiss();
+                                                Intent intent = new Intent();
+                                                intent.setClass(customApplication.getWelcomeActivity(), SubscribeActivity.class);
+                                                intent.setAction(Intent.ACTION_VIEW);
+                                                String phone = imcg.getTbUsersEntity().getPhone();
+                                                intent.putExtra("phone",phone);
+                                                customApplication.getWelcomeActivity().startActivity(intent);
+                                                customApplication.getWelcomeActivity().finish();
+                                            }
+                                        });
+                                builder.create().show();
+                            } else if (imcg.getResult() == 3) {//无效，预留
+                                System.out.println("没有该用户信息，请注册");
+                                Intent intent = new Intent();
+                                intent.setClass(customApplication.getWelcomeActivity(), RegisterActivity.class);
+                                customApplication.getWelcomeActivity().startActivity(intent);
+                                customApplication.getWelcomeActivity().finish();
+                            }
+                        }
+                    });
+                    break;
+
                 default:
                     break;
             }

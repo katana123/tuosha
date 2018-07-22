@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+
 public class SubscribeActivity extends AppCompatActivity {
 
     private Button subscrube;
@@ -16,6 +18,7 @@ public class SubscribeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.subscribe_main);
 
         TextView tv = findViewById(R.id.sub_title);
@@ -29,6 +32,7 @@ public class SubscribeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(SubscribeActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

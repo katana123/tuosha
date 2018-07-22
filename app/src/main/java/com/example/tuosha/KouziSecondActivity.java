@@ -9,15 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.example.tuosha.model.KouziBean;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
 
 
 public class KouziSecondActivity extends AppCompatActivity {
@@ -34,22 +34,15 @@ public class KouziSecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        addActivity(this);
         setContentView(R.layout.activity_kouzi_second);
-        Intent intent = getIntent();
-        Bundle bd = intent.getExtras();
-        final int kouziId = bd.getInt("kouziId");
-        final String erTitle = bd.getString("erTitle");
         mContext = KouziSecondActivity.this;
         fManager = getFragmentManager();
-        bindViews(erTitle);
+        bindViews();
 
 
-        bar_title = erTitle;
-        KouziListFragment nlFragment = new KouziListFragment(fManager, bar_title, kouziId);
+        bar_title="大额贷款";
+        KouziListFragment nlFragment = new KouziListFragment(fManager, bar_title);
         FragmentTransaction ft = fManager.beginTransaction();
         ft.replace(R.id.fl_kouzi, nlFragment);
         ft.commit();
@@ -62,28 +55,24 @@ public class KouziSecondActivity extends AppCompatActivity {
                     finish();
                 } else {
                     fManager.popBackStack();
-                    txt_title.setText(erTitle);
+                    txt_title.setText("如何入会");
                 }
             }
         });
     }
 
-    private void bindViews(String kouzi_title) {
-        txt_title = findViewById(R.id.kouzi_title);
-        fl_kouzi = findViewById(R.id.fl_kouzi);
-        txt_title.setText(kouzi_title);
+    private void bindViews() {
+        txt_title = (TextView) findViewById(R.id.kouzi_title);
+        fl_kouzi = (FrameLayout) findViewById(R.id.fl_kouzi);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = getIntent();
-        Bundle bd = intent.getExtras();
-        final String erTitle = bd.getString("erTitle");
         if (fManager.getBackStackEntryCount() == 0) {
             super.onBackPressed();
         } else {
             fManager.popBackStack();
-            txt_title.setText(erTitle);
+            txt_title.setText("如何入会");
         }
     }
 }

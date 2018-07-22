@@ -10,12 +10,16 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+
 public class ApplyActivity extends Activity  {
     public ApplyActivity() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.activity_apply);
         WebView wv = findViewById(R.id.word_web_view);
         Intent intent = getIntent();//获取传来的intent对象
@@ -28,10 +32,14 @@ public class ApplyActivity extends Activity  {
             public void onClick(View v) {
                 Intent intent = new Intent(ApplyActivity.this , CardContentActivity.class);
                intent.putExtra("tag","CardActivity");
+                onDestory();
                 startActivity(intent);
+                finish();
                 //MainActivity.changeFragment(CardActivity.class.getName());
             }
         });
     }
-
+    public void onDestory(){
+        removeActivity(this);
+    }
 }

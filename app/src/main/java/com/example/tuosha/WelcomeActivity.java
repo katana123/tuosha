@@ -1,27 +1,37 @@
 package com.example.tuosha;
 
+import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.model.ImsXuanMixloanMemberEntity;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.model.TbUsersEntity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
 
 
 public class WelcomeActivity extends Activity {
@@ -30,77 +40,86 @@ public class WelcomeActivity extends Activity {
     @SuppressLint("NewApi")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        addActivity(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 设置为全屏幕显示
         setContentView(R.layout.welcome);
 
-       // customApplication = (CustomApplication)getApplication();
-        customApplication = new CustomApplication();
+        customApplication = (CustomApplication)getApplication();
         customApplication.setWelcomeActivity(this);
-//        customApplication.setActivity(this);
 
-//        TelephonyManager telephonyManager=(TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//        final String  imei=telephonyManager.getDeviceId();
-//        System.out.println("imei"+imei);
-//
-//        TelephonyManager telManager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-//        final String imsi = telManager.getSubscriberId();
-//        System.out.println("imsi"+imsi);
-        //获取手机号码
-        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-        //String deviceid = tm.getDeviceId();//获取智能设备唯一编号
-        final String te1 = "";//tm.getLine1Number();//获取本机号码
-
-        final String SerialNumber = android.os.Build.SERIAL;
-        System.out.println("SerialNumber"+SerialNumber);
-
-//        final String IP=rightIp;
-//        customApplication.setIp(rightIp);
-
-        Thread thread = new Thread() {
-            public void run() {
-            	try {
-            		
-		            IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
-		            imcgClientHandler.start();
-		            SWbean imcg = new SWbean();
-                    ImsXuanMixloanMemberEntity user = new ImsXuanMixloanMemberEntity();
-//		            if(imei!=null){
-//		            	user.setIimei(imei);
-//		            }else{
-//		            	user.setIimsi(SerialNumber);
-//		            }
-                    if(te1!=null){
-                        user.setPhone("13960590250");
-                    }else{
-                        user.setPhone("18186404165");
-                    }
-		            imcg.setMemberEntity(user);
-		            imcg.setCommand(Constants.DEFAULT);
-		            Thread.sleep(1000 * 3);
-		            imcgClientHandler.sendMsg(imcg);
-		            Thread.sleep(1000 * 10);
-		            //imcg.getUser().setUserid(2);
-		            //imcgClientHandler.sendMsg(imcg);
-		            Thread.sleep(1000);
-		            imcgClientHandler.disposeInfoColClient();
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-            }
-        };
-        thread.start();
-        Timer timer=new Timer();
-        TimerTask timerTask=new TimerTask() {
+         Handler mHandler = new Handler() {
             @Override
-            public void run() {
-                Intent intent1=new Intent(WelcomeActivity.this,LoginActivity.class);
-                startActivity(intent1);
-                WelcomeActivity.this.finish();
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 2000://去主页
+                        Timer timer=new Timer();
+                        TimerTask timerTask=new TimerTask() {
+                            @Override
+                            public void run() {
+                                Intent intent1=new Intent(WelcomeActivity.this,MainActivity.class);
+                                startActivity(intent1);
+                                WelcomeActivity.this.finish();
+                            }
+                        };
+                        timer.schedule(timerTask,1000*3);
+                        break;
+                    case 1000://去登录页
+                        Timer timer2=new Timer();
+                        TimerTask timerTask2=new TimerTask() {
+                            @Override
+                            public void run() {
+                                Intent intent2 = new Intent(WelcomeActivity.this, LoginActivity.class);
+                                startActivity(intent2);
+                                finish();
+                            }
+                        };
+                        timer2.schedule(timerTask2,1000*3);
+                        break;
+                }
             }
         };
-        timer.schedule(timerTask,1000*3);
+        if (UserManage.getInstance().hasUserInfo(this))//自动登录判断，SharePrefences中有数据，则跳转到主页，没数据则跳转到登录页
+        {
+            if (UserManage.getInstance().getUserInfo(this).getStatus()=="1") {
+                Message message = new Message();
+                message.what = 2000; //200代码获取数据正常
+                mHandler.sendMessage(message);
+            }else if(UserManage.getInstance().getUserInfo(this).getStatus()=="0"){
+                Thread thread = new Thread() {
+                    public void run() {
+                        try {
+
+                            IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
+                            imcgClientHandler.start();
+                            SWbean imcg = new SWbean();
+                            TbUsersEntity user = new TbUsersEntity();
+                            imcg.setTbUsersEntity(user);
+                            imcg.setCommand(Constants.DEFAULT);
+                            //把内存的nickname和password去找用户
+                            imcg.getTbUsersEntity().setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getNickname());
+                            imcg.getTbUsersEntity().setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getPassword());
+
+                            imcgClientHandler.sendMsg(imcg);
+                            Thread.sleep(1000 * 3);
+                            imcgClientHandler.sendMsg(imcg);
+                            Thread.sleep(1000 * 10);
+                            imcgClientHandler.disposeInfoColClient();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
+            }
+        } else {//没数据，需要登录
+            Message message=new Message();
+            message.what=1000; //
+            mHandler.sendMessage(message);
+        }
+
+
+
 
     }
     public void onBackPressed() {
@@ -113,8 +132,11 @@ public class WelcomeActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
+                        onDestory();
+
                         WelcomeActivity.this.finish();
                         System.exit(0);
+
                     }
                 });
         alterDialogBuilder.setNegativeButton(
@@ -126,14 +148,10 @@ public class WelcomeActivity extends Activity {
                 });
         alterDialogBuilder.show();
     }
-    private Handler handler = new Handler() {
+    public void onDestory(){
+        removeActivity(this);
+    }
 
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    break;
-            }
-        }
-    };
+
+
 }

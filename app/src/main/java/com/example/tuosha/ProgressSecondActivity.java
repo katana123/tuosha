@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+
 
 public class ProgressSecondActivity extends AppCompatActivity {
     private TextView txt_title;
@@ -29,6 +32,7 @@ public class ProgressSecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.activity_card_second);
         mContext = ProgressSecondActivity.this;
         fManager = getFragmentManager();
@@ -68,5 +72,8 @@ public class ProgressSecondActivity extends AppCompatActivity {
             fManager.popBackStack();
             txt_title.setText("进度查询");
         }
+    }
+    public void onDestory(){
+        removeActivity(this);
     }
 }

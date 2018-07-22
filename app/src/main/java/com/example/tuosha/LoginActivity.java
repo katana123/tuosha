@@ -1,6 +1,9 @@
 package com.example.tuosha;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,64 +13,135 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.model.ImsXuanMixloanMemberEntity;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.client.IMCGClientHandler;
+import com.example.tuosha.model.TbUsersEntity;
+
+import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button login;
-    private Button register;
     private TextView username;
     private TextView password;
-
-    @Override
+    private  CustomApplication customApplication ;
+   // @Override
+    public Context getContext(){
+        return this.getContext();
+    }
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addActivity(this);
         setContentView(R.layout.login_main);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        login = findViewById(R.id.sign_in_button);
+
+
+        customApplication = (CustomApplication) getApplication();
+        customApplication.setLoginActivity(this);
+        LoadUserDate();
+
+
+        Button login = findViewById(R.id.sign_in_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SaveUserDate();
                 String nickname = username.getText().toString();//账号
                 String pass = password.getText().toString();//密码
-                if (!TextUtils.isEmpty(nickname) && !TextUtils.isEmpty(pass)) {
-                    SWbean swbean = new SWbean();
-                    swbean.setCommand(Protocols.LOGIN);
-                    ImsXuanMixloanMemberEntity memberEntity = new ImsXuanMixloanMemberEntity();
-                    memberEntity.setNickname(nickname);
-                    memberEntity.setPass(pass);
-                    swbean.setMemberEntity(memberEntity);
-                    CustomApplication customApplication = new CustomApplication();
-                    IMCGClientHandler clientHandler = new IMCGClientHandler(customApplication);
-                    boolean aaa =true; //clientHandler.sendMsg(swbean);
-                    if(aaa){
-                        Intent intent = new Intent();
-                        intent.setClass(LoginActivity.this,SubscribeActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
 
+                if (nickname == null || nickname.equals("")) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle(R.string.app_name)
+                            .setMessage("请输入用户名!")
+                            .setPositiveButton("确定", null)
+                            .show();
+                } else if (pass == null || pass.equals("")) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle(R.string.app_name)
+                            .setMessage("请输入密码!")
+                            .setPositiveButton("确定", null)
+                            .show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "账号或者密码有误", Toast.LENGTH_SHORT).show();
+                    CustomApplication customApplication = (CustomApplication) getApplication();
+                    customApplication.setMailusername(nickname);
+
+                    try {
+                        IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
+                        imcgClientHandler.start();
+                        SWbean sWbean = new SWbean();
+                        TbUsersEntity user = new TbUsersEntity();
+                        user.setNickname(nickname);
+                        user.setPassword(pass);
+                        sWbean.setTbUsersEntity(user);
+                        sWbean.setCommand(Constants.LOGIN);
+                        Thread.sleep(1000 * 3);
+                        imcgClientHandler.sendMsg(sWbean);
+                        System.out.println("发起登录");
+                        Thread.sleep(1000);
+                        imcgClientHandler.disposeInfoColClient();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-
-
             }
         });
 
-        register = findViewById(R.id.register_button);
+
+        Button register = findViewById(R.id.register_button);
         register.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+
+    public void onDestory(){
+        removeActivity(this);
+    }
+
+    private void SaveUserDate() {
+        // 载入配置文件
+        SharedPreferences sp = getSharedPreferences("PREFS_NAME", 0);
+        // 写入配置文件
+        SharedPreferences.Editor spEd = sp.edit();
+
+        spEd.putBoolean("isSave", true);
+        spEd.putString(
+                "mailname",
+                username.getText().toString());
+        spEd.putString(
+                "mailpassword",
+                "");
+
+//
+        spEd.commit();
+    }
+
+    /**
+     * 载入已记住的用户信息
+     */
+    private void LoadUserDate() {
+        SharedPreferences sp = getSharedPreferences("PREFS_NAME", 0);
+
+        if (sp.getBoolean("isSave", false)) {
+            // String userserver = sp.getString("server", "");
+            // String userport = sp.getString("port", "");
+            String uname = sp.getString("mailname", "");
+           // String userpassword = sp.getString("mailpassword", "");
+            if (!("".equals(uname) )) {
+                ((TextView)findViewById(R.id.username)).setText(uname);
+
+            }
+
+        }
+
     }
 }
