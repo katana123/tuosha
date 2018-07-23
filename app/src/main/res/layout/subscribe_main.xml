@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="92dp"
@@ -18,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:src="@drawable/logo2" />
+            android:src="@drawable/dingyue" />
 
         <TextView
             android:id="@+id/sub_title"
@@ -74,32 +75,11 @@
         android:text="VIP信息订阅月卡"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/subscribe_button"
-        android:layout_width="248dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:background="#214A7D"
-        android:text="注册"
-        android:textColor="@color/white"/>
-
-    <CheckBox
-        android:id="@+id/subscribe_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/subscribe_button"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:text="同意《用户服务协议》"/>
-
-    <TextView
+        <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/subscribe_check"
+            android:layout_alignTop="@+id/textView3"
         android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:text="加入拓沙金服，狂赚365天"
