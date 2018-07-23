@@ -51,13 +51,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String nickname = username.getText().toString();//账号
+               // String nickname = username.getText().toString();//账号
+                String phone = username.getText().toString();//电话号码
                 String pass = password.getText().toString();//密码
 
-                if (nickname == null || nickname.equals("")) {
+                if (phone == null || phone.equals("")) {
                     new AlertDialog.Builder(LoginActivity.this)
                             .setTitle(R.string.app_name)
-                            .setMessage("请输入用户名!")
+                            .setMessage("请输入用户电话号码!")
                             .setPositiveButton("确定", null)
                             .show();
                 } else if (pass == null || pass.equals("")) {
@@ -68,14 +69,15 @@ public class LoginActivity extends AppCompatActivity {
                             .show();
                 } else {
                     CustomApplication customApplication = (CustomApplication) getApplication();
-                    customApplication.setMailusername(nickname);
+                    //customApplication.setMailusername(phone);
 
                     try {
                         IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                         imcgClientHandler.start();
                         SWbean sWbean = new SWbean();
                         TbUsersEntity user = new TbUsersEntity();
-                        user.setNickname(nickname);
+                        //user.setNickname(nickname);
+                        user.setPhone(phone);
                         user.setPassword(pass);
                         sWbean.setTbUsersEntity(user);
                         sWbean.setCommand(Constants.LOGIN);

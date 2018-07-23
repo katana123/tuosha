@@ -198,6 +198,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
 
             int netCommand = imcg.getCommand();
             System.out.println(imcg.getCommand()+"----"+imcg.getRecommand());
+            customApplication=(CustomApplication) getMyApplication();
             switch (netCommand) {
                 case Constants.BANKLIST:
                     System.out.println("BANKLIST");
@@ -298,8 +299,8 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                 String password=imcg.getTbUsersEntity().getPassword();
                                 String status=imcg.getTbUsersEntity().getStatus();
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), username, password,status);
-                                Intent intent = new Intent();
-                                customApplication = (CustomApplication) getMyApplication();
+                                 Intent intent = new Intent();
+                                customApplication=(CustomApplication) getMyApplication();
                                 intent.setClass(customApplication.getWelcomeActivity(), MainActivity.class);
                                 customApplication.getWelcomeActivity().startActivity(intent);
                                 customApplication.getWelcomeActivity().finish();
@@ -365,7 +366,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                 String status = imcg.getTbUsersEntity().getStatus();
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
 
-                                AlertDialog.Builder builder = new Builder(customApplication.getWelcomeActivity());
+                                AlertDialog.Builder builder = new Builder(customApplication.getLoginActivity());
                                 builder.setTitle("没有权限！！！请注册加入会员！");
                                 builder.setPositiveButton("确定",
                                         new android.content.DialogInterface.OnClickListener() {
@@ -373,12 +374,12 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                                 // TODO Auto-generated method stub
                                                 arg0.dismiss();
                                                 Intent intent = new Intent();
-                                                intent.setClass(customApplication.getWelcomeActivity(), SubscribeActivity.class);
+                                               intent.setClass(customApplication.getLoginActivity(), SubscribeActivity.class);
                                                 intent.setAction(Intent.ACTION_VIEW);
                                                 String phone = imcg.getTbUsersEntity().getPhone();
                                                 intent.putExtra("phone",phone);
-                                                customApplication.getWelcomeActivity().startActivity(intent);
-                                                customApplication.getWelcomeActivity().finish();
+                                               customApplication.getLoginActivity().startActivity(intent);
+                                                customApplication.getLoginActivity().finish();
                                             }
                                         });
                                 builder.create().show();
