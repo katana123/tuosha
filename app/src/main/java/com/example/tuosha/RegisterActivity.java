@@ -388,9 +388,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * 判断一个字符串的位数
-     * @param str
-     * @param length
-     * @return
+
      */
     public static boolean isMatchLength(String str, int length) {
         if (str.isEmpty()) {
