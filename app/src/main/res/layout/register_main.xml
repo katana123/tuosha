@@ -137,6 +137,7 @@
         android:layout_centerHorizontal="true"
         android:background="#EA517F"
         android:text="获取短信验证码"
+        android:onClick="MsgButtonOnClick"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_toRightOf="@id/identifying_code"

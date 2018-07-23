@@ -66,3 +66,12 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
 }
+apply plugin: 'com.mob.sdk'
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "26fedf0a15306"
+    appSecret "c0d6325b9bde8387236566a53895981b"
+
+    SMSSDK {}
+}

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Gravity;
 import android.widget.Toast;
 
 
@@ -50,6 +51,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     private volatile boolean shouldReconncet = false;
     private volatile boolean shouldRelogin = false;
     private CustomApplication customApplication;
+
     private ChannelHandlerContext rebackctx;
     private Object rebackmsg;
     public IMCGClientHandler(CustomApplication c) {
@@ -186,6 +188,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
             byte[] infocolBytes = new byte[infocolLength];
             byteBuf.readBytes(infocolBytes);
             final SWbean imcg = (SWbean) new NetWorkImpl().getObj(infocolBytes);
+            customApplication=(CustomApplication) getMyApplication();
             //SWbean resposeswbean = new SWbean();
 //            String clientIPAddress = ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
             // 首先获取指令
@@ -399,9 +402,33 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                             if (imcg.getRecommand() == Constants.CHECKNAME){
                                 System.out.println("CHECKNAME数据请求成功");
                                if (imcg.getResult() == 1){
-                                   Toast.makeText(customApplication.getRegisterActivity(), "存在同名用户！",
-                              	      Toast.LENGTH_SHORT).show();
-                                   //customApplication.getRegisterActivity()
+                                   Toast toast =Toast.makeText(customApplication.getRegisterActivity(), "用户名可用！",
+                              	      Toast.LENGTH_SHORT);
+                                   toast.setGravity(Gravity.CENTER, 0, 0);
+                                   toast.show();
+//                                 AlertDialog.Builder builder = new Builder(customApplication.getRegisterActivity());
+//                                builder.setTitle("用户可用");
+//                                builder.setPositiveButton("确定",
+//                                        new android.content.DialogInterface.OnClickListener() {
+//                                            public void onClick(DialogInterface arg0, int arg1) {
+//                                                // TODO Auto-generated method stub
+//                                                arg0.dismiss();
+//
+//                                            }
+//                                        });
+//                                builder.create().show();
+                               }else{
+                                   AlertDialog.Builder builder = new Builder(customApplication.getRegisterActivity());
+                                   builder.setTitle("存在同名用户");
+                                   builder.setPositiveButton("确定",
+                                           new android.content.DialogInterface.OnClickListener() {
+                                               public void onClick(DialogInterface arg0, int arg1) {
+                                                   // TODO Auto-generated method stub
+                                                   arg0.dismiss();
+
+                                               }
+                                           });
+                                   builder.create().show();
                                }
 
                             } else if(imcg.getRecommand() == Constants.DEFAULT){
@@ -431,9 +458,11 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                     UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
                                     //打开主页面
                                     Intent intent = new Intent();
-                                    intent.setClass(customApplication.getRegisterActivity(), MainActivity.class);
+                                    intent.setClass(customApplication.getRegisterActivity(), SubscribeActivity.class);
                                     customApplication.getRegisterActivity().startActivity(intent);
                                     customApplication.getRegisterActivity().finish();
+                                }else{
+                                    System.out.println("REGISTER数据失败");
                                 }
 
                             } else if(imcg.getRecommand() == Constants.DEFAULT){
