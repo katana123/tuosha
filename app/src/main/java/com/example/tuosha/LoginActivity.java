@@ -43,14 +43,14 @@ public class LoginActivity extends AppCompatActivity {
 
         customApplication = (CustomApplication) getApplication();
         customApplication.setLoginActivity(this);
-        LoadUserDate();
+
 
 
         Button login = findViewById(R.id.sign_in_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveUserDate();
+
                 String nickname = username.getText().toString();//账号
                 String pass = password.getText().toString();//密码
 
@@ -107,41 +107,5 @@ public class LoginActivity extends AppCompatActivity {
         removeActivity(this);
     }
 
-    private void SaveUserDate() {
-        // 载入配置文件
-        SharedPreferences sp = getSharedPreferences("PREFS_NAME", 0);
-        // 写入配置文件
-        SharedPreferences.Editor spEd = sp.edit();
 
-        spEd.putBoolean("isSave", true);
-        spEd.putString(
-                "mailname",
-                username.getText().toString());
-        spEd.putString(
-                "mailpassword",
-                "");
-
-//
-        spEd.commit();
-    }
-
-    /**
-     * 载入已记住的用户信息
-     */
-    private void LoadUserDate() {
-        SharedPreferences sp = getSharedPreferences("PREFS_NAME", 0);
-
-        if (sp.getBoolean("isSave", false)) {
-            // String userserver = sp.getString("server", "");
-            // String userport = sp.getString("port", "");
-            String uname = sp.getString("mailname", "");
-           // String userpassword = sp.getString("mailpassword", "");
-            if (!("".equals(uname) )) {
-                ((TextView)findViewById(R.id.username)).setText(uname);
-
-            }
-
-        }
-
-    }
 }

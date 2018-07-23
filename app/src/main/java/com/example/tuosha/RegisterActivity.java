@@ -223,6 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
             builder.create().show();
+            ((EditText) findViewById(R.id.username)).requestFocus();
         }
 
         else if(password.length()==0){
