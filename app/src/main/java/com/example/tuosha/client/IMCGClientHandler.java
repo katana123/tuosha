@@ -298,7 +298,8 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                 String password=imcg.getTbUsersEntity().getPassword();
                                 String status=imcg.getTbUsersEntity().getStatus();
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), username, password,status);
-                                 Intent intent = new Intent();
+                                Intent intent = new Intent();
+                                customApplication = (CustomApplication) getMyApplication();
                                 intent.setClass(customApplication.getWelcomeActivity(), MainActivity.class);
                                 customApplication.getWelcomeActivity().startActivity(intent);
                                 customApplication.getWelcomeActivity().finish();
@@ -343,6 +344,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
                             System.out.println(imcg.toString());
+                            customApplication = (CustomApplication) getMyApplication();
                             if (imcg.getResult() == 1) {
                                 System.out.println("登录成功");
                                 String userName= imcg.getTbUsersEntity().getNickname();
@@ -462,7 +464,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                     UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
                                     //打开主页面
                                     Intent intent = new Intent();
-                                    intent.setClass(customApplication.getRegisterActivity(), MainActivity.class);
+                                    intent.setClass(customApplication.getRegisterActivity(), SubscribeActivity.class);
                                     customApplication.getRegisterActivity().startActivity(intent);
                                     customApplication.getRegisterActivity().finish();
                                 }else{
