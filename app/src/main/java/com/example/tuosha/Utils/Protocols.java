@@ -23,7 +23,17 @@ public class Protocols {
     //登陆协议,登陆成功和登录失败
     public static final byte LOGIN = 0x03; // 返回协议值:0代表登录用户名不存在,1代表登陆成功,2代表登录密码错误,3代表用户信息与绑定设备不匹配
     public static final byte KOUZILIST = 0x04; //返回口子集合的口子列表
-    public static final byte KOUZISECONDLIST = 0x05; //返回口子集合的二级页面的口子列表
-    public static final byte CONTENTLIST = 0x06; //返回技术主页的新闻列表
-    public static final byte CONTENTLISTBYID = 0x07; //返回技术主页的二级新闻列表
+    public static final byte REGISTER = 0x06;
+    public static final byte CHECK_USRNAME = 0x07;
+    public static final byte BANKLIST = 0x05; //银行列表PRODUCT
+    public static final byte PRODUCTLIST = 0x08;
+    public static final byte BANKCARDLIST = 0x09; //银行列表
+    public static final byte BANKDEBITLIST = 0x10;
+    public static final byte PRODUCTEBITLIST = 0x11;
+    public static final byte CHECKNAME = 0x12;
+    public static final byte WELCOME = 0x13;
+    public static final byte KOUZISECONDLIST = 0x14; //返回口子集合的二级页面的口子列表
+    public static final byte CONTENTLIST = 0x15; //返回技术主页的新闻列表
+    public static final byte CONTENTLISTBYID = 0x16; //返回技术主页的二级新闻列表
+    public static final byte SENDVEVIFYCODE = 0x17; //发送短信验证码
 }

@@ -1,39 +1,114 @@
 package com.example.tuosha.client;
 
-import android.R.integer;
-import android.app.Activity;
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.example.tuosha.CardActivity;
+import com.example.tuosha.ContentActivity;
 import com.example.tuosha.LoginActivity;
 import com.example.tuosha.RegisterActivity;
 import com.example.tuosha.WelcomeActivity;
 import com.example.tuosha.BankSecondActivity;
+import com.example.tuosha.model.ContentBean;
 import com.example.tuosha.model.ImsXuanMixloanBankEntity;
 import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
+import com.example.tuosha.model.KouziBean;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 public class CustomApplication extends Application implements UncaughtExceptionHandler {
+	private ArrayList<ContentBean> ContentList;
+	private ArrayList<ContentBean> ContentSecondList;
+	private ArrayList<KouziBean> list;
+	private ArrayList<KouziBean> secondlist;
+	private String userName;
+	private ContentActivity ContentActivity;
+
+	public com.example.tuosha.ContentActivity getContentActivity() {
+		return ContentActivity;
+	}
+
+	public void setContentActivity(com.example.tuosha.ContentActivity contentActivity) {
+		ContentActivity = contentActivity;
+	}
+
+	public ArrayList<ContentBean> getContentList() {
+		return ContentList;
+	}
+
+	public void setContentList(ArrayList<ContentBean> contentList) {
+		ContentList = contentList;
+	}
+
+	public ArrayList<ContentBean> getContentSecondList() {
+		return ContentSecondList;
+	}
+
+	public void setContentSecondList(ArrayList<ContentBean> contentSecondList) {
+		ContentSecondList = contentSecondList;
+	}
+
+	public ArrayList<KouziBean> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<KouziBean> list) {
+		this.list = list;
+	}
+
+	public ArrayList<KouziBean> getSecondlist() {
+		return secondlist;
+	}
+
+	public void setSecondlist(ArrayList<KouziBean> secondlist) {
+		this.secondlist = secondlist;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+
+	public String getMailpassword() {
+		return mailpassword;
+	}
+
+	public void setMailpassword(String mailpassword) {
+		this.mailpassword = mailpassword;
+	}
+
+	public static void setInstance(CustomApplication instance) {
+		CustomApplication.instance = instance;
+	}
+
+	private String passWord;
 	private LoginActivity LoginActivity;
 	private WelcomeActivity WelcomeActivity;
-
-
-
 	private RegisterActivity registerActivity;
 	private BankSecondActivity BankSecondActivity;
 	private CardActivity CardActivity;
-
 	private ArrayList<ImsXuanMixloanBankEntity> bankEntityArrayList;
-
-
-
 	private ArrayList<ImsXuanMixloanBankCardEntity> cardEntityArrayList;
+	private ArrayList<ImsXuanMixloanProductEntity> productEntityArrayList;
+	private String mailusername;
+	private String mailpassword;
+	private String phone;
+	private String vcode;
+	private static CustomApplication instance;
+
 
 	public ArrayList<ImsXuanMixloanProductEntity> getProductEntityArrayList() {
 		return productEntityArrayList;
@@ -43,10 +118,7 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 		this.productEntityArrayList = productEntityArrayList;
 	}
 
-	private ArrayList<ImsXuanMixloanProductEntity> productEntityArrayList;
-	private String mailusername;
-	private String mailpassword;
-	private static CustomApplication instance;
+
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -68,7 +140,8 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	public static Context getMyApplication() {
 		return instance;
 	}
-	public static Context getInstance() {
+
+	public static CustomApplication getInstance() {
 		return instance;
 	}
 
@@ -135,6 +208,22 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 
 	public void setRegisterActivity(RegisterActivity registerActivity) {
 		this.registerActivity = registerActivity;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getVcode() {
+		return vcode;
+	}
+
+	public void setVcode(String vcode) {
+		this.vcode = vcode;
 	}
 }
 

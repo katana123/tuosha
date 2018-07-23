@@ -21,16 +21,14 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Protocols;
+import com.example.tuosha.client.CustomApplication;
+import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ContentBean;
-import com.example.tuosha.model.INFOCOLT;
 import com.example.tuosha.model.SWbean;
-import com.example.tuosha.netty.CustomApplication;
-import com.example.tuosha.netty.NettyClientHandler;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import static com.example.tuosha.netty.CustomApplication.getInstance;
+import static com.example.tuosha.client.CustomApplication.getInstance;
 
 @SuppressLint("ValidFragment")
 public class ArticleListFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -112,9 +110,9 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
                 CustomApplication customApplication = new CustomApplication();
 
                 try {
-                    NettyClientHandler nettyClientHandler = new NettyClientHandler(customApplication);
+                    IMCGClientHandler nettyClientHandler = new IMCGClientHandler(customApplication);
                     nettyClientHandler.start();
-                    INFOCOLT sWbean = new INFOCOLT();
+                    SWbean sWbean = new SWbean();
                     sWbean.setCommand(Protocols.CONTENTLISTBYID);
                     sWbean.setJisuType(jisuId);
                     Thread.sleep(1000 * 3);

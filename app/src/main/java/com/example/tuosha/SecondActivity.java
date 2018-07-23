@@ -107,4 +107,4 @@ public class SecondActivity extends AppCompatActivity {
             txt_title.setText("如何入会");
         }
     }
-}
+} 

@@ -9,7 +9,26 @@ public class SWbean implements Serializable {
     private byte command;
     private byte recommand;
     private int result;
-    private String Ex_Data;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    private String vcode;
+
+    public String getVcode() {
+        return vcode;
+    }
+
+    public void setVcode(String vcode) {
+        this.vcode = vcode;
+    }
+
     public String getEx_Data() {
         return Ex_Data;
     }
@@ -18,7 +37,7 @@ public class SWbean implements Serializable {
         Ex_Data = ex_Data;
     }
 
-
+    private String Ex_Data;
 
     private TbAdminEntity tbAdminEntity;
     private TbLogEntity tbLogEntity; //
@@ -57,11 +76,49 @@ public class SWbean implements Serializable {
     private ArrayList<ImsXuanMixloanProductApplyEntity> productApplyList;
     private ArrayList<ImsXuanMixloanProductEntity> productList;
 
+    private int KouziType;
+    private int JisuType;
+
+    public int getJisuType() {
+        return JisuType;
+    }
+
+    public void setJisuType(int jisuType) {
+        JisuType = jisuType;
+    }
+
+    private ArrayList<KouziBean> KouziBean;
+    private ArrayList<ContentBean> ContentBean;
+
+    public ArrayList<com.example.tuosha.model.ContentBean> getContentBean() {
+        return ContentBean;
+    }
+
+    public void setContentBean(ArrayList<com.example.tuosha.model.ContentBean> contentBean) {
+        ContentBean = contentBean;
+    }
+
+    public ArrayList<com.example.tuosha.model.KouziBean> getKouziBean() {
+        return KouziBean;
+    }
+
+    public void setKouziBean(ArrayList<com.example.tuosha.model.KouziBean> kouziBean) {
+        KouziBean = kouziBean;
+    }
+
+    public int getKouziType() {
+        return KouziType;
+    }
+
+    public void setKouziType(int kouziType) {
+        KouziType = kouziType;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public int getCommand() {
+    public byte getCommand() {
         return command;
     }
 
@@ -69,7 +126,7 @@ public class SWbean implements Serializable {
         this.command = command;
     }
 
-    public int getRecommand() {
+    public byte getRecommand() {
         return recommand;
     }
 
@@ -347,5 +404,14 @@ public class SWbean implements Serializable {
 
     public void setProductList(ArrayList<ImsXuanMixloanProductEntity> productList) {
         this.productList = productList;
+    }
+
+    @Override
+    public String toString() {
+        return "SWbean{" +
+                "command=" + command +
+                ", recommand=" + recommand +
+                ", result=" + result +
+                '}';
     }
 }

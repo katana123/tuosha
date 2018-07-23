@@ -17,11 +17,16 @@ import com.example.tuosha.LoginActivity;
 import com.example.tuosha.MainActivity;
 import com.example.tuosha.RegisterActivity;
 import com.example.tuosha.SubscribeActivity;
+import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.Utils.UserManage;
+import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.KouziBean;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.NetWorkImpl;
 
+
+import java.util.ArrayList;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -51,7 +56,6 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     private volatile boolean shouldReconncet = false;
     private volatile boolean shouldRelogin = false;
     private CustomApplication customApplication;
-
     private ChannelHandlerContext rebackctx;
     private Object rebackmsg;
     public IMCGClientHandler(CustomApplication c) {
@@ -188,7 +192,6 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
             byte[] infocolBytes = new byte[infocolLength];
             byteBuf.readBytes(infocolBytes);
             final SWbean imcg = (SWbean) new NetWorkImpl().getObj(infocolBytes);
-            customApplication=(CustomApplication) getMyApplication();
             //SWbean resposeswbean = new SWbean();
 //            String clientIPAddress = ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
             // 首先获取指令
@@ -339,6 +342,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                 case Constants.LOGIN:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
+                            System.out.println(imcg.toString());
                             if (imcg.getResult() == 1) {
                                 System.out.println("登录成功");
                                 String userName= imcg.getTbUsersEntity().getNickname();
@@ -458,7 +462,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                     UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,status);
                                     //打开主页面
                                     Intent intent = new Intent();
-                                    intent.setClass(customApplication.getRegisterActivity(), SubscribeActivity.class);
+                                    intent.setClass(customApplication.getRegisterActivity(), MainActivity.class);
                                     customApplication.getRegisterActivity().startActivity(intent);
                                     customApplication.getRegisterActivity().finish();
                                 }else{
@@ -474,6 +478,54 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                         }
                     });
 
+                    break;
+                case Protocols.KOUZILIST:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+                        public void run() {
+                            ArrayList<KouziBean> KouziList = imcg.getKouziBean();
+                            CustomApplication application = CustomApplication.getInstance();
+                            application.setList(KouziList);
+                        }
+                    });
+                    break;
+                case Protocols.KOUZISECONDLIST:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+                        public void run() {
+                            ArrayList<KouziBean> KouziList = imcg.getKouziBean();
+                            System.out.println(imcg.toString());
+                            CustomApplication application = CustomApplication.getInstance();
+                            application.setSecondlist(KouziList);
+                        }
+                    });
+                    break;
+                case Protocols.CONTENTLIST:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+                        public void run() {
+                            ArrayList<ContentBean> ContentList = imcg.getContentBean();
+                            CustomApplication application = CustomApplication.getInstance();
+                            application.setContentList(ContentList);
+                        }
+                    });
+                    break;
+                case Protocols.CONTENTLISTBYID:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+                        public void run() {
+                            ArrayList<ContentBean> ContentList = imcg.getContentBean();
+                            CustomApplication application = CustomApplication.getInstance();
+                            application.setContentSecondList(ContentList);
+                        }
+                    });
+                    break;
+                case Protocols.SENDVEVIFYCODE:
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
+                        public void run() {
+                            String phone = imcg.getPhone();
+                            String vcode = imcg.getVcode();
+                            CustomApplication application = CustomApplication.getInstance();
+                            application.setPhone(phone);
+                            application.setVcode(vcode);
+                        }
+                    });
                     break;
                 default:
                     break;

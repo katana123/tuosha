@@ -22,17 +22,15 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Protocols;
-import com.example.tuosha.model.INFOCOLT;
+import com.example.tuosha.client.CustomApplication;
+import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.KouziBean;
-import com.example.tuosha.netty.CustomApplication;
-import com.example.tuosha.netty.NettyClientHandler;
+import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import static com.example.tuosha.netty.CustomApplication.getInstance;
+import static com.example.tuosha.client.CustomApplication.getInstance;
 
 @SuppressLint("ValidFragment")
 public class KouziListFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -113,9 +111,9 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
             public void run() {
                 CustomApplication customApplication = new CustomApplication();
                 try {
-                    NettyClientHandler nettyClientHandler = new NettyClientHandler(customApplication);
+                    IMCGClientHandler nettyClientHandler = new IMCGClientHandler(customApplication);
                     nettyClientHandler.start();
-                    INFOCOLT sWbean = new INFOCOLT();
+                    SWbean sWbean = new SWbean();
                     sWbean.setCommand(Protocols.KOUZISECONDLIST);
                     sWbean.setKouziType(kouziId);
                     Thread.sleep(1000 * 3);

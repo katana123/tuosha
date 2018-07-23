@@ -16,13 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
-import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
 import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;

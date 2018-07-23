@@ -23,10 +23,10 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Protocols;
+import com.example.tuosha.client.CustomApplication;
+import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ContentBean;
-import com.example.tuosha.model.INFOCOLT;
-import com.example.tuosha.netty.CustomApplication;
-import com.example.tuosha.netty.NettyClientHandler;
+import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static com.example.tuosha.netty.CustomApplication.getInstance;
+import static com.example.tuosha.client.CustomApplication.getInstance;
 
 
 public class ContentActivity extends Fragment implements AdapterView.OnItemClickListener {
@@ -368,9 +368,9 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         Thread thread = new Thread() {
             public void run() {
                 try {
-                    NettyClientHandler nettyClientHandler = new NettyClientHandler(customApplication);
+                    IMCGClientHandler nettyClientHandler = new IMCGClientHandler(customApplication);
                     nettyClientHandler.start();
-                    INFOCOLT sWbean = new INFOCOLT();
+                    SWbean sWbean = new SWbean();
                     sWbean.setCommand(Protocols.CONTENTLIST);
                     Thread.sleep(1000 * 3);
                     nettyClientHandler.sendMsg(sWbean);

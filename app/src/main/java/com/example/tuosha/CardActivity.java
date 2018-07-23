@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //import com.example.R;
 
@@ -27,7 +26,6 @@ import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
-import com.example.tuosha.model.ImsXuanMixloanBankEntity;
 import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
