@@ -21,8 +21,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.tuosha.Utils.ActivityCollector;
+import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.download.DownLoadUtils;
 import com.example.tuosha.download.DownloadApk;
+
+import static com.example.tuosha.client.CustomApplication.getMyApplication;
 
 
 public class CenterActivity extends Fragment{
@@ -94,7 +97,7 @@ public class CenterActivity extends Fragment{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // 点击“确认”后的操作
-
+                                UserManage.getInstance().saveUserInfo(getMyApplication(), "", "","");
                                 android.os.Process.killProcess(android.os.Process.myPid());
                                 AppExit(getActivity());
                                 getActivity().finish();
