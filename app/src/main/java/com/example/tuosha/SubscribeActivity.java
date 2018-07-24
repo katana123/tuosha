@@ -25,15 +25,15 @@ public class SubscribeActivity extends AppCompatActivity {
         TextPaint tp = tv.getPaint();
         tp.setFakeBoldText(true);
 
-        subscrube = findViewById(R.id.subscribe_button);
-        subscrube.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(SubscribeActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        subscrube = findViewById(R.id.subscribe_button);
+//        subscrube.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(SubscribeActivity.this,MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 }

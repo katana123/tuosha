@@ -49,6 +49,7 @@ dependencies {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
     implementation 'com.android.support:design:28.+'
+    // "com.android.support:design:26.1.0"
 }
 
 dependencies {
@@ -65,6 +66,7 @@ dependencies {
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.25.Final'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
+
 }
 apply plugin: 'com.mob.sdk'
 

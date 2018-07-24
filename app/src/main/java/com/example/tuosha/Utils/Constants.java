@@ -5,9 +5,9 @@ package com.example.tuosha.Utils;
  */
 public class Constants {
     //public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
-  // public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
+   public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
     //public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
-    public static final String TCP_SERVER_ADDRESS = "192.168.100.105";
+   // public static final String TCP_SERVER_ADDRESS = "192.168.100.105";
   //  public static final String TCP_SERVER_ADDRESS = "192.168.43.170";
     public static final int TCP_SERVER_PORT = 9200;
 
