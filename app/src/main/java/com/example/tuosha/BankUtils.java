@@ -13,6 +13,7 @@ import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ImsXuanMixloanBankEntity;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
 import com.example.tuosha.model.SWbean;
+import com.example.tuosha.model.TiEsEntity;
 
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class BankUtils {
 
     //封装新闻的假数据到list中返回,以后数据会从数据库中获取
-    public static ArrayList<BankBean> getAllNews(Context context ,ArrayList<ImsXuanMixloanProductEntity> bankList) {
+    public static ArrayList<BankBean> getAllNews(Context context ,ArrayList<TiEsEntity> bankList) {
 
         ArrayList<BankBean> arrayList = new ArrayList<BankBean>();
 
@@ -31,15 +32,12 @@ public class BankUtils {
             BankBean bankBean = new BankBean();
 
             bankBean.title =bankList.get(i).getName();
-            String jsonstr=bankList.get(i).getExtInfo();
-            JSONObject jobject = JSON.parseObject(jsonstr);
-            bankBean.clicknum = jobject.getString("apply_num");
-            bankBean.des= jobject.getString("v_name");
-            bankBean.bank_url= jobject.getString("url");
-            if ((jobject.getString("logo")==null) || (jobject.getString("logo")=="")) {
+
+            bankBean.bank_url= bankList.get(i).getLink();
+            if ((bankList.get(i).getImage()==null) || (bankList.get(i).getImage()=="")) {
                 bankBean.icon = "";
             }else{
-                bankBean.icon = jobject.getString("logo");
+                bankBean.icon = bankList.get(i).getImage();
             }
                 // bankBean.icon =//json.getString("logo");
             arrayList.add(bankBean);

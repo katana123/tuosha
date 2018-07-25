@@ -9,11 +9,37 @@ import com.example.tuosha.LoginActivity;
 import com.example.tuosha.RegisterActivity;
 import com.example.tuosha.WelcomeActivity;
 import com.example.tuosha.BankSecondActivity;
+import com.example.tuosha.model.AlipayEntity;
+import com.example.tuosha.model.BankCardsEntity;
+import com.example.tuosha.model.CategoriesEntity;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.DaikuansEntity;
+import com.example.tuosha.model.EDusEntity;
+import com.example.tuosha.model.HkjBannersEntity;
+import com.example.tuosha.model.HkjsEntity;
 import com.example.tuosha.model.ImsXuanMixloanBankEntity;
 import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
+import com.example.tuosha.model.JieQianBannersEntity;
+import com.example.tuosha.model.JieQianJqCatEntity;
+import com.example.tuosha.model.JieQiansEntity;
+import com.example.tuosha.model.JqCatsEntity;
 import com.example.tuosha.model.KouziBean;
+import com.example.tuosha.model.MigrationsEntity;
+import com.example.tuosha.model.MobileversionEntity;
+import com.example.tuosha.model.MoneyRecordsEntity;
+import com.example.tuosha.model.NoticesEntity;
+import com.example.tuosha.model.OrdersEntity;
+import com.example.tuosha.model.PasswordResetsEntity;
+import com.example.tuosha.model.PostsEntity;
+import com.example.tuosha.model.ProcessesEntity;
+import com.example.tuosha.model.ProductsEntity;
+import com.example.tuosha.model.SettingsEntity;
+import com.example.tuosha.model.TiEsEntity;
+import com.example.tuosha.model.ToolsEntity;
+import com.example.tuosha.model.UsersEntity;
+import com.example.tuosha.model.XinYongKasEntity;
+import com.example.tuosha.model.XykBannersEntity;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
@@ -103,6 +129,34 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	private ArrayList<ImsXuanMixloanBankEntity> bankEntityArrayList;
 	private ArrayList<ImsXuanMixloanBankCardEntity> cardEntityArrayList;
 	private ArrayList<ImsXuanMixloanProductEntity> productEntityArrayList;
+// 新加表
+	private  ArrayList<AlipayEntity> alipayEntities; //
+	private  ArrayList<BankCardsEntity> bankCardsEntities; //
+	private  ArrayList<CategoriesEntity> categoriesEntities; //
+	private  ArrayList<DaikuansEntity> daikuansEntities;
+	private  ArrayList<EDusEntity> eDusEntities; //
+	private  ArrayList<HkjBannersEntity> hkjBannersEntities; //
+	private  ArrayList<HkjsEntity> hkjsEntities;
+	private  ArrayList<JieQianBannersEntity> jieQianBannersEntities; //
+	private  ArrayList<JieQianJqCatEntity> jieQianJqCatEntities;
+	private  ArrayList<JieQiansEntity> jieQiansEntities;
+	private  ArrayList<JqCatsEntity> jqCatsEntities;
+	private  ArrayList<MigrationsEntity> migrationsEntities;
+	private  ArrayList<MobileversionEntity> mobileversionEntities;
+	private  ArrayList<MoneyRecordsEntity> moneyRecordsEntities;
+	private  ArrayList<NoticesEntity> noticesEntities;
+	private  ArrayList<OrdersEntity> ordersEntities;
+	private  ArrayList<PasswordResetsEntity> passwordResetsEntities;
+	private  ArrayList<PostsEntity> postsEntities;
+	private  ArrayList<ProcessesEntity> processesEntities;
+	private  ArrayList<ProductsEntity> productsEntities;
+	private  ArrayList<SettingsEntity> settingsEntities;
+	private  ArrayList<TiEsEntity> tiEsEntities;
+	private  ArrayList<ToolsEntity> toolsEntities;
+	private  ArrayList<UsersEntity> usersEntities;
+	private  ArrayList<XinYongKasEntity> xinYongKasEntities;
+	private  ArrayList<XykBannersEntity> xykBannersEntities;
+
 	private String mailusername;
 	private String mailpassword;
 	private String phone;
@@ -224,6 +278,218 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 
 	public void setVcode(String vcode) {
 		this.vcode = vcode;
+	}
+
+
+
+	//新加表
+
+	public ArrayList<AlipayEntity> getAlipayEntities() {
+		return alipayEntities;
+	}
+
+	public void setAlipayEntities(ArrayList<AlipayEntity> alipayEntities) {
+		this.alipayEntities = alipayEntities;
+	}
+
+	public ArrayList<BankCardsEntity> getBankCardsEntities() {
+		return bankCardsEntities;
+	}
+
+	public void setBankCardsEntities(ArrayList<BankCardsEntity> bankCardsEntities) {
+		this.bankCardsEntities = bankCardsEntities;
+	}
+
+	public ArrayList<CategoriesEntity> getCategoriesEntities() {
+		return categoriesEntities;
+	}
+
+	public void setCategoriesEntities(ArrayList<CategoriesEntity> categoriesEntities) {
+		this.categoriesEntities = categoriesEntities;
+	}
+
+	public ArrayList<DaikuansEntity> getDaikuansEntities() {
+		return daikuansEntities;
+	}
+
+	public void setDaikuansEntities(ArrayList<DaikuansEntity> daikuansEntities) {
+		this.daikuansEntities = daikuansEntities;
+	}
+
+	public ArrayList<EDusEntity> geteDusEntities() {
+		return eDusEntities;
+	}
+
+	public void seteDusEntities(ArrayList<EDusEntity> eDusEntities) {
+		this.eDusEntities = eDusEntities;
+	}
+
+	public ArrayList<HkjBannersEntity> getHkjBannersEntities() {
+		return hkjBannersEntities;
+	}
+
+	public void setHkjBannersEntities(ArrayList<HkjBannersEntity> hkjBannersEntities) {
+		this.hkjBannersEntities = hkjBannersEntities;
+	}
+
+	public ArrayList<HkjsEntity> getHkjsEntities() {
+		return hkjsEntities;
+	}
+
+	public void setHkjsEntities(ArrayList<HkjsEntity> hkjsEntities) {
+		this.hkjsEntities = hkjsEntities;
+	}
+
+	public ArrayList<JieQianBannersEntity> getJieQianBannersEntities() {
+		return jieQianBannersEntities;
+	}
+
+	public void setJieQianBannersEntities(ArrayList<JieQianBannersEntity> jieQianBannersEntities) {
+		this.jieQianBannersEntities = jieQianBannersEntities;
+	}
+
+	public ArrayList<JieQianJqCatEntity> getJieQianJqCatEntities() {
+		return jieQianJqCatEntities;
+	}
+
+	public void setJieQianJqCatEntities(ArrayList<JieQianJqCatEntity> jieQianJqCatEntities) {
+		this.jieQianJqCatEntities = jieQianJqCatEntities;
+	}
+
+	public ArrayList<JieQiansEntity> getJieQiansEntities() {
+		return jieQiansEntities;
+	}
+
+	public void setJieQiansEntities(ArrayList<JieQiansEntity> jieQiansEntities) {
+		this.jieQiansEntities = jieQiansEntities;
+	}
+
+	public ArrayList<JqCatsEntity> getJqCatsEntities() {
+		return jqCatsEntities;
+	}
+
+	public void setJqCatsEntities(ArrayList<JqCatsEntity> jqCatsEntities) {
+		this.jqCatsEntities = jqCatsEntities;
+	}
+
+	public ArrayList<MigrationsEntity> getMigrationsEntities() {
+		return migrationsEntities;
+	}
+
+	public void setMigrationsEntities(ArrayList<MigrationsEntity> migrationsEntities) {
+		this.migrationsEntities = migrationsEntities;
+	}
+
+	public ArrayList<MobileversionEntity> getMobileversionEntities() {
+		return mobileversionEntities;
+	}
+
+	public void setMobileversionEntities(ArrayList<MobileversionEntity> mobileversionEntities) {
+		this.mobileversionEntities = mobileversionEntities;
+	}
+
+	public ArrayList<MoneyRecordsEntity> getMoneyRecordsEntities() {
+		return moneyRecordsEntities;
+	}
+
+	public void setMoneyRecordsEntities(ArrayList<MoneyRecordsEntity> moneyRecordsEntities) {
+		this.moneyRecordsEntities = moneyRecordsEntities;
+	}
+
+	public ArrayList<NoticesEntity> getNoticesEntities() {
+		return noticesEntities;
+	}
+
+	public void setNoticesEntities(ArrayList<NoticesEntity> noticesEntities) {
+		this.noticesEntities = noticesEntities;
+	}
+
+	public ArrayList<OrdersEntity> getOrdersEntities() {
+		return ordersEntities;
+	}
+
+	public void setOrdersEntities(ArrayList<OrdersEntity> ordersEntities) {
+		this.ordersEntities = ordersEntities;
+	}
+
+	public ArrayList<PasswordResetsEntity> getPasswordResetsEntities() {
+		return passwordResetsEntities;
+	}
+
+	public void setPasswordResetsEntities(ArrayList<PasswordResetsEntity> passwordResetsEntities) {
+		this.passwordResetsEntities = passwordResetsEntities;
+	}
+
+	public ArrayList<PostsEntity> getPostsEntities() {
+		return postsEntities;
+	}
+
+	public void setPostsEntities(ArrayList<PostsEntity> postsEntities) {
+		this.postsEntities = postsEntities;
+	}
+
+	public ArrayList<ProcessesEntity> getProcessesEntities() {
+		return processesEntities;
+	}
+
+	public void setProcessesEntities(ArrayList<ProcessesEntity> processesEntities) {
+		this.processesEntities = processesEntities;
+	}
+
+	public ArrayList<ProductsEntity> getProductsEntities() {
+		return productsEntities;
+	}
+
+	public void setProductsEntities(ArrayList<ProductsEntity> productsEntities) {
+		this.productsEntities = productsEntities;
+	}
+
+	public ArrayList<SettingsEntity> getSettingsEntities() {
+		return settingsEntities;
+	}
+
+	public void setSettingsEntities(ArrayList<SettingsEntity> settingsEntities) {
+		this.settingsEntities = settingsEntities;
+	}
+
+	public ArrayList<TiEsEntity> getTiEsEntities() {
+		return tiEsEntities;
+	}
+
+	public void setTiEsEntities(ArrayList<TiEsEntity> tiEsEntities) {
+		this.tiEsEntities = tiEsEntities;
+	}
+
+	public ArrayList<ToolsEntity> getToolsEntities() {
+		return toolsEntities;
+	}
+
+	public void setToolsEntities(ArrayList<ToolsEntity> toolsEntities) {
+		this.toolsEntities = toolsEntities;
+	}
+
+	public ArrayList<UsersEntity> getUsersEntities() {
+		return usersEntities;
+	}
+
+	public void setUsersEntities(ArrayList<UsersEntity> usersEntities) {
+		this.usersEntities = usersEntities;
+	}
+
+	public ArrayList<XinYongKasEntity> getXinYongKasEntities() {
+		return xinYongKasEntities;
+	}
+
+	public void setXinYongKasEntities(ArrayList<XinYongKasEntity> xinYongKasEntities) {
+		this.xinYongKasEntities = xinYongKasEntities;
+	}
+
+	public ArrayList<XykBannersEntity> getXykBannersEntities() {
+		return xykBannersEntities;
+	}
+
+	public void setXykBannersEntities(ArrayList<XykBannersEntity> xykBannersEntities) {
+		this.xykBannersEntities = xykBannersEntities;
 	}
 }
 

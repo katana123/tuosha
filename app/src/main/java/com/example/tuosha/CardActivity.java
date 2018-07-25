@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.util.LruCache;
+import android.widget.Toast;
 //import com.example.R;
 
 import com.alibaba.fastjson.JSON;
@@ -29,8 +30,9 @@ import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
-import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
+
 import com.example.tuosha.model.SWbean;
+import com.example.tuosha.model.XinYongKasEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -191,7 +193,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     public void setData(){
         //1.检查customApplication中是否有数据，有就发消息给handler
         CustomApplication application = (CustomApplication)getInstance();
-        if (application.getCardEntityArrayList()!=null){
+        if (application.getXinYongKasEntities()!=null){
             Message message=new Message();
             message.what=200; //200代码获取数据正常
             handler.sendMessage(message);
@@ -201,12 +203,12 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
 
             String jsonLruCache =util.getJsonLruCache(1) ;
             JSONArray jsonArray = JSON.parseArray(jsonLruCache);
-            ArrayList<ImsXuanMixloanBankCardEntity> bankCardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
+            ArrayList<XinYongKasEntity> xykList = new ArrayList<XinYongKasEntity>();
             for (Object jsonObject : jsonArray) {
-                ImsXuanMixloanBankCardEntity platformModel = JSONObject.parseObject(jsonObject.toString(), ImsXuanMixloanBankCardEntity.class);
-                bankCardList.add(platformModel);
+                XinYongKasEntity platformModel = JSONObject.parseObject(jsonObject.toString(), XinYongKasEntity.class);
+                xykList.add(platformModel);
             }
-            application.setCardEntityArrayList(bankCardList);
+            application.setXinYongKasEntities(xykList);
             Message message=new Message();
             message.what=200; //200代码获取数据正常
             handler.sendMessage(message);
@@ -287,27 +289,27 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             mViewPaper.setCurrentItem(currentItem);
             switch (msg.what){
                 case 200:
-                    ArrayList<ImsXuanMixloanBankCardEntity> cardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
+                    ArrayList<XinYongKasEntity> cardList = new ArrayList<XinYongKasEntity>();
                     CustomApplication application = (CustomApplication)getInstance();
-                    if (application.getCardEntityArrayList() != null) {
+                    if (application.getXinYongKasEntities() != null) {
                         mContext = getActivity();
-                         ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getCardEntityArrayList());
+                         ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getXinYongKasEntities());
 
                         //3.创建一个adapter设置给listview
                         CardAdapter cardAdapter = new CardAdapter(getActivity(), allNews);
                         lv_card.setAdapter(cardAdapter);
 
-                        application.setCardEntityArrayList(null);
+                        application.setXinYongKasEntities(null);
                     }
                     break;
                 case -1:
                     //获取失败
-                   // Toast.makeText(BankActivity.this, "获取失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
                     System.out.println("获取失败");
                     break;
                 case -2:
                     //获取发生异常
-                   // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "获取发生异常", Toast.LENGTH_SHORT).show();
                     System.out.println("获取发生异常");
                     break;
                 default:
@@ -345,26 +347,25 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             @Override
             public void run() {
                 super.run();
-                JSONArray aaa = new JSONArray();
+
                 try {
-                   // ArrayList<ImsXuanMixloanBankCardEntity> cardkList = new ArrayList<ImsXuanMixloanBankCardEntity>();
 
                     CustomApplication customApplication = (CustomApplication)getInstance();
 
                     Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" +customApplication.getCardEntityArrayList());
+                    System.out.println("customApplication的内容 :" +customApplication.getXinYongKasEntities());
 
                     int i=0;
-                    while (customApplication.getCardEntityArrayList()==null){
+                    while (customApplication.getXinYongKasEntities()==null){
 
                         i=i+1;
-                        System.out.println("读取customApplication.getCardEntityArrayList:"+customApplication.getCardEntityArrayList());
+                        System.out.println("读取customApplication.getXinYongKasEntities:"+customApplication.getXinYongKasEntities());
                         Thread.sleep(1000 );
                         if (i>50) break;
                     }
                     if (i<50){
 
-                        util.addJsonLruCache(1, customApplication.getCardEntityArrayList().toString());
+                        util.addJsonLruCache(1, customApplication.getXinYongKasEntities().toString());
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);

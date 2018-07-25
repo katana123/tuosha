@@ -13,6 +13,7 @@ import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ImsXuanMixloanBankCardEntity;
 import com.example.tuosha.model.ImsXuanMixloanBankEntity;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
+import com.example.tuosha.model.ProcessesEntity;
 import com.example.tuosha.model.SWbean;
 
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class DebitUtils {
 
     //封装新闻的假数据到list中返回,以后数据会从数据库中获取
-    public static ArrayList<DebitBean> getAllNews(Context context ,ArrayList<ImsXuanMixloanProductEntity> debitList) {
+    public static ArrayList<DebitBean> getAllNews(Context context ,ArrayList<ProcessesEntity> debitList) {
 
         ArrayList<DebitBean> arrayList = new ArrayList<DebitBean>();
 
@@ -34,16 +35,11 @@ public class DebitUtils {
             DebitBean debitBean = new DebitBean();
 
             debitBean.title = debitList.get(i).getName();
-            String jsonstr = debitList.get(i).getExtInfo();
-            JSONObject jobject = JSON.parseObject(jsonstr);
-
-
-           // debitBean.des = jobject.getString("subscribe_tips");
-            debitBean.debit_url = jobject.getString("url");
-            if ((jobject.getString("logo") == null) || (jobject.getString("logo") == "")) {
+            debitBean.debit_url = debitList.get(i).getLink();
+            if ((debitList.get(i).getImage() == null) || (debitList.get(i).getImage()  == "")) {
                 debitBean.icon = "";
             } else {
-                debitBean.icon = jobject.getString("logo");
+                debitBean.icon = debitList.get(i).getImage() ;
             }
             // bankBean.icon =//json.getString("logo");
             arrayList.add(debitBean);

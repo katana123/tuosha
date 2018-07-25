@@ -4,8 +4,8 @@ package com.example.tuosha.Utils;
  * Created by admin on 2014/7/8.
  */
 public class Constants {
-    //public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
-   public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
+    public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
+   //public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
     //public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
    // public static final String TCP_SERVER_ADDRESS = "192.168.100.105";
   //  public static final String TCP_SERVER_ADDRESS = "192.168.43.170";
@@ -45,7 +45,8 @@ public class Constants {
     public static final byte BANKLIST = 0x05; //银行列表PRODUCT
     public static final byte PRODUCTLIST = 0x08;
     public static final byte BANKCARDLIST = 0x09; //银行列表
-
+    public static final byte PROGRESSLIST = 0x0A;
+    public static final byte DAIKUANLIST = 0x0B;
     public static final byte BANKDEBITLIST = 0x10;
     public static final byte PRODUCTEBITLIST = 0x11;
     public static final byte CHECKNAME = 0x12;

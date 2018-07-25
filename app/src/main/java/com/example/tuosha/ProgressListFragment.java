@@ -17,11 +17,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
+import com.example.tuosha.model.ProcessesEntity;
 import com.example.tuosha.model.SWbean;
+import com.example.tuosha.model.TiEsEntity;
 
 import java.util.ArrayList;
 
@@ -37,6 +42,8 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     private ViewPager mViewPaper;
     private int currentItem;
     private View mview;
+    private CacheUtil util;
+
     @SuppressLint("ValidFragment")
     public ProgressListFragment(FragmentManager fManager, ArrayList<CardBean> datas) {
         this.fManager = fManager;
@@ -51,9 +58,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mview = inflater.inflate(R.layout.fragment_card_list, container, false);
-
-            sendmessage();
-            receivemsg();
+        setData();
 
         return mview;
     }
@@ -90,16 +95,16 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                 case 200:
                     //ArrayList<ImsXuanMixloanBankCardEntity> cardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
                     CustomApplication application = (CustomApplication)getInstance();
-                    if (application.getProductEntityArrayList() != null) {
+                    if (application.getProcessesEntities() != null) {
                         mContext = getActivity();
-                        ArrayList<DebitBean> allNews = DebitUtils.getAllNews(mContext, application.getProductEntityArrayList());
+                        ArrayList<DebitBean> allNews = DebitUtils.getAllNews(mContext, application.getProcessesEntities());
 
                         //3.创建一个adapter设置给listview
                         ListView lv_debit = (ListView) mview.findViewById(R.id.lv_debit);
                         DebitAdapter debitAdapter = new DebitAdapter(getActivity(), allNews);
                         lv_debit.setAdapter(debitAdapter);
 
-                        application.setProductEntityArrayList(null);
+                        application.setProcessesEntities(null);
                     }
                     break;
                 case -1:
@@ -118,6 +123,36 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
             }
         };
     };
+    public void setData(){
+        //1.检查customApplication中是否有数据，有就发消息给handler
+        CustomApplication application = (CustomApplication)getInstance();
+        if (application.getProcessesEntities()!=null){
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+        }
+        //2.检查customApplication中没有数据，在Lrucache中找有没有数据
+        else if (util.getJsonLruCache(2)!=null){
+
+            String jsonLruCache =util.getJsonLruCache(2) ;
+            JSONArray jsonArray = JSON.parseArray(jsonLruCache);
+            ArrayList<ProcessesEntity> xykList = new ArrayList<ProcessesEntity>();
+            for (Object jsonObject : jsonArray) {
+                ProcessesEntity platformModel = JSONObject.parseObject(jsonObject.toString(), ProcessesEntity.class);
+                xykList.add(platformModel);
+            }
+            application.setProcessesEntities(xykList);
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+            //Bitmap bitmap = CacheUtil.getBitmapLruCache(mListId.get(arg2));
+        }
+        //3.cache中没有数据，向数据库发出请求
+        else{
+            sendmessage();
+            receivemsg();
+        }
+    }
     public void sendmessage(){
         Thread thread = new Thread() {
             public void run() {
@@ -127,7 +162,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                     imcgClientHandler.start();
                     SWbean swbean = new SWbean();
                     System.out.println("sendmessage");
-                    swbean.setCommand(Constants.PRODUCTLIST);
+                    swbean.setCommand(Constants.PROGRESSLIST);
                     Thread.sleep(1000 * 3);
                     imcgClientHandler.sendMsg(swbean);
 
@@ -154,13 +189,13 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                     CustomApplication customApplication = (CustomApplication)getInstance();
 
                     Thread.sleep(3000);
-                    System.out.println("customApplication的内容 :" +customApplication.getProductEntityArrayList());
+                    System.out.println("customApplication的内容 :" +customApplication.getProcessesEntities());
 
                     int i=0;
-                    while (customApplication.getProductEntityArrayList()==null){
+                    while (customApplication.getProcessesEntities()==null){
 
                         i=i+1;
-                        System.out.println("du"+customApplication.getProductEntityArrayList());
+                        System.out.println("du"+customApplication.getProcessesEntities());
                         Thread.sleep(1000 );
                         if (i>50) break;
                     }

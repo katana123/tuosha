@@ -56,8 +56,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     private volatile boolean shouldReconncet = false;
     private volatile boolean shouldRelogin = false;
     private CustomApplication customApplication;
-    private ChannelHandlerContext rebackctx;
-    private Object rebackmsg;
+
     public IMCGClientHandler(CustomApplication c) {
 
         customApplication = c;
@@ -183,8 +182,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
        System.out.println(HANDLER_CHANNELREAD);
-         rebackctx = ctx;
-        rebackmsg = msg;
+
 
         ByteBuf byteBuf = (ByteBuf) msg;
         try {
@@ -200,41 +198,40 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
             System.out.println(imcg.getCommand()+"----"+imcg.getRecommand());
             customApplication=(CustomApplication) getMyApplication();
             switch (netCommand) {
+                //快速提额
                 case Constants.BANKLIST:
                     System.out.println("BANKLIST");
-                    rebackctx = ctx;
-                    rebackmsg = msg;
+
                   new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
 
                         	if (imcg.getRecommand() == Constants.BANKLIST){
                                 System.out.println("BANKLIST数据请求成功");
-                                System.out.println(imcg.getProductList());
-                                customApplication=(CustomApplication) getMyApplication();
-                                customApplication.setProductEntityArrayList(imcg.getProductList());
+                                System.out.println(imcg.getProductsEntities());
+
+                                customApplication.setTiEsEntities(imcg.getTiEsEntities());
 
                         	} else if(imcg.getRecommand() == Constants.DEFAULT){
                                 System.out.println("BANKLIST数据请求失败");
-//                                Toast.makeText(customapplication.getLoginActivity(), "登陆失败！",
-//                              	      Toast.LENGTH_SHORT).show();
+//
                             }
 
                         }
                     });
 
                     break;
+                    //信用卡
                 case Constants.BANKCARDLIST:
                     System.out.println("BANKCARDLIST");
-                    rebackctx = ctx;
-                    rebackmsg = msg;
+
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
 
                             if (imcg.getRecommand() == Constants.BANKCARDLIST){
                                 System.out.println("BANKCARDLIST数据请求成功");
-                                System.out.println(imcg.getBankCardList());
-                                customApplication=(CustomApplication) getMyApplication();
-                                customApplication.setCardEntityArrayList(imcg.getBankCardList());
+                                System.out.println(imcg.getXinYongKasEntities());
+
+                                customApplication.setXinYongKasEntities(imcg.getXinYongKasEntities());
 
                             } else if(imcg.getRecommand() == Constants.DEFAULT){
                                 System.out.println("BANKLIST数据请求失败");
@@ -246,28 +243,46 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                     });
 
                     break;
-                case Constants.PRODUCTEBITLIST:
-                    System.out.println("PRODUCTEBITLIST");
-                    rebackctx = ctx;
-                    rebackmsg = msg;
+                    //银行贷款
+                case Constants.DAIKUANLIST:
+                    System.out.println("DAIKUANLIST");
+
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
 
-                            if (imcg.getRecommand() == Constants.PRODUCTEBITLIST){
-                                System.out.println("PRODUCTEBITLISTT数据请求成功");
-                                System.out.println(imcg.getProductList());
-                                customApplication=(CustomApplication) getMyApplication();
-                                customApplication.setProductEntityArrayList(imcg.getProductList());
+                            if (imcg.getRecommand() == Constants.DAIKUANLIST){
+                                System.out.println("DAIKUANLIST数据请求成功");
+                                System.out.println(imcg.getDaikuansEntities());
+
+                                customApplication.setDaikuansEntities(imcg.getDaikuansEntities());
 
                             } else if(imcg.getRecommand() == Constants.DEFAULT){
-                                System.out.println("PRODUCTEBITLIST数据请求失败");
-//                                Toast.makeText(customapplication.getLoginActivity(), "登陆失败！",
-//                              	      Toast.LENGTH_SHORT).show();
+                                System.out.println("DAIKUANLIST数据请求失败");
+//
                             }
 
                         }
                     });
+                    //贷款进度
+                case Constants.PROGRESSLIST:
+                    System.out.println("PROGRESSLIST");
 
+                    new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
+                        public void run() {
+
+                            if (imcg.getRecommand() == Constants.DAIKUANLIST){
+                                System.out.println("PROGRESSLIST数据请求成功");
+                                System.out.println(imcg.getProcessesEntities());
+
+                                customApplication.setProcessesEntities(imcg.getProcessesEntities());
+
+                            } else if(imcg.getRecommand() == Constants.DEFAULT){
+                                System.out.println("PROGRESSLIST数据请求失败");
+//
+                            }
+
+                        }
+                    });
                     break;
 //                case Constants.INFOCOL_LINKING_SUC:
 //                    System.out.println("INFOCOL_LINKING_SUC");
@@ -574,13 +589,13 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
         }
     }
 
-    public ChannelHandlerContext getChannelHandlerContext() {
-        return rebackctx;
-    }
+    //public ChannelHandlerContext getChannelHandlerContext() {
+    //    return rebackctx;
+    //}
 
-    public Object getMsg() {
-        return rebackmsg;
-    }
+    //public Object getMsg() {
+     //   return rebackmsg;
+    //}
 
     public CustomApplication getCustomApplication() {
         return customApplication;

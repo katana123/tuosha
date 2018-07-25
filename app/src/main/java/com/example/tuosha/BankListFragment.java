@@ -18,13 +18,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
 import com.example.tuosha.model.SWbean;
-
+import com.example.tuosha.model.TiEsEntity;
+import com.example.tuosha.model.XinYongKasEntity;
 
 
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
     private FragmentManager fManager;
     private ArrayList<BankBean> datas;
     private String txt_title;
-
+    private CacheUtil util;
     //   @SuppressLint("ValidFragment")
 //    public BankListFragment(FragmentManager fManager, ArrayList<BankBean> datas) {
 //        this.fManager = fManager;
@@ -67,11 +71,8 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView=inflater.inflate(R.layout.fragment_bank_list, null);
+        setData();
 
-        sendmessage();
-
-        System.out.println("执行receive");
-        receivemsg();
 
 
         return mView;
@@ -85,11 +86,11 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
 
             switch (msg.what) {
                 case 200:
-                    ArrayList<ImsXuanMixloanProductEntity> bankList = new ArrayList<ImsXuanMixloanProductEntity>();
+                    ArrayList<TiEsEntity> bankList = new ArrayList<TiEsEntity>();
                     CustomApplication application = (CustomApplication)getInstance();
                     mContext = getActivity();
-                    if (customApplication.getProductEntityArrayList() != null) {
-                        ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext, customApplication.getProductEntityArrayList());
+                    if (customApplication.getTiEsEntities() != null) {
+                        ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext, customApplication.getTiEsEntities());
                         //3.创建一个adapter
                         BankAdapter  bankAdapter = new BankAdapter(mContext, allNews);
                         //4.设置给listview
@@ -97,7 +98,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                         lv_bank.setAdapter(bankAdapter);
                         bankAdapter.notifyDataSetChanged();//一旦适配器有数据，直接通知listView更新
                         lv_bank.setOnItemClickListener(BankListFragment.this);
-                        application.setProductEntityArrayList(null);
+                        application.setTiEsEntities(null);
                     }
 
                     break;
@@ -115,8 +116,111 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
             }
         }
     };
+    public void setData(){
+        //1.检查customApplication中是否有数据，有就发消息给handler
+        CustomApplication application = (CustomApplication)getInstance();
+        if (application.getTiEsEntities()!=null){
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+        }
+        //2.检查customApplication中没有数据，在Lrucache中找有没有数据
+        else if (util.getJsonLruCache(2)!=null){
+
+            String jsonLruCache =util.getJsonLruCache(2) ;
+            JSONArray jsonArray = JSON.parseArray(jsonLruCache);
+            ArrayList<TiEsEntity> xykList = new ArrayList<TiEsEntity>();
+            for (Object jsonObject : jsonArray) {
+                TiEsEntity platformModel = JSONObject.parseObject(jsonObject.toString(), TiEsEntity.class);
+                xykList.add(platformModel);
+            }
+            application.setTiEsEntities(xykList);
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+            //Bitmap bitmap = CacheUtil.getBitmapLruCache(mListId.get(arg2));
+        }
+        //3.cache中没有数据，向数据库发出请求
+        else{
+            sendmessage();
+            receivemsg();
+        }
+    }
+    public void sendmessage(){
+        Thread thread = new Thread() {
+            public void run() {
+                CustomApplication customApplication=new CustomApplication();
+
+                try {
+                    IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
+                    imcgClientHandler.start();
+                    SWbean swbean = new SWbean();
+                    System.out.println("sendmessage");
+                    swbean.setCommand(Constants.BANKLIST);
+                    Thread.sleep(1000 * 3);
+                    imcgClientHandler.sendMsg(swbean);
+
+                    Thread.sleep(1000);
+                    imcgClientHandler.disposeInfoColClient();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+    }
+    public void receivemsg(){
+        System.out.println("执行接收程序");
 
 
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                JSONArray aaa = new JSONArray();
+                try {
+                    ArrayList<TiEsEntity> bankList = new ArrayList<TiEsEntity>();
+                    //CustomApplication customApplication = new CustomApplication();
+
+                    customApplication=(CustomApplication) getInstance();
+                    Thread.sleep(5000);
+                    System.out.println("customApplication的内容 :" +customApplication.getTiEsEntities());
+                    //System.out.println("bukenengqudao :" +customApplication.getMailusername());
+                    int i=0;
+                    while (customApplication.getTiEsEntities()==null){
+                        //while (customApplication.getMailusername()==null){
+                        i=i+1;
+                        System.out.println("du"+customApplication.getTiEsEntities());
+                        Thread.sleep(1000 );
+                        if (i>50) break;
+                    }
+                    if (i<50){
+                        Message message=new Message();
+                        message.what=200; //200代码获取数据正常
+                        handler.sendMessage(message);
+
+                    }
+                    else{
+                        Message message=new Message();
+                        message.what=-1; //代码获取数据 常
+                        handler.sendMessage(message);
+
+                    }
+
+
+                    //把arraylist 转成 jsonArray
+                    // String bbb = JSONArray.toJSONString(bankList);
+                    //aaa = JSONArray.parseArray(bbb);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+
+                }
+            }
+        }.start();
+    }
 
 
 
@@ -157,82 +261,8 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
 
     }
 
-    public void sendmessage(){
-        Thread thread = new Thread() {
-            public void run() {
-                CustomApplication customApplication=new CustomApplication();
-
-                try {
-                    IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
-                    imcgClientHandler.start();
-                    SWbean swbean = new SWbean();
-                    System.out.println("sendmessage");
-                    swbean.setCommand(Constants.BANKLIST);
-                    Thread.sleep(1000 * 3);
-                    imcgClientHandler.sendMsg(swbean);
-
-                    Thread.sleep(1000);
-                    imcgClientHandler.disposeInfoColClient();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        thread.start();
-    }
-
-    public void receivemsg(){
-        System.out.println("执行接收程序");
 
 
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                JSONArray aaa = new JSONArray();
-                try {
-                    ArrayList<ImsXuanMixloanProductEntity> bankList = new ArrayList<ImsXuanMixloanProductEntity>();
-                    //CustomApplication customApplication = new CustomApplication();
-
-                    customApplication=(CustomApplication) getInstance();
-                    Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" +customApplication.getProductEntityArrayList());
-                    //System.out.println("bukenengqudao :" +customApplication.getMailusername());
-                    int i=0;
-                    while (customApplication.getProductEntityArrayList()==null){
-                        //while (customApplication.getMailusername()==null){
-                        i=i+1;
-                        System.out.println("du"+customApplication.getProductEntityArrayList());
-                        Thread.sleep(1000 );
-                        if (i>50) break;
-                    }
-                    if (i<50){
-                        Message message=new Message();
-                        message.what=200; //200代码获取数据正常
-                        handler.sendMessage(message);
-
-                    }
-                    else{
-                        Message message=new Message();
-                        message.what=-1; //代码获取数据 常
-                        handler.sendMessage(message);
-
-                    }
-
-
-                    //把arraylist 转成 jsonArray
-                    // String bbb = JSONArray.toJSONString(bankList);
-                    //aaa = JSONArray.parseArray(bbb);
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-
-                }
-            }
-        }.start();
-    }
     // @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
