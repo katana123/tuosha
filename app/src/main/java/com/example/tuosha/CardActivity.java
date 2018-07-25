@@ -3,6 +3,7 @@ package com.example.tuosha;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,10 +19,13 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.util.LruCache;
 //import com.example.R;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
@@ -45,6 +49,8 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     private CustomApplication customApplication;
     private List<View> dots;
     private int currentItem;
+    private ArrayList<Integer> mListId;
+    private CacheUtil util;
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
@@ -87,44 +93,14 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView=inflater.inflate(R.layout.activity_card, null);
+        util = new CacheUtil();
+        //滚动图片
         setView();
-        //设置图标点击事件
-        TextView tv0 = mView.findViewById(R.id.textView0);
-        tv0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(getActivity() , BankSecondActivity.class);
-                startActivity(intent);
-            }
-        });
-        TextView tv1 = mView.findViewById(R.id.textView1);
-        tv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+        //监听点击事件
+        setListener();
+        //加载数据
+        setData();
 
-                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
-                startActivity(intent);
-            }
-        });
-        TextView tv2 = mView.findViewById(R.id.textView2);
-        tv2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-                Intent intent = new Intent(getActivity() , ProgressSecondActivity.class);
-                startActivity(intent);
-            }
-        });
-        //改变图标大小
-        initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
-        initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
-        initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
-
-        lv_card = mView.findViewById(R.id.lv_card);
-        //4.设置listview条目的点击事件
-        lv_card.setOnItemClickListener(this);
-        sendmessage();
-        receivemsg();
         return mView;
     }
     private void setView(){
@@ -175,7 +151,73 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             }
         });
     }
+    public void setListener(){
+        //设置图标点击事件
+        TextView tv0 = mView.findViewById(R.id.textView0);
+        tv0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getActivity() , BankSecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView tv1 = mView.findViewById(R.id.textView1);
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
 
+                Intent intent = new Intent(getActivity() , CardSecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView tv2 = mView.findViewById(R.id.textView2);
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(getActivity() , ProgressSecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        //改变图标大小
+        initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
+        initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
+        initbtn(R.id.textView2,R.drawable.quick_option_photo_nor);
+
+        lv_card = mView.findViewById(R.id.lv_card);
+        //4.设置listview条目的点击事件
+        lv_card.setOnItemClickListener(this);
+    }
+    public void setData(){
+        //1.检查customApplication中是否有数据，有就发消息给handler
+        CustomApplication application = (CustomApplication)getInstance();
+        if (application.getCardEntityArrayList()!=null){
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+        }
+        //2.检查customApplication中没有数据，在Lrucache中找有没有数据
+        else if (util.getJsonLruCache(1)!=null){
+
+            String jsonLruCache =util.getJsonLruCache(1) ;
+            JSONArray jsonArray = JSON.parseArray(jsonLruCache);
+            ArrayList<ImsXuanMixloanBankCardEntity> bankCardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
+            for (Object jsonObject : jsonArray) {
+                ImsXuanMixloanBankCardEntity platformModel = JSONObject.parseObject(jsonObject.toString(), ImsXuanMixloanBankCardEntity.class);
+                bankCardList.add(platformModel);
+            }
+            application.setCardEntityArrayList(bankCardList);
+            Message message=new Message();
+            message.what=200; //200代码获取数据正常
+            handler.sendMessage(message);
+            //Bitmap bitmap = CacheUtil.getBitmapLruCache(mListId.get(arg2));
+        }
+        //3.cache中没有数据，向数据库发出请求
+        else{
+            sendmessage();
+            receivemsg();
+        }
+    }
     /*定义的适配器*/
     public class ViewPagerAdapter extends PagerAdapter{
 
@@ -321,6 +363,8 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                         if (i>50) break;
                     }
                     if (i<50){
+
+                        util.addJsonLruCache(1, customApplication.getCardEntityArrayList().toString());
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);

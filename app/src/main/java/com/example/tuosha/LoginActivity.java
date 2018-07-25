@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.Protocols;
+import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.model.ImsXuanMixloanMemberEntity;
 import com.example.tuosha.model.SWbean;
@@ -23,16 +24,19 @@ import com.example.tuosha.model.TbUsersEntity;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
 import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+import static com.example.tuosha.client.CustomApplication.getMyApplication;
 
 public class LoginActivity extends AppCompatActivity {
 
     private TextView username;
     private TextView password;
-    private  CustomApplication customApplication ;
-   // @Override
-    public Context getContext(){
+    private CustomApplication customApplication;
+
+    // @Override
+    public Context getContext() {
         return this.getContext();
     }
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
@@ -44,14 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         customApplication = (CustomApplication) getApplication();
         customApplication.setLoginActivity(this);
 
-
+        LoadUserDate();
 
         Button login = findViewById(R.id.sign_in_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               // String nickname = username.getText().toString();//账号
+                // String nickname = username.getText().toString();//账号
                 String phone = username.getText().toString();//电话号码
                 String pass = password.getText().toString();//密码
 
@@ -68,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton("确定", null)
                             .show();
                 } else {
-                    CustomApplication customApplication = (CustomApplication) getApplication();
+                    // CustomApplication customApplication = (CustomApplication) getApplication();
                     //customApplication.setMailusername(phone);
 
                     try {
@@ -98,16 +102,28 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(LoginActivity.this,RegisterActivity.class);
+                intent.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
     }
 
 
-    public void onDestory(){
+    public void onDestory() {
         removeActivity(this);
     }
 
+    private void LoadUserDate() {
+        if (UserManage.getInstance().hasUserInfo(this)) {
 
+            String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getPhone();
+
+            if (!("".equals(username))) {
+                username.setText(uname);
+
+
+            }
+
+        }
+    }
 }

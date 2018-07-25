@@ -55,8 +55,10 @@ public class CenterActivity extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.activity_center, null);
-
-        //关于我们
+        String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getNickname();
+        TextView t_name = mView.findViewById(R.id.user_name);
+        t_name.setText(uname);
+          //关于我们
         TextView t_about = (TextView) mView.findViewById(R.id.c_about);
         t_about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +80,7 @@ public class CenterActivity extends Fragment{
                 Toast.makeText(getActivity(), "没有新版本更新，当前已是最新版本", Toast.LENGTH_SHORT).show();
                 //3.如果手机已经启动下载程序，执行downloadApk。否则跳转到设置界面
                 if (DownLoadUtils.getInstance(getActivity()).canDownload()) {
-                    DownloadApk.downloadApk(getActivity(), "http://192.168.100.245:9000/download/apk/huiqu.apk", "Hobbees更新", "Hobbees");
+                    DownloadApk.downloadApk(getActivity(), "http://192.168.100.245:9000/download/apk/tuosha.apk", "tuosha更新", "tuosha");
                 } else {
                     DownLoadUtils.getInstance(getActivity()).skipToDownloadManager();
                 }
@@ -97,7 +99,7 @@ public class CenterActivity extends Fragment{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // 点击“确认”后的操作
-                                UserManage.getInstance().saveUserInfo(getMyApplication(), "", "","");
+                                UserManage.getInstance().saveUserInfo(getMyApplication(), "", "","","");
                                 android.os.Process.killProcess(android.os.Process.myPid());
                                 AppExit(getActivity());
                                 getActivity().finish();
