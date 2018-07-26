@@ -42,6 +42,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.tuosha.client.CustomApplication.getInstance;
+import static com.mob.tools.utils.DeviceHelper.getApplication;
 
 //接口
 public class CardActivity extends Fragment implements AdapterView.OnItemClickListener{
@@ -329,7 +330,8 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         Thread thread = new Thread() {
             public void run() {
 
-                CustomApplication customApplication=new CustomApplication();
+                customApplication = (CustomApplication) getApplication();
+
                 application.setXinYongKasEntities(null);
                 try {
                     IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
