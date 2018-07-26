@@ -51,19 +51,15 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
     private int oldPosition = 0;
     //存放图片的id
     private int[] imageIds = new int[]{
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
-            R.mipmap.xxdt_07,
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
+            R.drawable.k01,
+            R.drawable.k02,
+            R.drawable.k03,
     };
     //存放图片的标题
     private String[] titles = new String[]{
             "轮播1",
             "轮播2",
             "轮播3",
-            "轮播4",
-            "轮播5"
     };
     private TextView title;
     private ViewPagerAdapter adapter;
@@ -464,6 +460,5 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
         webView.loadUrl(url);          //调用loadUrl方法为WebView加入链接
         getActivity().setContentView(webView);                           //调用Activity提供的setContentView将webView显示出来
     }
-
 
 }

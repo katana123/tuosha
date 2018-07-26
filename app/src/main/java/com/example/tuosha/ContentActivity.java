@@ -49,19 +49,15 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
     private int oldPosition = 0;
     //存放图片的id
     private int[] imageIds = new int[]{
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
-            R.mipmap.xxdt_07,
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
+            R.drawable.xx1,
+            R.drawable.xx2,
+            R.drawable.xx3
     };
     //存放图片的标题
     private String[] titles = new String[]{
             "轮播1",
             "轮播2",
-            "轮播3",
-            "轮播4",
-            "轮播5"
+            "轮播3"
     };
     private TextView title;
     private ViewPagerAdapter adapter;
@@ -235,8 +231,6 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         dots.add(mView.findViewById(R.id.dot_0));
         dots.add(mView.findViewById(R.id.dot_1));
         dots.add(mView.findViewById(R.id.dot_2));
-        dots.add(mView.findViewById(R.id.dot_3));
-        dots.add(mView.findViewById(R.id.dot_4));
 
         title = mView.findViewById(R.id.title);
         title.setText(titles[0]);
@@ -408,6 +402,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }
+
                     if (i < 50) {
                         Message message = new Message();
                         message.what = 200; //200代码获取数据正常

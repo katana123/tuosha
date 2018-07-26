@@ -54,7 +54,7 @@ public class KouziListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.item_img_icon.setImageResource(R.mipmap.ic_launcher);
+//        viewHolder.item_img_icon.setImageResource(R.mipmap.ic_launcher);
         String url = mList.get(i).image;
         viewHolder.item_img_icon.setTag(url);
         mImageLoader.showImageByThread(viewHolder.item_img_icon, mList.get(i).image);
