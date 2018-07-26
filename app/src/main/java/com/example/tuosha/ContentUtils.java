@@ -8,33 +8,27 @@ import android.support.v4.content.ContextCompat;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.PostsEntity;
 
 
 public class ContentUtils {
 
     //封装新闻的假数据到list中返回,以后数据会从数据库中获取
-    public static ArrayList<ContentBean> getAllNews(Context context, ArrayList<ContentBean> contentList) {
+    public static ArrayList<PostsEntity> getAllNews(Context context, ArrayList<PostsEntity> postsEntities) {
 
-        ArrayList<ContentBean> arrayList = new ArrayList<ContentBean>();
+        ArrayList<PostsEntity> arrayList = new ArrayList<PostsEntity>();
 
-        if (contentList != null) {
+        if (postsEntities != null) {
             for (int i = 0; i < 10; i++) {
                 try {
-                    ContentBean contentBean = new ContentBean();
-                    contentBean.title = contentList.get(i).getTitle();
-                    contentBean.readnum = contentList.get(i).getReadnum();
-                    contentBean.newstime = contentList.get(i).getNewstime();
-                    //处理ext_info
-                    String jsonstr = contentList.get(i).getExtInfo();
-                    JSONObject jobject = JSON.parseObject(jsonstr);
-                    contentBean.extInfo = jobject.getString("content");
-                    if ((jobject.getString("pic") == null) || (jobject.getString("pic") == "")) {
-                        contentBean.icon = "";
-                    } else {
-                        contentBean.icon = jobject.getString("pic");
-                    }
-                    // cardBean.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_note_over); //通过context对象将一个资源id转换成一个Drawable对象。
-                    arrayList.add(contentBean);
+                    PostsEntity postsEntity = new PostsEntity();
+                    postsEntity.name = postsEntities.get(i).getName();
+                    postsEntity.id = postsEntities.get(i).getId();
+                    postsEntity.intro = postsEntities.get(i).getIntro();
+                    postsEntity.createdAt = postsEntities.get(i).getCreatedAt();
+                    postsEntity.views = postsEntities.get(i).getViews();
+                    postsEntity.image = postsEntities.get(i).getImage();
+                    arrayList.add(postsEntity);
                 } catch (Exception e) {
 
                     break;

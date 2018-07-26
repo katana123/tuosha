@@ -24,9 +24,11 @@ import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.PostsEntity;
 import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.example.tuosha.client.CustomApplication.getInstance;
 
@@ -73,11 +75,11 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
 
             switch (msg.what) {
                 case 200:
-                    ArrayList<ContentBean> contentBeans = new ArrayList<ContentBean>();
+                    ArrayList<PostsEntity> contentBeans = new ArrayList<PostsEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
                     mContext = getActivity();
-                    if (customApplication.getContentSecondList() != null) {
-                        ArrayList<ContentBean> allNews = ContentUtils.getAllNews(mContext, customApplication.getContentSecondList());
+                    if (customApplication.getPostsEntities() != null) {
+                        ArrayList<PostsEntity> allNews = ContentUtils.getAllNews(mContext, customApplication.getPostsEntities());
                         //3.创建一个adapter
                         ContentAdapter contentAdapter = new ContentAdapter(mContext, allNews);
                         //4.设置给listview
@@ -137,18 +139,18 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
                 super.run();
                 JSONArray aaa = new JSONArray();
                 try {
-                    ArrayList<ContentBean> bankList = new ArrayList<ContentBean>();
+                    ArrayList<PostsEntity> bankList = new ArrayList<PostsEntity>();
                     //CustomApplication customApplication = new CustomApplication();
 
                     customApplication = (CustomApplication) getInstance();
                     Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" + customApplication.getContentSecondList());
+                    System.out.println("customApplication的内容 :" + customApplication.getPostsEntities());
                     //System.out.println("bukenengqudao :" +customApplication.getMailusername());
                     int i = 0;
-                    while (customApplication.getContentSecondList() == null) {
+                    while (customApplication.getPostsEntities() == null) {
                         //while (customApplication.getMailusername()==null){
                         i = i + 1;
-                        System.out.println("du" + customApplication.getContentSecondList());
+                        System.out.println("du" + customApplication.getPostsEntities());
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }
@@ -207,13 +209,13 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
     @SuppressLint("ResourceType")
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-        ContentBean bean = (ContentBean) parent.getItemAtPosition(position);
-        String name = bean.title;
-        String apply_num = bean.readnum;
-        String newstime = bean.newstime;
-        String logo = bean.icon;
+        PostsEntity bean = (PostsEntity) parent.getItemAtPosition(position);
+        String name = bean.name;
+        String apply_num = String.valueOf(bean.views);
+        String newstime = String.valueOf(bean.createdAt);
+        String logo = bean.image;
         int id = bean.id;
-        String extInfo = bean.extInfo;
+        String extInfo = bean.intro;
 
         fManager = getFragmentManager();
         FragmentTransaction fTransaction = fManager.beginTransaction();

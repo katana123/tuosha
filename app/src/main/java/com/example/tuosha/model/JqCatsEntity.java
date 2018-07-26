@@ -17,19 +17,32 @@ public class JqCatsEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//
-	private Integer id;
+	public Integer id;
 	//借钱分类
-	private String name;
+	public String name;
 	//
-	private String image;
+	public String image;
 	//
-	private Integer sort;
+	public Integer sort;
 	//
-	private Date createdAt;
+	public Date createdAt;
 	//
-	private Date updatedAt;
+	public Date updatedAt;
 	//
-	private Date deletedAt;
+	public Date deletedAt;
+
+	public JqCatsEntity() {
+	}
+
+	public JqCatsEntity(Integer id, String name, String image, Integer sort, Date createdAt, Date updatedAt, Date deletedAt) {
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.sort = sort;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.deletedAt = deletedAt;
+	}
 
 	/**
 	 * 设置：
