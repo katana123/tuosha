@@ -290,7 +290,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
      * 接收子线程传递过来的数据
      */
     private Handler handler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             mViewPaper.setCurrentItem(currentItem);
             switch (msg.what){
                 case 200:

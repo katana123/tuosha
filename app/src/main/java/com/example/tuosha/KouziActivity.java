@@ -27,6 +27,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
+import com.example.tuosha.model.JieQiansEntity;
 import com.example.tuosha.model.KouziBean;
 import com.example.tuosha.model.SWbean;
 
@@ -333,16 +334,16 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
             mViewPaper.setCurrentItem(currentItem);
             switch (msg.what) {
                 case 200:
-                    ArrayList<KouziBean> cardList = new ArrayList<KouziBean>();
+                    ArrayList<JieQiansEntity> jieQiansEntities = new ArrayList<JieQiansEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
-                    if (application.getList() != null) {
+                    if (application.getJieQiansEntities() != null) {
                         mContext = getActivity();
-                        ArrayList<KouziBean> allNews = KouziUtils.getAllNews(mContext, application.getList());
+                        ArrayList<JieQiansEntity> allNews = KouziUtils.getAllNews(mContext, application.getJieQiansEntities());
                         //3.创建一个adapter设置给listview
-                        KouziAdapter contentAdapter = new KouziAdapter(getActivity(), allNews);
+                        KouziListAdapter contentAdapter = new KouziListAdapter(getActivity(), allNews);
                         lv_kouzi.setAdapter(contentAdapter);
 
-                        application.setList(null);
+                        application.setJieQiansEntities(null);
                     }
                     break;
                 case -1:
@@ -391,13 +392,13 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
                     CustomApplication customApplication = (CustomApplication) getInstance();
 
                     Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" + customApplication.getList());
+                    System.out.println("customApplication的内容 :" + customApplication.getJieQiansEntities());
 
                     int i = 0;
-                    while (customApplication.getList() == null) {
+                    while (customApplication.getJieQiansEntities() == null) {
 //                        System.out.println("aaa");
                         i = i + 1;
-                        System.out.println("du55555" + customApplication.getList());
+                        System.out.println("du55555" + customApplication.getJieQiansEntities());
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }
@@ -446,9 +447,9 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
                             long id) {
 
 //        //需要获取条目上bean对象中url做跳转
-        KouziBean bean = (KouziBean) parent.getItemAtPosition(position);
+        JieQiansEntity bean = (JieQiansEntity) parent.getItemAtPosition(position);
 
-        String url = bean.kouzi_url;
+        String url = bean.link;
         System.out.println(url);
         webView = new WebView(getActivity());
         webView.setWebViewClient(new WebViewClient() {

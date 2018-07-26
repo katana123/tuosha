@@ -20,7 +20,10 @@ import com.example.tuosha.SubscribeActivity;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.JieQiansEntity;
+import com.example.tuosha.model.JqCatsEntity;
 import com.example.tuosha.model.KouziBean;
+import com.example.tuosha.model.PostsEntity;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.NetWorkImpl;
@@ -504,37 +507,37 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                 case Protocols.KOUZILIST:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
                         public void run() {
-                            ArrayList<KouziBean> KouziList = imcg.getKouziBean();
+                            ArrayList<JieQiansEntity> JieQianList = imcg.getJieQiansEntities();
                             CustomApplication application = CustomApplication.getInstance();
-                            application.setList(KouziList);
+                            application.setJieQiansEntities(JieQianList);
                         }
                     });
                     break;
                 case Protocols.KOUZISECONDLIST:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
                         public void run() {
-                            ArrayList<KouziBean> KouziList = imcg.getKouziBean();
-                            System.out.println(imcg.toString());
+                            ArrayList<JieQiansEntity> JieQianList = imcg.getJieQiansEntities();
+
                             CustomApplication application = CustomApplication.getInstance();
-                            application.setSecondlist(KouziList);
+                            application.setJieQiansEntities(JieQianList);
                         }
                     });
                     break;
                 case Protocols.CONTENTLIST:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
                         public void run() {
-                            ArrayList<ContentBean> ContentList = imcg.getContentBean();
+                            ArrayList<PostsEntity> postsEntities = imcg.getPostsEntities();
                             CustomApplication application = CustomApplication.getInstance();
-                            application.setContentList(ContentList);
+                            application.setPostsEntities(postsEntities);
                         }
                     });
                     break;
                 case Protocols.CONTENTLISTBYID:
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue(new Runnable() {
                         public void run() {
-                            ArrayList<ContentBean> ContentList = imcg.getContentBean();
+                            ArrayList<PostsEntity> postsEntities = imcg.getPostsEntities();
                             CustomApplication application = CustomApplication.getInstance();
-                            application.setContentSecondList(ContentList);
+                            application.setPostsEntities(postsEntities);
                         }
                     });
                     break;

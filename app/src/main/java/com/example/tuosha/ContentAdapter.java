@@ -2,104 +2,80 @@ package com.example.tuosha;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.JieQiansEntity;
+import com.example.tuosha.model.PostsEntity;
 
 
 public class ContentAdapter extends BaseAdapter{
 
-    private ArrayList<ContentBean> list;
-    private Context context;
+    private List<PostsEntity> mList;
+    private LayoutInflater mInflater;
+    private ImageLoader mImageLoader;
 
     //通过构造方法接受要显示的新闻数据集合
-    public ContentAdapter(Context context, ArrayList<ContentBean> list) {
-        this.list = list;
-        this.context = context;
+    public ContentAdapter(Context context, List<PostsEntity> data) {
+        mList = data;
+        mInflater = LayoutInflater.from(context);
+        mImageLoader = new ImageLoader();
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return mList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
+    public Object getItem(int i) {
+        return mList.get(i);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = null;
-        //1.复用converView优化listview,创建一个view作为getview的返回值用来显示一个条目
-        if(convertView != null){
-            view = convertView;
-        }else {
-            //方法一：推荐
-            //context:上下文, resource:要转换成view对象的layout的id, root:将layout用root(ViewGroup)包一层作为codify的返回值,一般传null
-            view = View.inflate(context, R.layout.item_news_layout, null);//将一个布局文件转换成一个view对象
-
-            //方法二
-            //通过LayoutInflater将布局转换成view对象
-            //view =  LayoutInflater.from(context).inflate(R.layout.item_news_layout, null);
-
-            //方法三：系统级开发
-            //通过context获取系统服务得到一个LayoutInflater，通过LayoutInflater将一个布局转换为view对象
-            //LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //view = layoutInflater.inflate(R.layout.item_news_layout, null);
-
-        }
-        //2.获取view上的子控件对象
-        ImageView item_img_icon = view.findViewById(R.id.item_img_icon);
-        TextView item_tv_des = view.findViewById(R.id.item_tv_des);
-        TextView item_tv_title = view.findViewById(R.id.item_tv_title);
-        TextView item_tv_newstime = view.findViewById(R.id.item_tv_newstime);
-        //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
-        ContentBean contentBean = list.get(position);
-        //4.将数据设置给这些子控件做显示
-//        item_img_icon.setImageDrawable(contentBean.icon);//设置imageView的图片
-        item_tv_title.setText(contentBean.title);
-        item_tv_des.setText(contentBean.news_url);
-        item_tv_newstime.setText(contentBean.newstime + "天前  |  " + contentBean.readnum + "人在看");
-
-        if (contentBean.icon == "") {
-            item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        ContentAdapter.ViewHolder viewHolder = null;
+        if (view == null) {
+            viewHolder = new ContentAdapter.ViewHolder();
+            view = mInflater.inflate(R.layout.item_news_layout, null);
+            viewHolder.item_img_icon = view.findViewById(R.id.item_img_icon);
+            viewHolder.item_tv_title = view.findViewById(R.id.item_tv_title);
+            viewHolder.item_tv_des = view.findViewById(R.id.item_tv_des);
+            viewHolder.item_tv_newstime = view.findViewById(R.id.item_tv_newstime);
+            view.setTag(viewHolder);
         } else {
-            if (!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + contentBean.icon)) {
-                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
-            } else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + contentBean.icon)));
-            }
+            viewHolder = (ContentAdapter.ViewHolder) view.getTag();
         }
+        viewHolder.item_img_icon.setImageResource(R.mipmap.ic_launcher);
+        String url = mList.get(i).image;
+        viewHolder.item_img_icon.setTag(url);
+//        mImageLoader.showImageByThread(viewHolder.item_img_icon,mList.get(i).image);
+        viewHolder.item_tv_title.setText(mList.get(i).name);
+        viewHolder.item_tv_des.setText(mList.get(i).intro);
+        viewHolder.item_tv_newstime.setText(mList.get(i).createdAt + "  |  " + mList.get(i).views + "人在看");
         return view;
     }
 
-    public boolean fileIsExists(String strFile) {
-        try {
-            File f = new File(strFile);
-            if (!f.exists()) {
-                return false;
-            }
-
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
+    class ViewHolder {
+        public ImageView item_img_icon;
+        public TextView item_tv_des, item_tv_title, item_tv_newstime;
     }
 
 }

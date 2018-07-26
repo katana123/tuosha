@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
+import com.example.tuosha.model.JieQiansEntity;
 import com.example.tuosha.model.KouziBean;
 
 import java.io.File;
@@ -22,19 +24,19 @@ import java.util.ArrayList;
 
 public class KouziAdapter extends BaseAdapter{
 
-    private ArrayList<KouziBean> list;
+    private ArrayList<JieQiansEntity> list;
     private Context context;
 
-    public ArrayList<KouziBean> getList() {
+    public ArrayList<JieQiansEntity> getList() {
         return list;
     }
 
-    public void setList(ArrayList<KouziBean> list) {
+    public void setList(ArrayList<JieQiansEntity> list) {
         this.list = list;
     }
 
     //通过构造方法接受要显示的数据集合
-    public KouziAdapter(Context context, ArrayList<KouziBean> list) {
+    public KouziAdapter(Context context, ArrayList<JieQiansEntity> list) {
         this.list = list;
         this.context = context;
     }
@@ -82,21 +84,12 @@ public class KouziAdapter extends BaseAdapter{
         TextView item_tv_title = view.findViewById(R.id.item_tv_kouzititle);
         TextView item_tv_kouzitime = view.findViewById(R.id.item_tv_kouzitime);
         //3.获取postion位置条目对应的list集合中的新闻数据，Bean对象
-        KouziBean kouziBean = list.get(position);
+        JieQiansEntity jieQianBean = list.get(position);
         //4.将数据设置给这些子控件做显示
-        item_tv_title.setText(kouziBean.title);
-        item_tv_des.setText("已申请人数" + kouziBean.clicknum + "人");
-        item_tv_kouzitime.setText(kouziBean.kouzitime + "天前  |  " + kouziBean.clicknum + "人在看");
-
-        if (kouziBean.icon == "") {
-            item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
-        } else {
-            if (!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + kouziBean.icon)) {
-                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
-            } else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + kouziBean.icon)));
-            }
-        }
+        item_tv_title.setText(jieQianBean.name);
+        item_tv_des.setText("已申请人数" + jieQianBean.view + "人");
+        item_tv_kouzitime.setText(jieQianBean.createdAt + "天前  |  " + jieQianBean.view + "人在看");
+        new ImageLoader().showImageByThread(item_img_icon, jieQianBean.image);
         return view;
     }
 

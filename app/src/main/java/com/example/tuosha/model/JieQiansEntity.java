@@ -14,50 +14,50 @@ import java.util.Date;
  * @date 2018-07-25 09:38:58
  */
 public class JieQiansEntity implements Serializable{
-	private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
 	
 	//
-	private Integer id;
+    public Integer id;
 	//借钱平台名称
-	private String name;
+    public String name;
 	//特点
-	private String advantage;
+    public String advantage;
 	//LOGO
-	private String image;
+    public String image;
 	//浏览量
-	private Integer view;
+    public Integer view;
 	//文章状态 0 不热门 1 热门
-	private Integer hot;
+    public Integer hot;
 	//通过率%
-	private Double pass;
+    public Double pass;
 	//最低借款
-	private Integer min;
+    public Integer min;
 	//最高借款
-	private Integer max;
+    public Integer max;
 	//借款期限单位
-	private String timeUnit;
+    public String timeUnit;
 	//最低借款期限
-	private Integer minTime;
+    public Integer minTime;
 	//最高借款
-	private Integer maxTime;
+    public Integer maxTime;
 	//利率%
-	private Double rate;
+    public Double rate;
 	//放款时间
-	private String fangkuanTime;
+    public String fangkuanTime;
 	//放款流程
-	private String liucheng;
+    public String liucheng;
 	//放款条件
-	private String tiaojian;
+    public String tiaojian;
 	//放款材料
-	private String cailiao;
+    public String cailiao;
 	//跳转链接
-	private String link;
-	//
-	private Date createdAt;
-	//
-	private Date updatedAt;
-	//
-	private Date deletedAt;
+    public String link;
+    //
+    public Date createdAt;
+    //
+    public Date updatedAt;
+    //
+    public Date deletedAt;
 
 	/**
 	 * 设置：

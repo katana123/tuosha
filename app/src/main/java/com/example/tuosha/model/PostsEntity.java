@@ -17,25 +17,25 @@ public class PostsEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//
-	private Integer id;
+	public Integer id;
 	//文章名称
-	private String name;
+	public String name;
 	//浏览量
-	private Integer views;
+	public Integer views;
 	//
-	private String image;
+	public String image;
 	//详情介绍
-	private String intro;
+	public String intro;
 	//
-	private Integer userId;
+	public Integer userId;
 	//
-	private Integer categoryId;
+	public Integer categoryId;
 	//
-	private Date createdAt;
+	public Date createdAt;
 	//
-	private Date updatedAt;
+	public Date updatedAt;
 	//
-	private Date deletedAt;
+	public Date deletedAt;
 
 	/**
 	 * 设置：

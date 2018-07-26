@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
+import com.example.tuosha.model.JieQiansEntity;
 import com.example.tuosha.model.KouziBean;
 import com.example.tuosha.model.SWbean;
 
@@ -75,19 +76,19 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
 
             switch (msg.what) {
                 case 200:
-                    ArrayList<KouziBean> contentBeans = new ArrayList<KouziBean>();
+                    ArrayList<JieQiansEntity> contentBeans = new ArrayList<JieQiansEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
                     mContext = getActivity();
-                    if (customApplication.getSecondlist() != null) {
-                        ArrayList<KouziBean> allNews = KouziUtils.getAllNews(mContext, customApplication.getSecondlist());
+                    if (application.getJieQiansEntities() != null) {
+                        ArrayList<JieQiansEntity> allNews = KouziUtils.getAllNews(mContext, application.getJieQiansEntities());
                         //3.创建一个adapter
-                        KouziAdapter contentAdapter = new KouziAdapter(mContext, allNews);
+                        KouziListAdapter contentAdapter = new KouziListAdapter(mContext, allNews);
                         //4.设置给listview
                         ListView lv_news = mView.findViewById(R.id.list_kouzi);
                         lv_news.setAdapter(contentAdapter);
                         contentAdapter.notifyDataSetChanged();//一旦适配器有数据，直接通知listView更新
                         lv_news.setOnItemClickListener(KouziListFragment.this);
-                        application.setContentSecondList(null);
+                        application.setJieQiansEntities(null);
                     }
 
                     break;
@@ -138,18 +139,18 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
                 super.run();
                 JSONArray aaa = new JSONArray();
                 try {
-                    ArrayList<KouziBean> bankList = new ArrayList<KouziBean>();
+                    ArrayList<JieQiansEntity> bankList = new ArrayList<JieQiansEntity>();
                     //CustomApplication customApplication = new CustomApplication();
 
                     customApplication = (CustomApplication) getInstance();
                     Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" + customApplication.getSecondlist());
+                    System.out.println("customApplication的内容 :" + customApplication.getJieQiansEntities());
                     //System.out.println("bukenengqudao :" +customApplication.getMailusername());
                     int i = 0;
-                    while (customApplication.getSecondlist() == null) {
+                    while (customApplication.getJieQiansEntities() == null) {
                         //while (customApplication.getMailusername()==null){
                         i = i + 1;
-                        System.out.println("du" + customApplication.getSecondlist());
+                        System.out.println("du" + customApplication.getJieQiansEntities());
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }
@@ -164,13 +165,6 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
                         handler.sendMessage(message);
 
                     }
-
-
-                    //把arraylist 转成 jsonArray
-                    // String bbb = JSONArray.toJSONString(bankList);
-                    //aaa = JSONArray.parseArray(bbb);
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -197,7 +191,6 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
                             e.printStackTrace();
                         }
 
-                        //handler.sendMessage(message);
                     }
                 };
                 mThread.start();
@@ -208,29 +201,9 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
     @SuppressLint("ResourceType")
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-//        FragmentTransaction fTransaction = fManager.beginTransaction();
-//        KouziContentFragment ncFragment = new KouziContentFragment();
-//        Bundle bd = new Bundle();
-//        bd.putString("content", datas.get(position).getDes());
-//        ncFragment.setArguments(bd);
-//        //获取Activity的控件
-//        //bar_title
-//        TextView txt_title = getActivity().findViewById(R.id.kouzi_title);
-//        txt_title.setText("大额贷款");
-//        // 标题
-//        TextView s_title = getActivity().findViewById(R.id.s_title);
-//       // s_title.setText(datas.get(position).getDes());
-//        //s_title.setText("sdgdafghdafhdah");
-//        //加上FragmentgetDes替换动画
-//        fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
-//        fTransaction.replace(R.id.fl_kouzi, ncFragment);
-//        //调用addToBackStack将Fragment添加到栈中
-//        fTransaction.addToBackStack(null);
-//        fTransaction.commit();
-        //需要获取条目上bean对象中url做跳转
-        KouziBean bean = (KouziBean) parent.getItemAtPosition(position);
+        JieQiansEntity bean = (JieQiansEntity) parent.getItemAtPosition(position);
 
-        String url = bean.kouzi_url;
+        String url = bean.link;
         System.out.println(url + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         webView = new WebView(getActivity());
         webView.setWebViewClient(new WebViewClient() {
@@ -246,43 +219,4 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
         getActivity().setContentView(webView);
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-//        scheduledExecutorService.scheduleWithFixedDelay(
-//                new KouziListFragment.ViewPageTask(),
-//                2,
-//                2,
-//                TimeUnit.SECONDS);
-//    }
-//
-//    private class ViewPageTask implements Runnable{
-//
-//        @Override
-//        public void run() {
-//            mHandler.sendEmptyMessage(0);
-//        }
-//    }
-
-//    private Handler mHandler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what){
-//                case 0:
-//                    CustomApplication application = CustomApplication.getInstance();
-//                    //1.获取新闻数据用list封装
-//                    datas = application.getSecondlist();
-//                    if(datas != null){
-//                    ListView lv_kouzi = view.findViewById(R.id.list_kouzi);
-//                    KouziAdapter kouziAdapter = new KouziAdapter(getActivity(), datas);
-//                    lv_kouzi.setAdapter(kouziAdapter);
-//                    application.setSecondlist(null);
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    };
 }

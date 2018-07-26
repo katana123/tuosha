@@ -26,6 +26,7 @@ import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ContentBean;
+import com.example.tuosha.model.PostsEntity;
 import com.example.tuosha.model.SWbean;
 
 import java.util.ArrayList;
@@ -334,11 +335,11 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
             mViewPaper.setCurrentItem(currentItem);
             switch (msg.what) {
                 case 200:
-                    ArrayList<ContentBean> cardList = new ArrayList<ContentBean>();
+                    ArrayList<PostsEntity> postsEntities = new ArrayList<PostsEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
-                    if (application.getContentList() != null) {
+                    if (application.getPostsEntities() != null) {
                         mContext = getActivity();
-                        ArrayList<ContentBean> allNews = ContentUtils.getAllNews(mContext, application.getContentList());
+                        ArrayList<PostsEntity> allNews = ContentUtils.getAllNews(mContext, application.getPostsEntities());
 
                         //3.创建一个adapter设置给listview
                         ContentAdapter contentAdapter = new ContentAdapter(getActivity(), allNews);
@@ -397,13 +398,13 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                     CustomApplication customApplication = (CustomApplication) getInstance();
 
                     Thread.sleep(5000);
-                    System.out.println("customApplication的内容 :" + customApplication.getContentList());
+//                    System.out.println("customApplication的内容 :" + customApplication.getPostsEntities());
 
                     int i = 0;
-                    while (customApplication.getContentList() == null) {
+                    while (customApplication.getPostsEntities() == null) {
 
                         i = i + 1;
-                        System.out.println("du" + customApplication.getContentList());
+                        System.out.println("du" + customApplication.getPostsEntities());
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }
@@ -451,7 +452,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                             long id) {
 
         //需要获取条目上bean对象中url做跳转
-        ContentBean bean = (ContentBean) parent.getItemAtPosition(position);
+        PostsEntity bean = (PostsEntity) parent.getItemAtPosition(position);
 
 //        String url = bean.news_url;
 
@@ -459,12 +460,12 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
         Intent intent = new Intent();
         intent.setClass(mContext, SecondActivity.class);
         Bundle bd = new Bundle();
-        bd.putString("name", bean.getTitle());
-        bd.putString("apply_num", bean.getReadnum());
-        bd.putString("newstime", bean.getNewstime());
-        bd.putString("logo", bean.getIcon());
+        bd.putString("name", bean.getName());
+        bd.putString("apply_num", String.valueOf(bean.getViews()));
+        bd.putString("newstime", String.valueOf(bean.getCreatedAt()));
+        bd.putString("logo", bean.getImage());
         bd.putInt("id", bean.getId());
-        bd.putString("extInfo", bean.getExtInfo());
+        bd.putString("extInfo", bean.getIntro());
         bd.putInt("type", 3);
         intent.putExtras(bd);
         startActivity(intent);
