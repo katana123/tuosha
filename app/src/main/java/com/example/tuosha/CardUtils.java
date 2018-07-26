@@ -26,11 +26,12 @@ public class CardUtils {
 
                     cardBean.des = cardList.get(i).getAdvantage();
                     cardBean.card_url = cardList.get(i).getLink();
-                    if ((cardList.get(i).getImage() == null) || (cardList.get(i).getImage()  == "")) {
-                        cardBean.icon = "";
-                    } else {
-                        cardBean.icon = cardList.get(i).getImage() ;
-                    }
+                    cardBean.icon = cardList.get(i).getImage() ;
+//                    if ((cardList.get(i).getImage() == null) || (cardList.get(i).getImage()  == "")) {
+//                        cardBean.icon = "";
+//                    } else {
+//                        cardBean.icon = cardList.get(i).getImage() ;
+//                    }
                     // cardBean.icon = ContextCompat.getDrawable(context, R.drawable.quick_option_note_over); //通过context对象将一个资源id转换成一个Drawable对象。
                     arrayList.add(cardBean);
                 }catch(Exception e){

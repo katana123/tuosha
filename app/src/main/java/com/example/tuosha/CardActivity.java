@@ -58,12 +58,13 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
-    private String[] imageIds = new String[]{
-//            R.mipmap.xxdt_03,
-//            R.mipmap.xxdt_05,
-//            R.mipmap.xxdt_07,
-//            R.mipmap.xxdt_03,
-//            R.mipmap.xxdt_05,
+   // private String[] imageIds = new String[]{
+    private int[] imageIds = new int[]{
+            R.mipmap.xxdt_03,
+            R.mipmap.xxdt_05,
+            R.mipmap.xxdt_07,
+            R.mipmap.xxdt_03,
+            R.mipmap.xxdt_05,
     };
     //存放图片的标题
     private String[] titles = new String[]{
@@ -116,9 +117,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         images = new ArrayList<ImageView>();
         for(int i = 0; i < imageIds.length; i++){
             ImageView imageView = new ImageView(getActivity());
-            //imageView.setBackgroundResource(imageIds[i]);
+            imageView.setBackgroundResource(imageIds[i]);
 
-            imageView.setImageURI(Uri.fromFile(new File(imageIds[i])));
+            //imageView.setImageURI(Uri.fromFile(new File(imageIds[i])));
             images.add(imageView);
         }
         //显示的小点
@@ -377,7 +378,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                     }
                     if (i<50){
 
-                        util.addJsonLruCache(1, customApplication.getXinYongKasEntities().toString());
+                        util.addJsonLruCache(1, JSON.toJSONString(customApplication.getXinYongKasEntities()));
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);

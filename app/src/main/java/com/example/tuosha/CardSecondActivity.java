@@ -37,7 +37,10 @@ public class CardSecondActivity extends AppCompatActivity {
         addActivity(this);
         setContentView(R.layout.activity_card_second);
         customApplication = (CustomApplication) getApplication();
-        customApplication.setCardSecondActivity(this);
+        if (customApplication.getCardSecondActivity()!=null){
+            customApplication.setCardSecondActivity(this);
+        }
+
 
         mContext = CardSecondActivity.this;
         fManager = getFragmentManager();

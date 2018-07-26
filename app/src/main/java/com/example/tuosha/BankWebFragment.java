@@ -1,5 +1,6 @@
 package com.example.tuosha;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,7 +16,15 @@ import android.widget.TextView;
 
 public class BankWebFragment extends Fragment {
     private WebSettings webSettings;
+    private FragmentManager fManager;
+    public BankWebFragment() {
 
+    }
+    @SuppressLint("ValidFragment")
+    public BankWebFragment(FragmentManager fManager) {
+        this.fManager = fManager;
+
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bank_web,container, false);
 

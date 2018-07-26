@@ -88,7 +88,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
             switch (msg.what) {
                 case 200:
                     ArrayList<TiEsEntity> bankList = new ArrayList<TiEsEntity>();
-                    CustomApplication application = (CustomApplication)getInstance();
+                    CustomApplication customApplication = (CustomApplication)getInstance();
                     mContext = getActivity();
                     if (customApplication.getTiEsEntities() != null) {
                         ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext, customApplication.getTiEsEntities());
@@ -99,7 +99,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                         lv_bank.setAdapter(bankAdapter);
                         bankAdapter.notifyDataSetChanged();//一旦适配器有数据，直接通知listView更新
                         lv_bank.setOnItemClickListener(BankListFragment.this);
-                        application.setTiEsEntities(null);
+
                     }
 
                     break;
@@ -144,11 +144,13 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
         }
         //3.cache中没有数据，向数据库发出请求
         else{
+            application.setTiEsEntities(null);
             sendmessage();
             receivemsg();
         }
     }
     public void sendmessage(){
+
         Thread thread = new Thread() {
             public void run() {
                 CustomApplication customApplication=new CustomApplication();
@@ -197,6 +199,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                         if (i>50) break;
                     }
                     if (i<50){
+                        util.addJsonLruCache(2, JSON.toJSONString(customApplication.getTiEsEntities()));
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);
@@ -240,7 +243,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
         String logo = bean.icon;
         fManager = getFragmentManager();
         FragmentTransaction fTransaction = fManager.beginTransaction();
-        CardContentFragment ncFragment = new CardContentFragment(fManager,"提额通道");
+        BankWebFragment ncFragment = new BankWebFragment(fManager);
         Bundle bd = new Bundle();
         // bd.putString("content", datas.get(position).getDes());
         bd.putString("name",name);
@@ -252,7 +255,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
         //获取Activity的控件
         //bar_title
         TextView txt_title = (TextView) getActivity().findViewById(R.id.bank_title);
-        txt_title.setText("银行贷款");
+        txt_title.setText("提额通道");
 
 
        //fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);

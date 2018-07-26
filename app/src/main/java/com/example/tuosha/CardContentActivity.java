@@ -19,10 +19,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.Utils.UserManage;
+import com.example.tuosha.client.CustomApplication;
+
 import java.io.File;
 import java.util.ArrayList;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
+import static com.example.tuosha.client.CustomApplication.getMyApplication;
 
 public class CardContentActivity extends AppCompatActivity {
     private TextView txt_title;
@@ -33,6 +37,7 @@ public class CardContentActivity extends AppCompatActivity {
 
     private TextView backbtn;
     private  String bar_title;
+    private CustomApplication customApplication;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -40,15 +45,32 @@ public class CardContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         addActivity(this);
         setContentView(R.layout.activity_card_content);
+
+        customApplication = (CustomApplication) getApplication();
+        if (customApplication.getCardContentActivity()==null){
+            customApplication.setCardContentActivity(this);
+        }
+
         mContext = CardContentActivity.this;
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        final String url = intent.getStringExtra("url");
+        String url = intent.getStringExtra("url");
         String logo = intent.getStringExtra("logo");
         String des = intent.getStringExtra("des");
         String applynum = intent.getStringExtra("apply_num");
-
+        if (name!=null) {
+            UserManage.getInstance().saveBankCardInfo(customApplication.getCardContentActivity(), name, url, logo, des, applynum);
+        }else{
+            if (UserManage.getInstance().hasBankCardInfo(customApplication.getCardContentActivity())) {
+                name = UserManage.getInstance().getBankCardInfo(getMyApplication()).getName();
+                url = UserManage.getInstance().getBankCardInfo(getMyApplication()).getLink();
+                logo = UserManage.getInstance().getBankCardInfo(getMyApplication()).getImage();
+                des = UserManage.getInstance().getBankCardInfo(getMyApplication()).getAdvantage();
+                applynum = String.valueOf(UserManage.getInstance().getBankCardInfo(getMyApplication()).getViews());
+            }
+        }
+        final String link=url;
         TextView s_title = (TextView) findViewById(R.id.s_title);
         s_title.setText(name);
         TextView apply_num = (TextView) findViewById(R.id.apply_num);
@@ -76,8 +98,9 @@ public class CardContentActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_VIEW);
                // intent.setData(Uri.parse(url));
 
-                intent.putExtra("url",url);
+                intent.putExtra("url",link);
                 startActivity(intent);
+                finish();
             }
         });
 

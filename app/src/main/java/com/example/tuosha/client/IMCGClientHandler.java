@@ -210,7 +210,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
 
                         	if (imcg.getRecommand() == Constants.BANKLIST){
                                 System.out.println("BANKLIST数据请求成功");
-                                System.out.println(imcg.getProductsEntities());
+                                System.out.println(imcg.getTiEsEntities());
 
                                 customApplication.setTiEsEntities(imcg.getTiEsEntities());
 
@@ -273,7 +273,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
 
-                            if (imcg.getRecommand() == Constants.DAIKUANLIST){
+                            if (imcg.getRecommand() == Constants.PROGRESSLIST){
                                 System.out.println("PROGRESSLIST数据请求成功");
                                 System.out.println(imcg.getProcessesEntities());
 

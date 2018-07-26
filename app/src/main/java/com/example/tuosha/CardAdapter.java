@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -18,11 +20,13 @@ public class CardAdapter extends BaseAdapter{
 
     private ArrayList<CardBean> list;
     private Context context;
+    private ImageLoader mImageLoader;
 
     //通过构造方法接受要显示的新闻数据集合
     public CardAdapter(Context context, ArrayList<CardBean> list) {
         this.list = list;
         this.context = context;
+        mImageLoader = new ImageLoader();
     }
 
     @Override
@@ -77,11 +81,15 @@ public class CardAdapter extends BaseAdapter{
         if (cardBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
         }else{
-            if(!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+cardBean.icon))
-            {
+            if(!fileIsExists(cardBean.icon))//Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+
+            {       //本地
                 item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+                //item_img_icon.etImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + cardBean.icon)));
+                //                //item_img_icon.setImageURI(cardBean.icon);
             }else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + cardBean.icon)));
+                String url = cardBean.card_url;
+                item_img_icon.setTag(url);
+                mImageLoader.showImageByThread(item_img_icon, cardBean.card_url);
             }
         }
         return view;

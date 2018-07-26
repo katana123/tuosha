@@ -101,10 +101,10 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                         ArrayList<DebitBean> allNews = DebitUtils.getAllNews(mContext, application.getProcessesEntities());
 
                         //3.创建一个adapter设置给listview
-                        ListView lv_debit = (ListView) mview.findViewById(R.id.lv_debit);
+                        ListView lv_debit = (ListView) mview.findViewById(R.id.lv_card);
                         DebitAdapter debitAdapter = new DebitAdapter(getActivity(), allNews);
                         lv_debit.setAdapter(debitAdapter);
-
+                        lv_debit.setOnItemClickListener(ProgressListFragment.this);
                         application.setProcessesEntities(null);
                     }
                     break;
@@ -133,9 +133,9 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
             handler.sendMessage(message);
         }
         //2.检查customApplication中没有数据，在Lrucache中找有没有数据
-        else if (util.getJsonLruCache(2)!=null){
+        else if (util.getJsonLruCache(4)!=null){
 
-            String jsonLruCache =util.getJsonLruCache(2) ;
+            String jsonLruCache =util.getJsonLruCache(4) ;
             JSONArray jsonArray = JSON.parseArray(jsonLruCache);
             ArrayList<ProcessesEntity> xykList = new ArrayList<ProcessesEntity>();
             for (Object jsonObject : jsonArray) {
@@ -150,6 +150,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
         }
         //3.cache中没有数据，向数据库发出请求
         else{
+            application.setTiEsEntities(null);
             sendmessage();
             receivemsg();
         }
@@ -201,6 +202,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                         if (i>50) break;
                     }
                     if (i<50){
+                        util.addJsonLruCache(4, JSON.toJSONString(customApplication.getProcessesEntities()));
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);

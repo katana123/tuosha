@@ -114,8 +114,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoadUserDate() {
-        if (UserManage.getInstance().hasUserInfo(this)) {
-            String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getPhone();
+        if (UserManage.getInstance().hasUserInfo(customApplication.getLoginActivity())) {
+            String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getMobile();
             if (!("".equals(username))) {
                 username.setText(uname);
             }

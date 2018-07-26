@@ -69,7 +69,7 @@ class CardContentFragment extends Fragment {
                 String url = getArguments().getString("url");
                 fManager = getFragmentManager();
                 FragmentTransaction fTransaction = fManager.beginTransaction();
-                BankWebFragment ncFragment = new BankWebFragment();
+                BankWebFragment ncFragment = new BankWebFragment(fManager);
                 Bundle bd = new Bundle();
                 // bd.putString("content", datas.get(position).getDes());
                 bd.putString("name", name);

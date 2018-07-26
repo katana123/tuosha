@@ -3,7 +3,9 @@ package com.example.tuosha.client;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.tuosha.ApplyActivity;
 import com.example.tuosha.CardActivity;
+import com.example.tuosha.CardContentActivity;
 import com.example.tuosha.CardSecondActivity;
 import com.example.tuosha.ContentActivity;
 import com.example.tuosha.LoginActivity;
@@ -130,6 +132,9 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	private BankSecondActivity BankSecondActivity;
 	private CardSecondActivity cardSecondActivity;
 	private CardActivity CardActivity;
+	private CardContentActivity cardContentActivity;
+    private ApplyActivity applyActivity;
+
 	private ArrayList<ImsXuanMixloanBankEntity> bankEntityArrayList;
 	private ArrayList<ImsXuanMixloanBankCardEntity> cardEntityArrayList;
 	private ArrayList<ImsXuanMixloanProductEntity> productEntityArrayList;
@@ -511,6 +516,22 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	public void setCardSecondActivity(CardSecondActivity cardSecondActivity) {
 		this.cardSecondActivity = cardSecondActivity;
 	}
+
+	public CardContentActivity getCardContentActivity() {
+		return cardContentActivity;
+	}
+
+	public void setCardContentActivity(CardContentActivity cardContentActivity) {
+		this.cardContentActivity = cardContentActivity;
+	}
+
+    public ApplyActivity getApplyActivity() {
+        return applyActivity;
+    }
+
+    public void setApplyActivity(ApplyActivity applyActivity) {
+        this.applyActivity = applyActivity;
+    }
 }
 
 

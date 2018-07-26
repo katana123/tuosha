@@ -33,7 +33,7 @@ public class ProgressSecondActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
-        setContentView(R.layout.activity_card_second);
+        setContentView(R.layout.activity_progress_second);
         mContext = ProgressSecondActivity.this;
         fManager = getFragmentManager();
         bindViews();

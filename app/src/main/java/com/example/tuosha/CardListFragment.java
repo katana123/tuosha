@@ -64,28 +64,6 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
         return mview;
     }
 
-    @SuppressLint("ResourceType")
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-        DebitBean bean = (DebitBean) adapterView.getItemAtPosition(position);
-
-        String url = bean.debit_url;
-        fManager = getFragmentManager();
-        FragmentTransaction fTransaction = fManager.beginTransaction();
-        CardWebFragment ncFragment = new CardWebFragment();
-        Bundle bd = new Bundle();
-        // bd.putString("content", datas.get(position).getDes());
-
-        bd.putString("url", url);
-        ncFragment.setArguments(bd);
-
-        fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
-        fTransaction.replace(R.id.fl_card, ncFragment);
-        //调用addToBackStack将Fragment添加到栈中
-        fTransaction.addToBackStack(null);
-        fTransaction.commit();
-    }
 
     /**
      * 接收子线程传递过来的数据
@@ -102,10 +80,10 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                         ArrayList<CardBean> allNews = DaikuanUtils.getAllNews(mContext, application.getDaikuansEntities());
 
                         //3.创建一个adapter设置给listview
-                        ListView lv_debit = mview.findViewById(R.id.lv_debit);
-                        DaikuanAdapter debitAdapter = new DaikuanAdapter(getActivity(), allNews);
-                        lv_debit.setAdapter(debitAdapter);
-
+                        ListView lv_debit = mview.findViewById(R.id.lv_card);
+                        DaikuanAdapter daikuanAdapter = new DaikuanAdapter(getActivity(), allNews);
+                        lv_debit.setAdapter(daikuanAdapter);
+                        lv_debit.setOnItemClickListener(CardListFragment.this);
                         application.setDaikuansEntities(null);
                     }
                     break;
@@ -136,7 +114,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
         //2.检查customApplication中没有数据，在Lrucache中找有没有数据
         else if (util.getJsonLruCache(3)!=null){
 
-            String jsonLruCache =util.getJsonLruCache(3) ;
+            String jsonLruCache =util.getJsonLruCache(3);
             JSONArray jsonArray = JSON.parseArray(jsonLruCache);
             ArrayList<DaikuansEntity> xykList = new ArrayList<DaikuansEntity>();
             for (Object jsonObject : jsonArray) {
@@ -151,6 +129,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
         }
         //3.cache中没有数据，向数据库发出请求
         else{
+            application.setTiEsEntities(null);
             sendmessage();
             receivemsg();
         }
@@ -202,6 +181,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                         if (i>50) break;
                     }
                     if (i<50){
+                        util.addJsonLruCache(3, JSON.toJSONString(customApplication.getDaikuansEntities()));
                         Message message=new Message();
                         message.what=200; //200代码获取数据正常
                         handler.sendMessage(message);
@@ -227,5 +207,30 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
                 }
             }
         }.start();
+
+
+    }
+
+    @SuppressLint("ResourceType")
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+        CardBean bean = (CardBean) adapterView.getItemAtPosition(position);
+        System.out.println(bean.toString());
+        String url = bean.card_url;
+        fManager = getFragmentManager();
+        FragmentTransaction fTransaction = fManager.beginTransaction();
+        CardWebFragment ncFragment = new CardWebFragment();
+        Bundle bd = new Bundle();
+        // bd.putString("content", datas.get(position).getDes());
+
+        bd.putString("url", url);
+        ncFragment.setArguments(bd);
+
+        fTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_left_exit);
+        fTransaction.replace(R.id.fl_card, ncFragment);
+        //调用addToBackStack将Fragment添加到栈中
+        fTransaction.addToBackStack(null);
+        fTransaction.commit();
     }
 }

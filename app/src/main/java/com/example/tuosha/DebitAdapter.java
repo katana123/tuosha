@@ -56,7 +56,7 @@ public class DebitAdapter extends BaseAdapter {
         }else {
             //方法一：推荐
             //context:上下文, resource:要转换成view对象的layout的id, root:将layout用root(ViewGroup)包一层作为codify的返回值,一般传null
-            view = View.inflate(context, R.layout.item_card_view, null);//将一个布局文件转换成一个view对象
+            view = View.inflate(context, R.layout.item_prog_view, null);//将一个布局文件转换成一个view对象
 
             //方法二
             //通过LayoutInflater将布局转换成view对象

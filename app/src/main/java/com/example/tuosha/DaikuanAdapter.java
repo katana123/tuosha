@@ -49,7 +49,7 @@ public class DaikuanAdapter extends BaseAdapter{
         }else {
             //方法一：推荐
             //context:上下文, resource:要转换成view对象的layout的id, root:将layout用root(ViewGroup)包一层作为codify的返回值,一般传null
-            view = View.inflate(context, R.layout.item_card_layout, null);//将一个布局文件转换成一个view对象
+            view = View.inflate(context, R.layout.item_card_view, null);//将一个布局文件转换成一个view对象
 
             //方法二
             //通过LayoutInflater将布局转换成view对象
@@ -71,8 +71,8 @@ public class DaikuanAdapter extends BaseAdapter{
         //4.将数据设置给这些子控件做显示
         //item_img_icon.setImageDrawable(cardBean.icon);//设置imageView的图片
         item_tv_title.setText(cardBean.title);
-        item_tv_des.setText(cardBean.des);
-        item_tv_cardtime.setText("已申请人数"+cardBean.clicknum+"人");
+        //item_tv_des.setText(cardBean.des);
+        //item_tv_cardtime.setText("已申请人数"+cardBean.clicknum+"人");
 
         if (cardBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片

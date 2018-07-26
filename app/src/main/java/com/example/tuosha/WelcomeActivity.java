@@ -103,7 +103,7 @@ public class WelcomeActivity extends Activity {
                             UsersEntity user = new UsersEntity();
                             //把内存的nickname和password去找用户
                             user.setNickname(UserManage.getInstance().getUserInfo(getMyApplication()).getNickname());
-                            user.setMobile(UserManage.getInstance().getUserInfo(getMyApplication()).getPhone());
+                            user.setMobile(UserManage.getInstance().getUserInfo(getMyApplication()).getMobile());
                             user.setPassword(UserManage.getInstance().getUserInfo(getMyApplication()).getPassword());
 
                             imcg.setUsersEntity(user);
