@@ -298,9 +298,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                     CustomApplication application = (CustomApplication)getInstance();
                     if (application.getXinYongKasEntities() != null) {
                         mContext = getActivity();
-                        for (int i=0;i<application.getXinYongKasEntities().size();i++){
-                            imageIds[i]=application.getXinYongKasEntities().get(i).getImage();
-                        }
+//                        for (int i=0;i<application.getXinYongKasEntities().size();i++){
+//                            imageIds[i]=application.getXinYongKasEntities().get(i).getImage();
+//                        }
                          ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getXinYongKasEntities());
 
                         //3.创建一个adapter设置给listview
