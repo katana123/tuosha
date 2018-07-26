@@ -71,6 +71,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView=inflater.inflate(R.layout.fragment_bank_list, null);
+        util = CacheUtil.getInstance();
         setData();
 
 
@@ -119,12 +120,13 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
     public void setData(){
         //1.检查customApplication中是否有数据，有就发消息给handler
         CustomApplication application = (CustomApplication)getInstance();
+
         if (application.getTiEsEntities()!=null){
             Message message=new Message();
             message.what=200; //200代码获取数据正常
             handler.sendMessage(message);
         }
-        //2.检查customApplication中没有数据，在Lrucache中找有没有数据
+        //2.检查，在Lrucache中找有没有数据
         else if (util.getJsonLruCache(2)!=null){
 
             String jsonLruCache =util.getJsonLruCache(2) ;

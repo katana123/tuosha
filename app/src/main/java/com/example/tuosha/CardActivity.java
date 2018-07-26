@@ -34,6 +34,7 @@ import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.model.XinYongKasEntity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -56,12 +57,12 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
-    private int[] imageIds = new int[]{
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
-            R.mipmap.xxdt_07,
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
+    private String[] imageIds = new String[]{
+//            R.mipmap.xxdt_03,
+//            R.mipmap.xxdt_05,
+//            R.mipmap.xxdt_07,
+//            R.mipmap.xxdt_03,
+//            R.mipmap.xxdt_05,
     };
     //存放图片的标题
     private String[] titles = new String[]{
@@ -77,6 +78,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     //5.context
     private Context mContext;
     private  ListView lv_card ;
+    private CustomApplication application = (CustomApplication)getInstance();
     public CardActivity() {
 
     }
@@ -95,14 +97,15 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView=inflater.inflate(R.layout.activity_card, null);
-        util = new CacheUtil();
-        //滚动图片
-        setView();
+        util = CacheUtil.getInstance();
+
+
         //监听点击事件
         setListener();
         //加载数据
         setData();
-
+        //滚动图片
+        setView();
         return mView;
     }
     private void setView(){
@@ -112,7 +115,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         images = new ArrayList<ImageView>();
         for(int i = 0; i < imageIds.length; i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setBackgroundResource(imageIds[i]);
+            //imageView.setBackgroundResource(imageIds[i]);
+
+            imageView.setImageURI(Uri.fromFile(new File(imageIds[i])));
             images.add(imageView);
         }
         //显示的小点
@@ -134,7 +139,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
 
             @Override
             public void onPageSelected(int position) {
-                title.setText(titles[position]);
+               // title.setText(titles[position]);
                 dots.get(position).setBackgroundResource(R.drawable.point_enable);
                 dots.get(oldPosition).setBackgroundResource(R.drawable.point_disenable);
 
@@ -192,7 +197,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     }
     public void setData(){
         //1.检查customApplication中是否有数据，有就发消息给handler
-        CustomApplication application = (CustomApplication)getInstance();
+
         if (application.getXinYongKasEntities()!=null){
             Message message=new Message();
             message.what=200; //200代码获取数据正常
@@ -293,13 +298,16 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                     CustomApplication application = (CustomApplication)getInstance();
                     if (application.getXinYongKasEntities() != null) {
                         mContext = getActivity();
+                        for (int i=0;i<application.getXinYongKasEntities().size();i++){
+                            imageIds[i]=application.getXinYongKasEntities().get(i).getImage();
+                        }
                          ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getXinYongKasEntities());
 
                         //3.创建一个adapter设置给listview
                         CardAdapter cardAdapter = new CardAdapter(getActivity(), allNews);
                         lv_card.setAdapter(cardAdapter);
 
-                        application.setXinYongKasEntities(null);
+
                     }
                     break;
                 case -1:
@@ -320,7 +328,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     public void sendmessage(){
         Thread thread = new Thread() {
             public void run() {
+
                 CustomApplication customApplication=new CustomApplication();
+                application.setXinYongKasEntities(null);
                 try {
                     IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                     imcgClientHandler.start();

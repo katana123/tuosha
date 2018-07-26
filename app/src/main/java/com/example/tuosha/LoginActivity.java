@@ -2,6 +2,7 @@ package com.example.tuosha;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +21,8 @@ import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.model.ImsXuanMixloanMemberEntity;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.client.IMCGClientHandler;
-import com.example.tuosha.model.TbUsersEntity;
+
+import com.example.tuosha.model.UsersEntity;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
 import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
@@ -41,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         addActivity(this);
         setContentView(R.layout.login_main);
+        //电话号码
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-
 
         customApplication = (CustomApplication) getApplication();
         customApplication.setLoginActivity(this);
@@ -72,18 +74,16 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton("确定", null)
                             .show();
                 } else {
-                    // CustomApplication customApplication = (CustomApplication) getApplication();
-                    //customApplication.setMailusername(phone);
 
                     try {
                         IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                         imcgClientHandler.start();
                         SWbean sWbean = new SWbean();
-                        TbUsersEntity user = new TbUsersEntity();
+                        UsersEntity user = new UsersEntity();
                         //user.setNickname(nickname);
-                        user.setPhone(phone);
+                        user.setMobile(phone);
                         user.setPassword(pass);
-                        sWbean.setTbUsersEntity(user);
+                        sWbean.setUsersEntity(user);
                         sWbean.setCommand(Constants.LOGIN);
                         Thread.sleep(1000 * 3);
                         imcgClientHandler.sendMsg(sWbean);
@@ -115,15 +115,36 @@ public class LoginActivity extends AppCompatActivity {
 
     private void LoadUserDate() {
         if (UserManage.getInstance().hasUserInfo(this)) {
-
             String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getPhone();
-
             if (!("".equals(username))) {
                 username.setText(uname);
-
-
             }
-
         }
+    }
+    public void onBackPressed() {
+        AlertDialog.Builder alterDialogBuilder = new AlertDialog.Builder(this);
+        alterDialogBuilder.setTitle(R.string.app_name);
+        alterDialogBuilder
+                .setMessage(R.string.login_activity_dialog_confirm_exit_message);
+        alterDialogBuilder.setPositiveButton(
+                R.string.login_activity_dialog_ok_button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        onDestory();
+
+                        LoginActivity.this.finish();
+                        System.exit(0);
+
+                    }
+                });
+        alterDialogBuilder.setNegativeButton(
+                R.string.login_activity_dialog_cancel_button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int id) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        alterDialogBuilder.show();
     }
 }

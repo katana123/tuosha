@@ -22,6 +22,7 @@ import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.SWbean;
 import com.example.tuosha.model.TbUsersEntity;
+import com.example.tuosha.model.UsersEntity;
 import com.mob.MobSDK;
 
 import java.util.regex.Pattern;
@@ -39,14 +40,18 @@ public class RegisterActivity extends AppCompatActivity {
     String APPSECRETE = "c0d6325b9bde8387236566a53895981b";
     private Button msg_button;
     int i = 30;
+    private CustomApplication customApplication;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
         setContentView(R.layout.register_main);
-        init();
-        final CustomApplication customApplication = (CustomApplication) getApplication();
+
+        customApplication = (CustomApplication) getApplication();
         customApplication.setRegisterActivity(this);
+
+        init();
+
         EditText nickName = (EditText) findViewById(R.id.username);
         nickName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
@@ -62,10 +67,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                                     imcgClientHandler.start();
                                     SWbean sWbean = new SWbean();
-                                    TbUsersEntity user = new TbUsersEntity();
+                                    UsersEntity user = new UsersEntity();
                                     user.setNickname(userName);
 
-                                    sWbean.setTbUsersEntity(user);
+                                    sWbean.setUsersEntity(user);
                                     sWbean.setCommand(Constants.CHECKNAME);
                                     Thread.sleep(1000 * 3);
                                     imcgClientHandler.sendMsg(sWbean);
@@ -325,13 +330,13 @@ public class RegisterActivity extends AppCompatActivity {
                 IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                 imcgClientHandler.start();
                 SWbean swbean = new SWbean();
-                TbUsersEntity user = new TbUsersEntity();
+                UsersEntity user = new UsersEntity();
                 user.setNickname(userName);
                 user.setPassword(password);
-                user.setPhone(phone);
+                user.setMobile(phone);
                 swbean.setEx_Data(icode);
 
-                swbean.setTbUsersEntity(user);
+                swbean.setUsersEntity(user);
                 swbean.setCommand(Constants.REGISTER);
                 Thread.sleep(1000 * 3);
                 imcgClientHandler.sendMsg(swbean);

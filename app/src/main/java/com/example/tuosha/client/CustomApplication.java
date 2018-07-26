@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.tuosha.CardActivity;
+import com.example.tuosha.CardSecondActivity;
 import com.example.tuosha.ContentActivity;
 import com.example.tuosha.LoginActivity;
+import com.example.tuosha.MainActivity;
 import com.example.tuosha.RegisterActivity;
 import com.example.tuosha.WelcomeActivity;
 import com.example.tuosha.BankSecondActivity;
@@ -124,7 +126,9 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	private LoginActivity LoginActivity;
 	private WelcomeActivity WelcomeActivity;
 	private RegisterActivity registerActivity;
+	private MainActivity mainActivity;
 	private BankSecondActivity BankSecondActivity;
+	private CardSecondActivity cardSecondActivity;
 	private CardActivity CardActivity;
 	private ArrayList<ImsXuanMixloanBankEntity> bankEntityArrayList;
 	private ArrayList<ImsXuanMixloanBankCardEntity> cardEntityArrayList;
@@ -490,6 +494,22 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 
 	public void setXykBannersEntities(ArrayList<XykBannersEntity> xykBannersEntities) {
 		this.xykBannersEntities = xykBannersEntities;
+	}
+
+	public MainActivity getMainActivity() {
+		return mainActivity;
+	}
+
+	public void setMainActivity(MainActivity mainActivity) {
+		this.mainActivity = mainActivity;
+	}
+
+	public CardSecondActivity getCardSecondActivity() {
+		return cardSecondActivity;
+	}
+
+	public void setCardSecondActivity(CardSecondActivity cardSecondActivity) {
+		this.cardSecondActivity = cardSecondActivity;
 	}
 }
 

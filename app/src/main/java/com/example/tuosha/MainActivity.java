@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.tuosha.client.CustomApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup mRgTab;
     //private View mview;
     private List<Fragment> mFragmentList = new ArrayList<>();
+    private CustomApplication customApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
         setContentView(R.layout.activity_main);
+
+        customApplication = (CustomApplication) getApplication();
+        customApplication.setMainActivity(this);
+
         initbtn();
         mRgTab = (RadioGroup) findViewById(R.id.rg_main);
         mRgTab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

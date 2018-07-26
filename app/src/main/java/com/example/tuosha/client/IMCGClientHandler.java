@@ -196,7 +196,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
 
             int netCommand = imcg.getCommand();
             System.out.println(imcg.getCommand()+"----"+imcg.getRecommand());
-            customApplication=(CustomApplication) getMyApplication();
+            customApplication=(CustomApplication) getMyApplication();//可以省略？
             switch (netCommand) {
                 //快速提额
                 case Constants.BANKLIST:
@@ -310,13 +310,12 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                         public void run() {
                             if(imcg.getResult()==1){
                                 System.out.println("连接成功");
-                                String username=imcg.getTbUsersEntity().getNickname();
-                                String password=imcg.getTbUsersEntity().getPassword();
-                                String phone=imcg.getTbUsersEntity().getPhone();
-                                String status=imcg.getTbUsersEntity().getStatus();
+                                String username=imcg.getUsersEntity().getNickname();
+                                String password=imcg.getUsersEntity().getPassword();
+                                String phone=imcg.getUsersEntity().getMobile();
+                                String status=String.valueOf(imcg.getUsersEntity().getMember());
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), username, password,phone,status);
-                                 Intent intent = new Intent();
-                                customApplication=(CustomApplication) getMyApplication();
+                                Intent intent = new Intent();
                                 intent.setClass(customApplication.getWelcomeActivity(), MainActivity.class);
                                 customApplication.getWelcomeActivity().startActivity(intent);
                                 customApplication.getWelcomeActivity().finish();
@@ -361,13 +360,14 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                     new Handler(Looper.getMainLooper()).postAtFrontOfQueue( new Runnable() {
                         public void run() {
                             System.out.println(imcg.toString());
-                            //customApplication = (CustomApplication) getMyApplication();
+
                             if (imcg.getResult() == 1) {
                                 System.out.println("登录成功");
-                                String userName= imcg.getTbUsersEntity().getNickname();
-                                String userPwd = imcg.getTbUsersEntity().getPassword();
-                                String userPhone = imcg.getTbUsersEntity().getPhone();
-                                String status = imcg.getTbUsersEntity().getStatus();
+                                String userName= imcg.getUsersEntity().getNickname();
+                                String userPwd = imcg.getUsersEntity().getPassword();
+                                String userPhone = imcg.getUsersEntity().getMobile();
+                                //String status = imcg.getTbUsersEntity().getStatus();
+                                String status=String.valueOf(imcg.getUsersEntity().getMember());
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,userPhone,status);
                                //如果有登陆过，直接进入主页，否则进入登录页面
                                 Intent intent = new Intent();
@@ -378,10 +378,10 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                             } else if (imcg.getResult() == 2) {
                                 System.out.println("没有权限，该账号被禁用！");
                             } else if (imcg.getResult() == 0) {
-                                String userName= imcg.getTbUsersEntity().getNickname();
-                                String userPwd = imcg.getTbUsersEntity().getPassword();
-                                String userPhone = imcg.getTbUsersEntity().getPhone();
-                                String status = imcg.getTbUsersEntity().getStatus();
+                                String userName= imcg.getUsersEntity().getNickname();
+                                String userPwd = imcg.getUsersEntity().getPassword();
+                                String userPhone = imcg.getUsersEntity().getMobile();
+                                String status=String.valueOf(imcg.getUsersEntity().getMember());
                                 UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,userPhone,status);
 
                                 AlertDialog.Builder builder = new Builder(customApplication.getLoginActivity());
@@ -394,7 +394,7 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                                 Intent intent = new Intent();
                                                intent.setClass(customApplication.getLoginActivity(), SubscribeActivity.class);
                                                 intent.setAction(Intent.ACTION_VIEW);
-                                                String phone = imcg.getTbUsersEntity().getPhone();
+                                                String phone = imcg.getUsersEntity().getMobile();
                                                 intent.putExtra("phone",phone);
                                                customApplication.getLoginActivity().startActivity(intent);
                                                 customApplication.getLoginActivity().finish();
@@ -477,10 +477,10 @@ public class IMCGClientHandler implements  NetListener, ChannelFutureListener {
                                     Toast.makeText(customApplication.getRegisterActivity(), "注册成功！",
                                             Toast.LENGTH_SHORT).show();
                                     //把返回的值，用户名、密码放入缓存中
-                                    String userName= imcg.getTbUsersEntity().getNickname();
-                                    String userPwd = imcg.getTbUsersEntity().getPassword();
-                                    String phone = imcg.getTbUsersEntity().getPhone();
-                                    String status = imcg.getTbUsersEntity().getStatus();
+                                    String userName= imcg.getUsersEntity().getNickname();
+                                    String userPwd = imcg.getUsersEntity().getPassword();
+                                    String phone = imcg.getUsersEntity().getMobile();
+                                    String status=String.valueOf(imcg.getUsersEntity().getMember());
                                     UserManage.getInstance().saveUserInfo(getMyApplication(), userName, userPwd,phone,status);
                                     //打开主页面
                                     Intent intent = new Intent();

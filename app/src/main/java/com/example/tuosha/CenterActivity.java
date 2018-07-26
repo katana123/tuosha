@@ -58,6 +58,7 @@ public class CenterActivity extends Fragment{
         String uname = UserManage.getInstance().getUserInfo(getMyApplication()).getNickname();
         TextView t_name = mView.findViewById(R.id.user_name);
         t_name.setText(uname);
+
           //关于我们
         TextView t_about = (TextView) mView.findViewById(R.id.c_about);
         t_about.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +88,7 @@ public class CenterActivity extends Fragment{
             }
         });
 
-        //关于我们
+
         TextView t_exit = (TextView) mView.findViewById(R.id.c_exit);
         t_exit.setOnClickListener(new View.OnClickListener() {
             @Override

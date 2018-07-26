@@ -7,7 +7,8 @@ import com.example.tuosha.model.ImsXuanMixloanMemberEntity;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.Utils.Constants;
-import com.example.tuosha.model.TbUsersEntity;
+
+import com.example.tuosha.model.UsersEntity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -32,6 +33,7 @@ import java.util.TimerTask;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
 import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
+import static com.example.tuosha.client.CustomApplication.getMyApplication;
 
 
 public class WelcomeActivity extends Activity {
@@ -47,7 +49,8 @@ public class WelcomeActivity extends Activity {
 
         customApplication = (CustomApplication)getApplication();
         customApplication.setWelcomeActivity(this);
-
+        setData();
+    }
          Handler mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -79,14 +82,16 @@ public class WelcomeActivity extends Activity {
                 }
             }
         };
+
+    public void setData(){
         if (UserManage.getInstance().hasUserInfo(this))//自动登录判断，SharePrefences中有数据，则跳转到主页，没数据则跳转到登录页
         {
-            if (UserManage.getInstance().getUserInfo(this).getStatus()=="1") {
+            if (UserManage.getInstance().getUserInfo(getMyApplication()).getStatus()=="1") {
                 Message message = new Message();
                 message.what = 2000; //200代码获取数据正常
                 mHandler.sendMessage(message);
                 // }else if(UserManage.getInstance().getUserInfo(this).getStatus()=="0"){
-            }else{
+            }else{  System.out.println("状态不为1：到数据库查找");
                 Thread thread = new Thread() {
                     public void run() {
                         try {
@@ -94,14 +99,14 @@ public class WelcomeActivity extends Activity {
                             IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                             imcgClientHandler.start();
                             SWbean imcg = new SWbean();
-                            TbUsersEntity user = new TbUsersEntity();
-
+                            //TbUsersEntity user = new TbUsersEntity();
+                            UsersEntity user = new UsersEntity();
                             //把内存的nickname和password去找用户
-                            user.setNickname(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getNickname());
-                            user.setPassword(UserManage.getInstance().getUserInfo(WelcomeActivity.this).getPassword());
-                            System.out.println("状态不为1：到数据库查找");
+                            user.setNickname(UserManage.getInstance().getUserInfo(getMyApplication()).getNickname());
+                            user.setMobile(UserManage.getInstance().getUserInfo(getMyApplication()).getPhone());
+                            user.setPassword(UserManage.getInstance().getUserInfo(getMyApplication()).getPassword());
 
-                            imcg.setTbUsersEntity(user);
+                            imcg.setUsersEntity(user);
                             imcg.setCommand(Constants.WELCOME);
 
 
@@ -121,11 +126,11 @@ public class WelcomeActivity extends Activity {
             message.what=1000; //
             mHandler.sendMessage(message);
         }
-
-
-
-
     }
+
+
+
+
     public void onBackPressed() {
         AlertDialog.Builder alterDialogBuilder = new AlertDialog.Builder(this);
         alterDialogBuilder.setTitle(R.string.app_name);

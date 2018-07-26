@@ -58,7 +58,7 @@ public class CardListFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mview = inflater.inflate(R.layout.fragment_card_list, container, false);
-
+        util = CacheUtil.getInstance();
         setData();
 
         return mview;

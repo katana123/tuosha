@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.tuosha.client.CustomApplication;
+
 import java.util.ArrayList;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
@@ -26,13 +28,16 @@ public class BankSecondActivity extends AppCompatActivity {
     private long exitTime = 0;
     private ImageButton backbtn;
     private  String bar_title;
-
+    private CustomApplication customApplication;
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
         setContentView(R.layout.activity_bank_second);
+        customApplication = (CustomApplication) getApplication();
+        customApplication.setBankSecondActivity(this);
+
         mContext = BankSecondActivity.this;
         fManager = getFragmentManager();
         bindViews();
