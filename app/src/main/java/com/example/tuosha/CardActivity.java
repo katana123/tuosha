@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,6 +32,7 @@ import com.example.tuosha.Utils.LoadingDialog;
 import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
 import com.example.tuosha.Utils.DialogUtils;
+import com.example.tuosha.Utils.RefreshableView;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 
@@ -59,14 +61,16 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     private ArrayList<Integer> mListId;
     private CacheUtil util;
     private Dialog mDialog;
+    private int lastVisibleItemPosition = 0;// 标记上次滑动位置，初始化默认为0
+    private boolean scrollFlag = false;// 标记是否滑动
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
    // private String[] imageIds = new String[]{
     private int[] imageIds = new int[]{
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
-            R.mipmap.xxdt_07,
+            R.drawable.xyk01,
+            R.drawable.xyk02,
+            R.drawable.xyk03,
 
     };
     //存放图片的标题
@@ -82,8 +86,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     //5.context
     private Context mContext;
     private  ListView lv_card ;
-    private CustomApplication application = (CustomApplication)getInstance();
-    private LoadingDialog dialog1;
+    private CustomApplication application = (CustomApplication)getApplication();
+
+    //private RefreshableView refreshableView;
     public CardActivity() {
 
     }
@@ -105,11 +110,11 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         util = CacheUtil.getInstance();
         mContext = getActivity();
         mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
-
-        //监听点击事件
-        setListener();
         //加载数据
         setData();
+        //监听点击事件
+        setListener();
+
         //滚动图片
         setView();
         return mView;
@@ -131,11 +136,11 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         dots.add(mView.findViewById(R.id.dot_0));
         dots.add(mView.findViewById(R.id.dot_1));
         dots.add(mView.findViewById(R.id.dot_2));
-        dots.add(mView.findViewById(R.id.dot_3));
-        dots.add(mView.findViewById(R.id.dot_4));
+        //dots.add(mView.findViewById(R.id.dot_3));
+        //dots.add(mView.findViewById(R.id.dot_4));
 
-        title = mView.findViewById(R.id.title);
-        title.setText(titles[0]);
+        //title = mView.findViewById(R.id.title);
+        //title.setText(titles[0]);
 
         adapter = new ViewPagerAdapter();
         mViewPaper.setAdapter(adapter);
@@ -200,10 +205,81 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         lv_card = mView.findViewById(R.id.lv_card);
         //4.设置listview条目的点击事件
         lv_card.setOnItemClickListener(this);
+
+//        refreshableView = (RefreshableView) mView.findViewById(R.id.refreshable_view);
+//        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                try {
+//                    if (application.getXinYongKasEntities()==null) {
+//                        sendmessage();
+//                        receivemsg();
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                refreshableView.finishRefreshing();
+//            }
+//        }, 0);
+//        lv_card.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView absListView, int i) {
+//                //判断状态
+//                switch (i) {
+//                    // 当不滚动时
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:// 是当屏幕停止滚动时
+//                        scrollFlag = false;
+//                        // 判断滚动到底部 、position是从0开始算起的
+//                        if (lv_card.getLastVisiblePosition() == (lv_card
+//                                .getCount() - 1)) {
+//
+//                            //TODO
+//
+//                        }
+//                        // 判断滚动到顶部
+//                        if (lv_card.getFirstVisiblePosition() == 0) {
+//
+//                            //TODO
+//                        }
+//
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// 滚动时
+//                        scrollFlag = true;
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+//                        // 当用户由于之前划动屏幕并抬起手指，屏幕产生惯性滑动时，即滚动时
+//                        scrollFlag = true;
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem,
+//                                 int visibleItemCount, int totalItemCount) {
+//                // TODO Auto-generated method stub
+//                //当滑动时
+//                if (scrollFlag
+//                        ) {
+//                    if (firstVisibleItem < lastVisibleItemPosition) {
+//
+//                        // 下滑
+//                                              sendmessage();
+//                                              receivemsg();
+//                    } else if (firstVisibleItem > lastVisibleItemPosition) {
+//                        // 上滑
+//                    } else {
+//                        return;
+//                    }
+//                    lastVisibleItemPosition = firstVisibleItem;//更新位置
+//
+//                }
+//            }
+//        });
     }
     public void setData(){
         //1.检查customApplication中是否有数据，有就发消息给handler
-
+        System.out.println("setData:"+application.getXinYongKasEntities());
+        System.out.println("setData:"+util.getJsonLruCache(1));
         if (application.getXinYongKasEntities()!=null){
             Message message=new Message();
             message.what=200; //200代码获取数据正常
@@ -301,7 +377,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             switch (msg.what){
                 case 200:
                     ArrayList<XinYongKasEntity> cardList = new ArrayList<XinYongKasEntity>();
-                    CustomApplication application = (CustomApplication)getInstance();
+                    CustomApplication application = (CustomApplication)getApplication();
                     DialogUtils.closeDialog(mDialog);
                     if (application.getXinYongKasEntities() != null) {
 
@@ -367,9 +443,9 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
 
                 try {
 
-                    CustomApplication customApplication = (CustomApplication)getInstance();
+                    CustomApplication customApplication = (CustomApplication)getApplication();
 
-                    Thread.sleep(5000);
+                    Thread.sleep(6000);
                     System.out.println("customApplication的内容 :" +customApplication.getXinYongKasEntities());
 
                     int i=0;
@@ -417,7 +493,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         //控制登录用户名图标大小
         TextView hpRB = mView.findViewById(tw);
         Drawable hpDrawable = getResources().getDrawable(pic);
-        hpDrawable.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        hpDrawable.setBounds(0, 0, 80, 80);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         hpRB.setCompoundDrawables(null,hpDrawable,null,null);//
 
     }

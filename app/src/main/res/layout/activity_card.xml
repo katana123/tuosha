@@ -8,7 +8,7 @@
     <!--轮播图-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" >
+        android:layout_height="180dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cardpic"
@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dip"
+            android:layout_height="15dip"
             android:layout_gravity="bottom"
             android:background="#33000000"
             android:gravity="center"
@@ -27,7 +27,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="图片标题"
+                android:text=""
                 android:textColor="@android:color/white" />
 
             <LinearLayout
@@ -58,20 +58,7 @@
                     android:layout_marginLeft="2dip"
                     android:layout_marginRight="2dip"
                     android:background="@drawable/point_selector"/>
-                <View
-                    android:id="@+id/dot_3"
-                    android:layout_width="5dip"
-                    android:layout_height="5dip"
-                    android:layout_marginLeft="2dip"
-                    android:layout_marginRight="2dip"
-                    android:background="@drawable/point_selector"/>
-                <View
-                    android:id="@+id/dot_4"
-                    android:layout_width="5dip"
-                    android:layout_height="5dip"
-                    android:layout_marginLeft="2dip"
-                    android:layout_marginRight="2dip"
-                    android:background="@drawable/point_selector"/>
+
 
             </LinearLayout>
         </LinearLayout>
@@ -95,7 +82,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_album_nor"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:maxLines="1"
                 android:textAlignment="center"
 
@@ -108,7 +95,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_note_nor"
                 android:text="@string/card_type_1"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:maxLines="1"
                 android:textAlignment="center"/>
 
@@ -118,7 +105,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/quick_option_photo_nor"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:textAlignment="center"
                 android:maxLines="1"
                 android:text="@string/card_type_2" />
@@ -131,10 +118,12 @@
             android:layout_height="2dp"
             android:background="#d9d9d9"/>
         <!--文章item-->
-        <ListView
-            android:id="@+id/lv_card"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+
+            <ListView
+                android:id="@+id/lv_card"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
         <!--文章item-end-->
     </LinearLayout>
     <!--文章end-->

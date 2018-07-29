@@ -46,7 +46,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="des"
-            android:textColor="@color/midgray"
+            android:textColor="@color/lightdark"
             android:textSize="12sp" />
 
     </LinearLayout>

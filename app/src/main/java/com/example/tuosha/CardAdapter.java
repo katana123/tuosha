@@ -26,7 +26,7 @@ public class CardAdapter extends BaseAdapter{
     public CardAdapter(Context context, ArrayList<CardBean> list) {
         this.list = list;
         this.context = context;
-        mImageLoader = new ImageLoader();
+
     }
 
     @Override
@@ -87,9 +87,11 @@ public class CardAdapter extends BaseAdapter{
                 //item_img_icon.etImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + cardBean.icon)));
                 //                //item_img_icon.setImageURI(cardBean.icon);
             }else {
-                String url = cardBean.card_url;
+                String url = cardBean.icon;
+
+                item_img_icon.setImageResource( R.drawable.quick_option_note_over);
                 item_img_icon.setTag(url);
-                mImageLoader.showImageByThread(item_img_icon, cardBean.card_url);
+                new ImageLoader().showImageByThread(item_img_icon, cardBean.icon);
             }
         }
         return view;

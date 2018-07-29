@@ -33,6 +33,7 @@ import com.example.tuosha.model.TiEsEntity;
 import java.util.ArrayList;
 
 import static com.example.tuosha.client.CustomApplication.getInstance;
+import static com.example.tuosha.client.CustomApplication.getMyApplication;
 
 @SuppressLint("ValidFragment")
 public class ProgressListFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -102,7 +103,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
             switch (msg.what){
                 case 200:
                     //ArrayList<ImsXuanMixloanBankCardEntity> cardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
-                    CustomApplication application = (CustomApplication)getInstance();
+                    CustomApplication application = (CustomApplication)getMyApplication();
                     if (application.getProcessesEntities() != null) {
 
                         DialogUtils.closeDialog(mDialog);
@@ -134,7 +135,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     };
     public void setData(){
         //1.检查customApplication中是否有数据，有就发消息给handler
-        CustomApplication application = (CustomApplication)getInstance();
+        CustomApplication application = (CustomApplication)getMyApplication();
         if (application.getProcessesEntities()!=null){
             Message message=new Message();
             message.what=200; //200代码获取数据正常
@@ -166,7 +167,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     public void sendmessage(){
         Thread thread = new Thread() {
             public void run() {
-                CustomApplication customApplication=new CustomApplication();
+                CustomApplication customApplication=(CustomApplication) getMyApplication();
                 try {
                     IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);
                     imcgClientHandler.start();
@@ -196,7 +197,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
                 JSONArray aaa = new JSONArray();
                 try {
 
-                    CustomApplication customApplication = (CustomApplication)getInstance();
+                    CustomApplication customApplication = (CustomApplication)getMyApplication();
 
                     Thread.sleep(3000);
                     System.out.println("customApplication的内容 :" +customApplication.getProcessesEntities());

@@ -6,7 +6,9 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@color/gray"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:theme="@style/AppTheme"
+    android:fitsSystemWindows="true">
 
 
             <ImageView

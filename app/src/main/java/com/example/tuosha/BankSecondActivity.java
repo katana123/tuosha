@@ -57,7 +57,7 @@ public class BankSecondActivity extends AppCompatActivity {
                     finish();
                 } else {
                     fManager.popBackStack();
-                    txt_title.setText("银行贷款");
+                    txt_title.setText("提额通道");
                 }
             }
         });

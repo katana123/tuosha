@@ -36,10 +36,10 @@ public class CardContentActivity extends AppCompatActivity {
     private ArrayList<CardBean> datas = null;
     public static WebView webView;
 
-    private TextView backbtn;
-    private  String bar_title;
+    private ImageView backbtn;
+    private  TextView barbutton;
     private CustomApplication customApplication;
-
+    private FragmentManager fManager = null;
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,8 +100,8 @@ public class CardContentActivity extends AppCompatActivity {
         }
 
 
-        backbtn = (TextView) findViewById(R.id.s_button);
-        backbtn.setOnClickListener(new View.OnClickListener() {
+        barbutton = (TextView) findViewById(R.id.s_button);
+        barbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext , ApplyActivity.class);
@@ -114,24 +114,42 @@ public class CardContentActivity extends AppCompatActivity {
             }
         });
 
-        ImageView backbtn=(ImageView)findViewById(R.id.reback);
+//        ImageView backbtn=(ImageView)findViewById(R.id.reback);
+//        backbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(CardContentActivity.this , MainActivity.class);
+//                intent.putExtra("tag","CardActivity");
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+        fManager = getFragmentManager();
+        backbtn = findViewById(R.id.reback);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CardContentActivity.this , MainActivity.class);
-                intent.putExtra("tag","CardActivity");
-                startActivity(intent);
-
+            public void onClick(View view) {
+                if (fManager.getBackStackEntryCount() == 0) {
+                    finish();
+                } else {
+                    fManager.popBackStack();
+                   // txt_title.setText("提额通道");
+                }
             }
         });
     }
 
-
-
     @Override
     public void onBackPressed() {
-
+        if (fManager.getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        } else {
+            fManager.popBackStack();
+            //txt_title.setText("");
+        }
     }
+
+
 
     public boolean fileIsExists(String strFile)
     {

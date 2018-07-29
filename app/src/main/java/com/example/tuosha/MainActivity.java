@@ -1,15 +1,18 @@
 package com.example.tuosha;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -36,17 +39,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         addActivity(this);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 设置为全屏幕显示
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 设置为全屏幕显示
 
         setContentView(R.layout.activity_main);
-        try{
-            if(ApplyActivity.webView==null){
-                ApplyActivity.webView=new WebView(this);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
+
         customApplication = (CustomApplication) getApplication();
         customApplication.setMainActivity(this);
 
@@ -170,5 +168,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDestory(){
         removeActivity(this);
     }
+
+
 }
 

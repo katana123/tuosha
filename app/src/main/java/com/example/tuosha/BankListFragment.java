@@ -104,8 +104,7 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                         lv_bank.setAdapter(bankAdapter);
                         bankAdapter.notifyDataSetChanged();//一旦适配器有数据，直接通知listView更新
                         lv_bank.setOnItemClickListener(BankListFragment.this);
-
-                    }
+                                          }
 
                     break;
                 case -1:

@@ -1,11 +1,13 @@
 package com.example.tuosha;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +15,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView password;
     private CustomApplication customApplication;
     private Dialog mDialog;
+    private  View view;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -53,7 +59,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
+
         setContentView(R.layout.login_main);
+
+        //setImmerseLayout(View view);
         //电话号码
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -170,4 +179,25 @@ public class LoginActivity extends AppCompatActivity {
                 });
         alterDialogBuilder.show();
     }
+
+    protected void setImmerseLayout(View view) {// view为标题栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            int statusBarHeight = getStatusBarHeight(this.getBaseContext());
+            view.setPadding(0, statusBarHeight, 0, 0);
+        }
+    }
+
+    public int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
+                "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
 }
