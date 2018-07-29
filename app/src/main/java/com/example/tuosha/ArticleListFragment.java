@@ -1,6 +1,7 @@
 package com.example.tuosha;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
@@ -43,6 +46,7 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
     private Context mContext;
     private CustomApplication customApplication;
     private Thread mThread;
+    private Dialog mDialog;
 
     public ArticleListFragment() {
     }
@@ -59,6 +63,8 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fg_articlelist, container, false);
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
         sendmessage(jisuId);
 
         System.out.println("执行receive");
@@ -72,12 +78,13 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            mContext = getActivity();
             switch (msg.what) {
                 case 200:
                     ArrayList<PostsEntity> contentBeans = new ArrayList<PostsEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
-                    mContext = getActivity();
+
+                    DialogUtils.closeDialog(mDialog);
                     if (customApplication.getPostsEntities() != null) {
                         ArrayList<PostsEntity> allNews = ContentUtils.getAllNews(mContext, customApplication.getPostsEntities());
                         //3.创建一个adapter
@@ -93,10 +100,12 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
                     Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -2:
                     //获取发生异常
+                    DialogUtils.closeDialog(mDialog);
                     Toast.makeText(mContext, "获取发生异常", Toast.LENGTH_SHORT).show();
                     break;
                 default:

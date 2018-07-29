@@ -1,5 +1,6 @@
 package com.example.tuosha;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 //import com.example.R;
 
 import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
@@ -66,6 +69,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
     private CustomApplication customApplication;
     private ArrayList<ContentBean> allNews = new ArrayList<>();
     private ListView lv_news;
+    private Dialog mDialog;
 
     public ContentActivity() {
 
@@ -86,6 +90,9 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
 
 
         mView=inflater.inflate(R.layout.activity_content, null);
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
+
         setView();
         initbtn(R.id.textView0,R.drawable.quick_option_album_nor);
         initbtn(R.id.textView1,R.drawable.quick_option_note_nor);
@@ -331,6 +338,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                 case 200:
                     ArrayList<PostsEntity> postsEntities = new ArrayList<PostsEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
+                    DialogUtils.closeDialog(mDialog);
                     if (application.getPostsEntities() != null) {
                         mContext = getActivity();
                         ArrayList<PostsEntity> allNews = ContentUtils.getAllNews(mContext, application.getPostsEntities());
@@ -339,16 +347,18 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                         ContentAdapter contentAdapter = new ContentAdapter(getActivity(), allNews);
                         lv_news.setAdapter(contentAdapter);
 
-                        application.setContentList(null);
+                        //application.setContentList(null);
                     }
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
                     // Toast.makeText(BankActivity.this, "获取失败", Toast.LENGTH_SHORT).show();
                     System.out.println("获取失败");
                     break;
                 case -2:
                     //获取发生异常
+                    DialogUtils.closeDialog(mDialog);
                     // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
                     System.out.println("获取发生异常");
                     break;
@@ -398,7 +408,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
                     while (customApplication.getPostsEntities() == null) {
 
                         i = i + 1;
-                        System.out.println("du" + customApplication.getPostsEntities());
+                        System.out.println("PostsEntities:" + customApplication.getPostsEntities());
                         Thread.sleep(1000);
                         if (i > 50) break;
                     }

@@ -1,6 +1,7 @@
 package com.example.tuosha;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ImsXuanMixloanProductEntity;
@@ -41,7 +43,7 @@ import static com.example.tuosha.client.CustomApplication.getInstance;
 public class BankListFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     private View mView;
-
+    private Dialog mDialog;
     private TextView title;
     private ProgressDialog dialog;
     private Context mContext;
@@ -72,6 +74,8 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
 
         mView=inflater.inflate(R.layout.fragment_bank_list, null);
         util = CacheUtil.getInstance();
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
         setData();
 
 
@@ -84,12 +88,13 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            mContext=getActivity();
             switch (msg.what) {
                 case 200:
                     ArrayList<TiEsEntity> bankList = new ArrayList<TiEsEntity>();
                     CustomApplication customApplication = (CustomApplication)getInstance();
-                    mContext = getActivity();
+
+                    DialogUtils.closeDialog(mDialog);
                     if (customApplication.getTiEsEntities() != null) {
                         ArrayList<BankBean> allNews = BankUtils.getAllNews(mContext, customApplication.getTiEsEntities());
                         //3.创建一个adapter
@@ -105,10 +110,12 @@ public class BankListFragment extends Fragment implements AdapterView.OnItemClic
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
                     Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -2:
                     //获取发生异常
+                    DialogUtils.closeDialog(mDialog);
                     Toast.makeText(mContext, "获取发生异常", Toast.LENGTH_SHORT).show();
                     break;
                 default:

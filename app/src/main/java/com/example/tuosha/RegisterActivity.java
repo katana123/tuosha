@@ -138,8 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void MsgButtonOnClick (View view) {
         msg_button = (Button) findViewById(R.id.msg_button);
-        String phone = ((EditText) findViewById(R.id.phone))
-                .getText().toString();
+        String phone = ((EditText) findViewById(R.id.phone)).getText().toString();
         // 1. 通过规则判断手机号
         if (!judgePhoneNums(phone)) {
             return;
@@ -181,8 +180,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        Toast.makeText(getApplicationContext(), "提交验证码成功",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "提交验证码成功",
+//                                Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this,
                                 MainActivity.class);
                         startActivity(intent);
@@ -216,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String icode = ((EditText) findViewById(R.id.identifying_code))
                 .getText().toString();
 
-        SMSSDK.submitVerificationCode("86", phone, icode);
+       // SMSSDK.submitVerificationCode("86", phone, icode);
 
         if(userName.length()==0){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -1,5 +1,6 @@
 package com.example.tuosha;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -26,8 +27,10 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.tuosha.Utils.LoadingDialog;
 import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 
@@ -55,6 +58,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     private int currentItem;
     private ArrayList<Integer> mListId;
     private CacheUtil util;
+    private Dialog mDialog;
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
@@ -63,16 +67,14 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
             R.mipmap.xxdt_03,
             R.mipmap.xxdt_05,
             R.mipmap.xxdt_07,
-            R.mipmap.xxdt_03,
-            R.mipmap.xxdt_05,
+
     };
     //存放图片的标题
     private String[] titles = new String[]{
             "轮播1",
             "轮播2",
             "轮播3",
-            "轮播4",
-            "轮播5"
+
     };
     private TextView title;
     private ViewPagerAdapter adapter;
@@ -81,6 +83,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
     private Context mContext;
     private  ListView lv_card ;
     private CustomApplication application = (CustomApplication)getInstance();
+    private LoadingDialog dialog1;
     public CardActivity() {
 
     }
@@ -100,7 +103,8 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
 
         mView=inflater.inflate(R.layout.activity_card, null);
         util = CacheUtil.getInstance();
-
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
 
         //监听点击事件
         setListener();
@@ -298,12 +302,10 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                 case 200:
                     ArrayList<XinYongKasEntity> cardList = new ArrayList<XinYongKasEntity>();
                     CustomApplication application = (CustomApplication)getInstance();
+                    DialogUtils.closeDialog(mDialog);
                     if (application.getXinYongKasEntities() != null) {
-                        mContext = getActivity();
-//                        for (int i=0;i<application.getXinYongKasEntities().size();i++){
-//                            imageIds[i]=application.getXinYongKasEntities().get(i).getImage();
-//                        }
-                         ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getXinYongKasEntities());
+
+                        ArrayList<CardBean> allNews = CardUtils.getAllNews(mContext, application.getXinYongKasEntities());
 
                         //3.创建一个adapter设置给listview
                         CardAdapter cardAdapter = new CardAdapter(getActivity(), allNews);
@@ -314,6 +316,7 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
                     Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
                     System.out.println("获取失败");
                     break;
@@ -328,11 +331,12 @@ public class CardActivity extends Fragment implements AdapterView.OnItemClickLis
         }
     };
     public void sendmessage(){
+
         Thread thread = new Thread() {
             public void run() {
 
-                customApplication = (CustomApplication) getApplication();
 
+                customApplication = (CustomApplication) getApplication();
                 application.setXinYongKasEntities(null);
                 try {
                     IMCGClientHandler imcgClientHandler = new IMCGClientHandler(customApplication);

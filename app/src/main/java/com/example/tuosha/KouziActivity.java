@@ -1,5 +1,6 @@
 package com.example.tuosha;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
@@ -69,6 +72,7 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
     private ArrayList<KouziBean> allNews = new ArrayList<>();
     private WebView webView;
     private ListView lv_kouzi;
+    private Dialog mDialog;
 
     public KouziActivity() {
 
@@ -91,6 +95,9 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.activity_kouzi, null);
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
+
         setView();
         initbtn(R.id.textView0, R.drawable.quick_option_album_nor);
         initbtn(R.id.textView1, R.drawable.quick_option_note_nor);
@@ -332,6 +339,8 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
                 case 200:
                     ArrayList<JieQiansEntity> jieQiansEntities = new ArrayList<JieQiansEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
+                    DialogUtils.closeDialog(mDialog);
+
                     if (application.getJieQiansEntities() != null) {
                         mContext = getActivity();
                         ArrayList<JieQiansEntity> allNews = KouziUtils.getAllNews(mContext, application.getJieQiansEntities());
@@ -344,11 +353,13 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
 //                     Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
                     System.out.println("获取失败");
                     break;
                 case -2:
                     //获取发生异常
+                    DialogUtils.closeDialog(mDialog);
                     // Toast.makeText(BankActivity.this, "获取发生异常", Toast.LENGTH_SHORT).show();
                     System.out.println("获取发生异常");
                     break;
@@ -359,19 +370,23 @@ public class KouziActivity extends Fragment implements AdapterView.OnItemClickLi
     };
 
     private void sendmessage() {
-        try {
-            IMCGClientHandler nettyClientHandler = new IMCGClientHandler(customApplication);
-            nettyClientHandler.start();
-            SWbean sWbean = new SWbean();
-            sWbean.setCommand(Protocols.KOUZILIST);
-            Thread.sleep(1000 * 3);
-            nettyClientHandler.sendMsg(sWbean);
-            Thread.sleep(1000);
-            nettyClientHandler.disposeInfoColClient();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        Thread thread = new Thread() {
+            public void run() {
+                try {
+                    IMCGClientHandler nettyClientHandler = new IMCGClientHandler(customApplication);
+                    nettyClientHandler.start();
+                    SWbean sWbean = new SWbean();
+                    sWbean.setCommand(Protocols.KOUZILIST);
+                    Thread.sleep(1000 * 3);
+                    nettyClientHandler.sendMsg(sWbean);
+                    Thread.sleep(1000);
+                    nettyClientHandler.disposeInfoColClient();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
 
     }
 

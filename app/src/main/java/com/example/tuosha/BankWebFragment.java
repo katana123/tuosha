@@ -35,6 +35,8 @@ public class BankWebFragment extends Fragment {
             webSettings.setJavaScriptEnabled(true);
             webSettings.setUseWideViewPort(true);
             webSettings.setLoadWithOverviewMode(true);
+            webSettings.setSupportZoom(true);
+            webSettings.setBuiltInZoomControls(true);
 
             webView.setWebViewClient(new MyWebViewClient());
             webView.loadUrl(url);

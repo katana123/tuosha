@@ -1,11 +1,14 @@
 package com.example.tuosha;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
+import com.example.tuosha.Utils.LoadingDialog;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.Utils.UserManage;
 import com.example.tuosha.client.CustomApplication;
@@ -33,7 +38,13 @@ public class LoginActivity extends AppCompatActivity {
     private TextView username;
     private TextView password;
     private CustomApplication customApplication;
-
+    private Dialog mDialog;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     // @Override
     public Context getContext() {
         return this.getContext();
@@ -50,12 +61,24 @@ public class LoginActivity extends AppCompatActivity {
         customApplication = (CustomApplication) getApplication();
         customApplication.setLoginActivity(this);
 
+
         LoadUserDate();
 
         Button login = findViewById(R.id.sign_in_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog.Builder builder1=new LoadingDialog.Builder(LoginActivity.this)
+                        .setMessage("加载中...")
+                        .setCancelable(false);
+                final LoadingDialog dialog1=builder1.create();
+                dialog1.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog1.dismiss();
+                    }
+                },4000);
 
                 // String nickname = username.getText().toString();//账号
                 String phone = username.getText().toString();//电话号码

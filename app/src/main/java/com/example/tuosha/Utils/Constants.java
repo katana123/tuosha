@@ -4,13 +4,13 @@ package com.example.tuosha.Utils;
  * Created by admin on 2014/7/8.
  */
 public class Constants {
-    //public static final String TCP_SERVER_ADDRESS = "192.168.100.105";
-   //public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
-    public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
-   // public static final String TCP_SERVER_ADDRESS = "192.168.100.105";
+    //public static final String TCP_SERVER_ADDRESS = "47.104.148.253";
+   public static final String TCP_SERVER_ADDRESS = "192.168.1.8";
+   // public static final String TCP_SERVER_ADDRESS = "192.168.100.245";
+   // public static final String TCP_SERVER_ADDRESS = "172.31.157.86";
   //  public static final String TCP_SERVER_ADDRESS = "192.168.43.170";
     public static final int TCP_SERVER_PORT = 9200;
-
+    public static final String LOADING_DATA = "加载中...";
     public static final int NET_TCP_BUFFER = 64 * 1024 * 1024; // 64MB
     public static final int IMCG_HEARTBEAT_READ_PERIOD_SECONDS = 15;
     public static final int IMCG_HEARTBEAT_WRITE_PERIOD_SECONDS = 16;

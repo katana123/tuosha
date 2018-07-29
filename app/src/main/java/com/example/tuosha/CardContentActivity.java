@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -33,7 +34,7 @@ public class CardContentActivity extends AppCompatActivity {
 
     private Context mContext;
     private ArrayList<CardBean> datas = null;
-
+    public static WebView webView;
 
     private TextView backbtn;
     private  String bar_title;
@@ -44,6 +45,15 @@ public class CardContentActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
+
+        try{
+            if(ApplyActivity.webView==null){
+                ApplyActivity.webView=new WebView(this);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_card_content);
 
         customApplication = (CustomApplication) getApplication();

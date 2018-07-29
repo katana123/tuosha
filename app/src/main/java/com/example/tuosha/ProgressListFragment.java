@@ -1,6 +1,7 @@
 package com.example.tuosha;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.tuosha.Utils.CacheUtil;
 import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
 import com.example.tuosha.model.ProcessesEntity;
@@ -43,6 +45,7 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     private int currentItem;
     private View mview;
     private CacheUtil util;
+    private Dialog mDialog;
 
     @SuppressLint("ValidFragment")
     public ProgressListFragment(FragmentManager fManager, ArrayList<CardBean> datas) {
@@ -59,6 +62,9 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mview = inflater.inflate(R.layout.fragment_card_list, container, false);
         util = CacheUtil.getInstance();
+
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
         setData();
 
         return mview;
@@ -92,12 +98,14 @@ public class ProgressListFragment extends Fragment implements AdapterView.OnItem
     private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
             //mViewPaper.setCurrentItem(currentItem);
+            mContext = getActivity();
             switch (msg.what){
                 case 200:
                     //ArrayList<ImsXuanMixloanBankCardEntity> cardList = new ArrayList<ImsXuanMixloanBankCardEntity>();
                     CustomApplication application = (CustomApplication)getInstance();
                     if (application.getProcessesEntities() != null) {
-                        mContext = getActivity();
+
+                        DialogUtils.closeDialog(mDialog);
                         ArrayList<DebitBean> allNews = DebitUtils.getAllNews(mContext, application.getProcessesEntities());
 
                         //3.创建一个adapter设置给listview

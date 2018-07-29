@@ -1,6 +1,7 @@
 package com.example.tuosha;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
+import com.example.tuosha.Utils.Constants;
+import com.example.tuosha.Utils.DialogUtils;
 import com.example.tuosha.Utils.Protocols;
 import com.example.tuosha.client.CustomApplication;
 import com.example.tuosha.client.IMCGClientHandler;
@@ -46,6 +49,7 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
     private ScheduledExecutorService scheduledExecutorService;
     private WebView webView;
     private Thread mThread;
+    private Dialog mDialog;
 
     public KouziListFragment() {
     }
@@ -60,7 +64,8 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_kouzi_list, container, false);
-
+        mContext = getActivity();
+        mDialog = DialogUtils.createLoadingDialog(mContext, Constants.LOADING_DATA);
         getSecondKouziList(kouziId);
         receivemsg();
 
@@ -73,12 +78,13 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            mContext = getActivity();
             switch (msg.what) {
                 case 200:
                     ArrayList<JieQiansEntity> contentBeans = new ArrayList<JieQiansEntity>();
                     CustomApplication application = (CustomApplication) getInstance();
-                    mContext = getActivity();
+
+                    DialogUtils.closeDialog(mDialog);
                     if (application.getJieQiansEntities() != null) {
                         ArrayList<JieQiansEntity> allNews = KouziUtils.getAllNews(mContext, application.getJieQiansEntities());
                         //3.创建一个adapter
@@ -94,10 +100,12 @@ public class KouziListFragment extends Fragment implements AdapterView.OnItemCli
                     break;
                 case -1:
                     //获取失败
+                    DialogUtils.closeDialog(mDialog);
 //                    Toast.makeText(mContext, "获取失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -2:
                     //获取发生异常
+                    DialogUtils.closeDialog(mDialog);
 //                    Toast.makeText(mContext, "获取发生异常", Toast.LENGTH_SHORT).show();
                     break;
                 default:

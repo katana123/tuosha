@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,8 +35,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
-        setContentView(R.layout.activity_main);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 设置为全屏幕显示
+
+        setContentView(R.layout.activity_main);
+        try{
+            if(ApplyActivity.webView==null){
+                ApplyActivity.webView=new WebView(this);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         customApplication = (CustomApplication) getApplication();
         customApplication.setMainActivity(this);
 
