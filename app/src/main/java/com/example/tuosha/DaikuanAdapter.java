@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -77,11 +79,13 @@ public class DaikuanAdapter extends BaseAdapter{
         if (cardBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
         }else{
-            if(!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+cardBean.icon))
+            if(fileIsExists(cardBean.icon))
             {
-                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+                item_img_icon.setImageURI(Uri.fromFile(new File( cardBean.icon)));
             }else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + cardBean.icon)));
+                String url = cardBean.icon;
+                item_img_icon.setTag(url);
+                new ImageLoader().showImageByThread(item_img_icon, cardBean.icon);
             }
         }
         return view;

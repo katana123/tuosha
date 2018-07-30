@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -81,11 +83,13 @@ public class BankAdapter extends BaseAdapter{
         if (bankBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
         }else{
-            if(!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+bankBean.icon))
+            if(fileIsExists(bankBean.icon))
             {
-                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+                item_img_icon.setImageURI(Uri.fromFile(new File( bankBean.icon)));
             }else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + bankBean.icon)));
+                String url = bankBean.icon;
+                item_img_icon.setTag(url);
+                new ImageLoader().showImageByThread(item_img_icon, bankBean.icon);
             }
         }
 

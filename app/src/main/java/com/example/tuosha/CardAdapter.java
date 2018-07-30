@@ -81,7 +81,7 @@ public class CardAdapter extends BaseAdapter{
         if (cardBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
         }else{
-            if(!fileIsExists(cardBean.icon))//Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+
+            if(fileIsExists(cardBean.icon))//Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+
             {       //本地
                 item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
                 //item_img_icon.etImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + cardBean.icon)));
@@ -89,9 +89,12 @@ public class CardAdapter extends BaseAdapter{
             }else {
                 String url = cardBean.icon;
 
-                item_img_icon.setImageResource( R.drawable.quick_option_note_over);
                 item_img_icon.setTag(url);
                 new ImageLoader().showImageByThread(item_img_icon, cardBean.icon);
+
+
+
+
             }
         }
         return view;

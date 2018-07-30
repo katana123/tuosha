@@ -114,17 +114,8 @@ public class CardContentActivity extends AppCompatActivity {
             }
         });
 
-//        ImageView backbtn=(ImageView)findViewById(R.id.reback);
-//        backbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(CardContentActivity.this , MainActivity.class);
-//                intent.putExtra("tag","CardActivity");
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-        fManager = getFragmentManager();
+
+       fManager = getFragmentManager();
         backbtn = findViewById(R.id.reback);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override

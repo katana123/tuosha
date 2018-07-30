@@ -6,8 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.util.LruCache;
 import android.widget.ImageView;
+
+import com.example.tuosha.R;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -53,9 +56,19 @@ public class ImageLoader {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (mImageView.getTag().equals(mUrl)) {
-                mImageView.setImageBitmap((Bitmap) msg.obj);
+            switch (msg.what) {
+                case 200:
+                if (mImageView.getTag().equals(mUrl)) {
+                    mImageView.setImageBitmap((Bitmap) msg.obj);
+                }
+                    break;
+                case -1:
+                    if (mImageView.getTag().equals(mUrl)) {
+                        mImageView.setImageResource(R.drawable.quick_option_note_over);
+
+                    }
             }
+
         }
     };
 
@@ -72,10 +85,18 @@ public class ImageLoader {
                     Bitmap bitmap = getBitmapFromURL(url);
                     if (bitmap != null) {
                         addBitmapToCache(url, bitmap);
+
+                        Message message = Message.obtain();
+                        message.what = 200;
+                        message.obj = bitmap;
+                        mHandler.sendMessage(message);
+                    }else{
+                        //Message message = new Message();
+                        Message message = Message.obtain();
+                        message.what = -1;
+                        //message.obj = bitmap;
+                        mHandler.sendMessage(message);
                     }
-                    Message message = Message.obtain();
-                    message.obj = bitmap;
-                    mHandler.sendMessage(message);
                 }
             }.start();
         } else {
@@ -109,18 +130,25 @@ public class ImageLoader {
         try {
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            is = new BufferedInputStream(connection.getInputStream());
-            bitmap = BitmapFactory.decodeStream(is);
-            connection.disconnect();
-            return bitmap;
-        } catch (java.io.IOException e) {
+            if (connection.getInputStream()==null){
+                connection.disconnect();
+                return null;
+            }else {
+                is = new BufferedInputStream(connection.getInputStream());
+                bitmap = BitmapFactory.decodeStream(is);
+                connection.disconnect();
+                return bitmap;
+            }
+//        } catch (java.io.IOException e) {
+        }catch (Exception e){
             e.printStackTrace();
         } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                is.close();
+//               // connection.disconnect();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         return null;
     }

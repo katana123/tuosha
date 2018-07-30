@@ -8,6 +8,7 @@ import com.example.tuosha.CardActivity;
 import com.example.tuosha.CardContentActivity;
 import com.example.tuosha.CardSecondActivity;
 import com.example.tuosha.ContentActivity;
+import com.example.tuosha.ContentWebActivity;
 import com.example.tuosha.LoginActivity;
 import com.example.tuosha.MainActivity;
 import com.example.tuosha.RegisterActivity;
@@ -134,6 +135,7 @@ public class CustomApplication extends Application implements UncaughtExceptionH
 	private CardActivity CardActivity;
 	private CardContentActivity cardContentActivity;
     private ApplyActivity applyActivity;
+	private ContentWebActivity contentWebActivity;
 
 	private ArrayList<ImsXuanMixloanBankEntity> bankEntityArrayList;
 	private ArrayList<ImsXuanMixloanBankCardEntity> cardEntityArrayList;
@@ -532,6 +534,14 @@ public class CustomApplication extends Application implements UncaughtExceptionH
     public void setApplyActivity(ApplyActivity applyActivity) {
         this.applyActivity = applyActivity;
     }
+
+	public ContentWebActivity getContentWebActivity() {
+		return contentWebActivity;
+	}
+
+	public void setContentWebActivity(ContentWebActivity contentWebActivity) {
+		this.contentWebActivity = contentWebActivity;
+	}
 }
 
 

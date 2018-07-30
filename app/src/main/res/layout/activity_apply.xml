@@ -15,7 +15,7 @@
             android:layout_height="37dp"
 
             android:background="@color/white"
-            app:srcCompat="@drawable/arrow_back" />
+            android:src="@drawable/arrow_back" />
         <TextView
             android:id="@+id/bank_title"
             android:layout_width="match_parent"

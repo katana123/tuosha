@@ -463,7 +463,7 @@ public class ContentActivity extends Fragment implements AdapterView.OnItemClick
 
         //跳转浏览器
         Intent intent = new Intent();
-        intent.setClass(mContext, SecondActivity.class);
+        intent.setClass(mContext, ContentWebActivity.class);
         Bundle bd = new Bundle();
         bd.putString("name", bean.getName());
         bd.putString("apply_num", String.valueOf(bean.getViews()));

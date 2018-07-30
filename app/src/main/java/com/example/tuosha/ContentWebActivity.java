@@ -1,48 +1,62 @@
 package com.example.tuosha;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.FragmentManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tuosha.client.CustomApplication;
 
 import static com.example.tuosha.Utils.ActivityCollector.addActivity;
 import static com.example.tuosha.Utils.ActivityCollector.removeActivity;
 
-public class ApplyActivity extends Activity  {
+public class ContentWebActivity extends Activity  {
     private CustomApplication customApplication;
     public static WebView webView;
-    public ApplyActivity() {
+    private FragmentManager fManager = null;
+    public ContentWebActivity() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
         try{
-            if(ApplyActivity.webView==null){
-                ApplyActivity.webView=new WebView(this);
+            if(ContentWebActivity.webView==null){
+                ContentWebActivity.webView=new WebView(this);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-        setContentView(R.layout.activity_apply);
+        setContentView(R.layout.activity_web_content);
 
         customApplication = (CustomApplication)getApplication();
-        customApplication.setApplyActivity(this);
+        customApplication.setContentWebActivity(this);
 
-        webView = findViewById(R.id.word_web_view);
+
         Intent intent = getIntent();//获取传来的intent对象
-        String data = intent.getStringExtra("url");//获取键值对的键名
-        System.out.println(data);
-        webView.loadUrl(data);
-        //webView.loadUrl("http://www.qichangkeji.vip/gongzhonghaoWeb/page/cardAction.html?id=27&userId=5898");
+
+        String title = intent.getStringExtra("name");
+        String time = intent.getStringExtra("newstime");
+        String apply_num = intent.getStringExtra("apply_num");
+        String extInfo = intent.getStringExtra("extInfo");
+        TextView txt_title = findViewById(R.id.txt_title);
+        txt_title.setText(title);
+
+        TextView pub_time = findViewById(R.id.pub_time);
+        pub_time.setText(time);
+
+        TextView read_count = findViewById(R.id.read_count);
+        read_count.setText(apply_num);
+
+        webView = findViewById(R.id.txt_content);
+        webView.loadData(extInfo, "text/html; charset=UTF-8", null);
+
 
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptEnabled(true);//允许使用js
@@ -55,14 +69,13 @@ public class ApplyActivity extends Activity  {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ApplyActivity.this , CardContentActivity.class);
-//               intent.putExtra("tag","CardContentActivity");
+//                Intent intent = new Intent(ContentWebActivity.this , MainActivity.class);
+//               intent.putExtra("tag","ContentActivity");
 //                onDestory();
 //                startActivity(intent);
-                onBackPressed();
-                finish();
-
+//                finish();
                 //MainActivity.changeFragment(CardActivity.class.getName());
+                onBackPressed();
             }
         });
     }
@@ -72,6 +85,8 @@ public class ApplyActivity extends Activity  {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+            super.onBackPressed();
+
     }
 }

@@ -46,7 +46,7 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
     private Context mContext;
     private CustomApplication customApplication;
     private Thread mThread;
-    private Dialog mDialog;
+   private Dialog mDialog;
 
     public ArticleListFragment() {
     }
@@ -175,12 +175,6 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
 
                     }
 
-
-                    //把arraylist 转成 jsonArray
-                    // String bbb = JSONArray.toJSONString(bankList);
-                    //aaa = JSONArray.parseArray(bbb);
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -190,30 +184,8 @@ public class ArticleListFragment extends Fragment implements AdapterView.OnItemC
         }.start();
     }
 
-    // @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
-        // TODO Auto-generated method stub
-        if (firstVisibleItem + visibleItemCount == totalItemCount) {
-            //开线程去下载网络数据
-            if (mThread == null || !mThread.isAlive()) {
-                mThread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            //这里放你网络数据请求的方法，我在这里用线程休眠5秒方法来处理
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
-                        //handler.sendMessage(message);
-                    }
-                };
-                mThread.start();
-            }
-        }
-    }
+
 
     @SuppressLint("ResourceType")
     @Override

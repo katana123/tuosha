@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tuosha.cache.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -80,11 +82,15 @@ public class DebitAdapter extends BaseAdapter {
         if (debitBean.icon==""){
             item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));//设置imageView的图片
         }else{
-            if(!fileIsExists(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+debitBean.icon))
+            if(fileIsExists(debitBean.icon))
             {
-                item_img_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.quick_option_note_over));
+                item_img_icon.setImageURI(Uri.fromFile(new File( debitBean.icon)));
             }else {
-                item_img_icon.setImageURI(Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + debitBean.icon)));
+                String url = debitBean.icon;
+                //url="http://118.126.101.192/"+url.substring(url.indexOf("uploads"));
+                System.out.println(url);
+                item_img_icon.setTag(url);
+                new ImageLoader().showImageByThread(item_img_icon, debitBean.icon);
             }
         }
 

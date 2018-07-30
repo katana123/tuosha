@@ -58,10 +58,12 @@ public class SecondActivity extends AppCompatActivity {
                     finish();
                 } else {
                     fManager.popBackStack();
-                    txt_title.setText("如何入会");
+                   // txt_title.setText("如何入会");
+
                 }
             }
         });
+
     }
 
     private void bindViews() {
@@ -104,7 +106,8 @@ public class SecondActivity extends AppCompatActivity {
             super.onBackPressed();
         } else {
             fManager.popBackStack();
-            txt_title.setText("如何入会");
+           // txt_title.setText("如何入会");
+
         }
     }
 } 
